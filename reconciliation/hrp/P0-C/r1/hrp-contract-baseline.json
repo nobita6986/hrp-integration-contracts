@@ -1,0 +1,59 @@
+{
+  "formatVersion": 1,
+  "hrp": {
+    "repository": "https://github.com/nobita6986/HRpartner.git",
+    "baseline": "1059f6669482efac5b7956ef25d43996ca59d515",
+    "branch": "main",
+    "dirty": false,
+    "surveyedAt": "2026-09-21T12:42:00Z"
+  },
+  "pendingDeltas": [
+    {
+      "commit": "1c08ecddd10564e0372f4146cf3527b5b21d4351",
+      "diffPaths": [
+        "src/domains/applications/aff03-public-intake.service.ts",
+        "app/api/public/intake/route.ts"
+      ],
+      "merged": false,
+      "deployed": false,
+      "evidenceReferences": [
+        "PR #22",
+        "hrp-v6-n2-aff-03b-rls-runtime-fix"
+      ]
+    }
+  ],
+  "crm": {
+    "repository": "https://github.com/nobita6986/HRP-CRM.git",
+    "baseline": "72643356a0d1355f9dccc3921b47c990ea9c31c1",
+    "package": "@hrp-engagement/contracts",
+    "packageVersion": "0.0.8-g0.8-fixes"
+  },
+  "crmEvidence": {
+    "repository": "https://github.com/nobita6986/hrp-integration-contracts.git",
+    "commit": "25fc8b1f7f61a4bd5b6a9313eddb866af2e41b31",
+    "bundle": "reconciliation/crm/CONTRACT-01/r1/"
+  },
+  "scope": {
+    "thinSlice": true,
+    "totalModulesCrossChecked": 28
+  },
+  "hrpConfirmedCapabilities": [
+    "Public JobPosting Projection",
+    "Application",
+    "PlacementCase",
+    "Placement"
+  ],
+  "unknownOrUnverified": [
+    "NextAction",
+    "Universal AFF (Pending AFF-03B)",
+    "Public Apply (Pending AFF-03B)",
+    "Public Recruiter Profile"
+  ],
+  "artifacts": [
+    "CRM_CONTRACT_GAP_REPORT.md",
+    "THIN_SLICE_CAPABILITY_MATRIX.md",
+    "CONTRACT_AUTHORITY_HIERARCHY.md",
+    "RECONCILIATION_DECISIONS.md",
+    "RECONCILIATION_PROTOCOL.md"
+  ]
+}
