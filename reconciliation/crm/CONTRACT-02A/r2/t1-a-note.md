@@ -36,7 +36,6 @@ Note: B.01 AC explicitly requires verifying edition capabilities. Do not assume 
 ## 3. What B.01 must NOT assume
 
 T1-A must NOT assume any of the following from this CONTRACT-02A bundle:
-
 - ACCEPTED_SHARED status. It is 0. No module is bilaterally accepted.
 - HRP_IMPLEMENTED status. It is 0. No HRP baseline SHA proves runtime.
 - REC-001 APPROVED grants runtime / deployment right. REC-001 is domain authority only; REC-001-OPS is OPEN/PROPOSED.
@@ -59,7 +58,6 @@ Do not mock canonical HRP data in B.01. B.01 is about Chatwoot infrastructure an
 ## 5. Canonical HRP paths that follow B.01 (separate briefs)
 
 Canonical HRP paths (intake, context panel, suppression, routing, etc.) are addressed in the thin-slice brief at reconciliation/crm/CONTRACT-02A/r2/thin-slice-brief.md. Those paths follow their own briefs and readiness gates.
-
 Only real HRP paths are subject to the H.09 readiness gate. B.01 POC is not a real HRP path; it is Chatwoot infrastructure verification.
 
 ## 6. Boundaries for T1-A
@@ -72,4 +70,3 @@ Only real HRP paths are subject to the H.09 readiness gate. B.01 POC is not a re
 - No tag / publish / deploy of contracts.
 - No implementation of HRP endpoints on the CRM side.
 - No assumption that Chatwoot POC success implies canonical HRP integration readiness.
-
