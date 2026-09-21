@@ -1,0 +1,67 @@
+{
+  "formatVersion": 2,
+  "supersedesCommit": "de1ebd122c665cb3557adaba27de48f9425f6dc3",
+  "crmAckMessageId": "CRM-HRP-MSG-002",
+  "crmAckScope": "INTEGRITY_ONLY",
+  "surveyMethod": "Static source analysis (SOURCE_ONLY) against Git baseline",
+  "hrp": {
+    "repository": "https://github.com/nobita6986/HRpartner.git",
+    "baseline": "1059f6669482efac5b7956ef25d43996ca59d515",
+    "branch": "main",
+    "dirty": false,
+    "surveyedAt": "2026-09-21T13:35:00Z"
+  },
+  "pendingDeltas": [
+    {
+      "commit": "1c08ecddd10564e0372f4146cf3527b5b21d4351",
+      "diffPaths": [
+        "src/domains/applications/aff03-public-intake.service.ts",
+        "app/api/public/intake/route.ts"
+      ],
+      "merged": false,
+      "deployed": false,
+      "evidenceReferences": [
+        "PR #22",
+        "hrp-v6-n2-aff-03b-rls-runtime-fix"
+      ]
+    }
+  ],
+  "crm": {
+    "repository": "https://github.com/nobita6986/HRP-CRM.git",
+    "baseline": "72643356a0d1355f9dccc3921b47c990ea9c31c1",
+    "package": "@hrp-engagement/contracts",
+    "packageVersion": "0.0.8-g0.8-fixes"
+  },
+  "crmEvidence": {
+    "repository": "https://github.com/nobita6986/hrp-integration-contracts.git",
+    "commit": "25fc8b1f7f61a4bd5b6a9313eddb866af2e41b31",
+    "bundle": "reconciliation/crm/CONTRACT-01/r1/"
+  },
+  "scope": {
+    "thinSlice": true,
+    "totalModulesCrossChecked": 28
+  },
+  "testExecutionState": {
+    "outbox": "NOT_FOUND_IN_SURVEY_SCOPE",
+    "publicApplyAFF03B": "INTEGRATION_TEST_RAN"
+  },
+  "decisionStatus": {
+    "HRP-CRM-REC-001": "OWNER_DECISION_BLOCKED",
+    "HRP-CRM-REC-002": "PROPOSED",
+    "HRP-CRM-REC-003": "PROPOSED",
+    "HRP-CRM-REC-004": "CLOSED"
+  },
+  "unknownOrUnverified": [
+    "NextAction",
+    "Universal AFF (Pending AFF-03B)",
+    "Public Apply (Pending AFF-03B)",
+    "Public Recruiter Profile"
+  ],
+  "artifacts": [
+    "CRM_CONTRACT_GAP_REPORT.md",
+    "THIN_SLICE_CAPABILITY_MATRIX.md",
+    "CONTRACT_AUTHORITY_HIERARCHY.md",
+    "RECONCILIATION_DECISIONS.md",
+    "RECONCILIATION_PROTOCOL.md"
+  ]
+}
