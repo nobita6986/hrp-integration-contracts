@@ -1,0 +1,187 @@
+{
+  "status": "SYNTHETIC_PROPOSAL_ONLY",
+  "vectors": [
+    {
+      "id": "vietnamese",
+      "input": "Nguyễn Văn An",
+      "requested": true,
+      "expectedName": "N•• V•• A••",
+      "expectedUnavailableFields": []
+    },
+    {
+      "id": "decomposed",
+      "input": "Élodie Durand",
+      "requested": true,
+      "expectedName": "É•• D••",
+      "expectedUnavailableFields": []
+    },
+    {
+      "id": "one_han_token",
+      "input": "李 小龍",
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "multi_han",
+      "input": "小龍",
+      "requested": true,
+      "expectedName": "小••",
+      "expectedUnavailableFields": []
+    },
+    {
+      "id": "apostrophe_inside",
+      "input": "O'Connor",
+      "requested": true,
+      "expectedName": "O••",
+      "expectedUnavailableFields": []
+    },
+    {
+      "id": "hyphen_inside",
+      "input": "Жан-Поль",
+      "requested": true,
+      "expectedName": "Ж••",
+      "expectedUnavailableFields": []
+    },
+    {
+      "id": "short",
+      "input": "A",
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "missing",
+      "input": null,
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "whitespace",
+      "input": "   ",
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "digit",
+      "input": "A1pha Name",
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "bidi",
+      "input": "User‮Name",
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "emoji",
+      "input": "👩‍💻 Test",
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "leading_apostrophe",
+      "input": "'Alpha",
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "leading_hyphen",
+      "input": "-Alpha",
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "leading_mark",
+      "input": "́Alpha",
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "trailing_punctuation",
+      "input": "Alpha-",
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "one_letter_mark",
+      "input": "É",
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "combining_initial",
+      "input": "Q́uang",
+      "requested": true,
+      "expectedName": "Q́••",
+      "expectedUnavailableFields": []
+    },
+    {
+      "id": "consecutive_punctuation",
+      "input": "O''Connor",
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "control_tab",
+      "input": "Alpha\tBeta",
+      "requested": true,
+      "expectedName": null,
+      "expectedUnavailableFields": [
+        "identitySummary"
+      ]
+    },
+    {
+      "id": "unicode_spaces",
+      "input": " Alpha Beta ",
+      "requested": true,
+      "expectedName": "A•• B••",
+      "expectedUnavailableFields": []
+    },
+    {
+      "id": "unrequested",
+      "input": "Nguyễn Văn An",
+      "requested": false,
+      "expectedName": null,
+      "expectedUnavailableFields": []
+    }
+  ]
+}
