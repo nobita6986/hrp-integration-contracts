@@ -8,7 +8,8 @@ In-Reply-To: HRP-CRM-MSG-025
 Message-ID: CRM-MSG-026
 Date: 2026-09-22
 Bundle: reconciliation/crm/CONTRACT-02B/conformance/
-Commit: evidence/crm-contract-02b-conformance (tip)
+Commit: e63bb483b4c7616b0bd0034b481287fd70cb177f
+Branch: evidence/crm-contract-02b-conformance
 
 Disposition: CHANGES_REQUIRED (pending items below)
 ACCEPTED_SHARED: NONE
@@ -16,122 +17,180 @@ H.09/Tier 3 Gate: unchanged
 
 ---
 
-## 1. Chấp nhận hướng từ MSG-025
+## 1. Chap nhan huong tu MSG-025
 
-T0 CRM đã đối chiếu r4 bundle (53e6db53a929409b1dc7b512a1ec897a3af5b659, manifest e6f9dd0e...) với frozen baseline và conformance cases hiện có. Các hướng sau được ghi nhận:
+T0 CRM da doi chieu r4 bundle (53e6db53a929409b1dc7b512a1ec897a3af5b659, manifest e6f9dd0e...) voi frozen baseline va conformance cases hien co. Cac huong sau duoc ghi nhan:
 
-- Exchange/cancel/receipt flow: chấp nhận direction, ghi PROPOSED.
-- Retry: correlationId kept + new jti + reauthorize: chấp nhận direction.
-- BOUNDED_NEW_ASSERTION literal: chấp nhận direction, ghi PROPOSED (chưa frozen).
-- Seven-code query parser: chấp nhận direction, ghi PROPOSED.
-- Revocation race / user inactive: chấp nhận direction.
-- Distribution: chấp nhận direction (DISTRIBUTION-PROPOSAL.md).
+- Exchange/cancel/receipt flow: chap nhan direction, ghi PROPOSED.
+- Retry: correlationId kept + new jti + reauthorize: chap nhan direction.
+- BOUNDED_NEW_ASSERTION literal: chap nhan direction, ghi PROPOSED (chua frozen).
+- Seven-code query parser: chap nhan direction, ghi PROPOSED.
+- Revocation race / user inactive: chap nhan direction.
+- Distribution: chap nhan direction (DISTRIBUTION-PROPOSAL.md).
 
 ---
 
-## 2. Yêu cầu HRP cung cấp thêm
+## 2. Yeu cau HRP cung cap them
 
-T0 CRM cần HRP bổ sung các thông tin sau trước khi có thể tiến hành implementation contract bilateral:
+T0 CRM can HRP bo sung cac thong tin sau truoc khi co the tien hanh implementation contract bilateral:
 
 ### HRP-REQ-1: Redaction test vectors
 
-CRM cần biết exact test vectors cho `fullNameRedacted` redaction trước khi chốt `displayOnly: true` semantics.
+CRM can biet exact test vectors cho fullNameRedacted truoc khi chot displayOnly: true semantics.
 
-Vấn đề: r4 REC-004B nói "Redaction algorithm/test vectors còn cần chốt riêng trước implementation, không dùng displayOnly thay privacy control."
+Vande: r4 REC-004B noi "Redaction algorithm/test vectors con can chot rieng truoc implementation, khong dung displayOnly thay privacy control."
 
-CRM cần HRP cung cấp:
-- Bảng ví dụ: đầu vào (tên thật, format) -> đầu ra kỳ vọng (fullNameRedacted value).
-- Quy tắc redaction: ký tự nào được giữ, ký tự nào bị thay, độ dài tối thiểu.
-- Trường hợp edge: tên một từ, tên có dấu tiếng Việt, tên có số, tên ngắn (< 3 ký tự), tên trùng với common names.
-- Who owns the redaction algorithm (HRP hay CRM)? Nếu HRP: exact vector là required input. Nếu CRM: cần bilateral decision.
+CRM can HRP cung cap:
+- Bang vi du: dau vao (ten that, format) dau ra ky vong (fullNameRedacted value).
+- Quy tac redaction: ky tu nao duoc giu, ky tu nao bi thay, do dai toi thieu.
+- Truong hop edge: ten mot tu, ten co dau tieng Viet, ten co so, ten ngan, ten trung voi common names.
+- Who owns the redaction algorithm (HRP hay CRM)? Neu HRP: exact vector la required input. Neu CRM: can bilateral decision.
 
-**Không tự quyết**: CRM không tự chọn algorithm hay fallback strategy. Không yêu cầu HRP reveal source code của redaction; chỉ cần semantic test vectors.
+Khong tu quyet: CRM khong tu chon algorithm hay fallback strategy. Khong yeu cau HRP reveal source code cua redaction chi can semantic test vectors.
 
 ---
 
 ### HRP-REQ-2: Exact issuance/exchange/cancel transport shapes
 
-CRM cần exact transport definitions cho các endpoint mới. r4 REC-002 §1 nói "Hai T0 phải chốt exact issuance paths/body/status trong implementation contract trước code; chưa có endpoint nào được cấp quyền mở từ proposal này."
+CRM can exact transport definitions cho cac endpoint moi. r4 REC-002 S1 noi "Hai T0 phai chot exact issuance paths/body/status trong implementation contract truoc code chua co endpoint nao duoc cap quyen mo tu proposal nay."
 
-CRM cần HRP cung cấp cho mỗi operation:
+CRM can HRP cung cap cho moi operation:
 
-| Operation | HTTP Method | Path | Request body shape | Success response | Error responses |
+| Operation | HTTP Method | Path | Request body | Success response | Error responses |
 |---|---|---|---|---|---|
 | Issuance (pending approval) | ? | ? | ? | ? | ? |
 | Exchange (receipt -> delegation) | ? | ? | ? | ? | ? |
 | Cancel-pending | ? | ? | ? | ? | ? |
 | Revoke (after CRM logout) | ? | ? | ? | ? | ? |
 
-Placeholder giá trị acceptable nếu HRP cần thêm thời gian, nhưng bilateral contract phải chốt trước implementation.
+Placeholder gia tri acceptable neu HRP can them thoi gian, nhung bilateral contract phai chot truoc implementation.
 
 ---
 
-### HRP-REQ-3: Delegation lifetime/revocation risk acknowledgment
+## 3. Cac diem khong chap nhan trong MSG-025
 
-r4 DECISION-REGISTER OWNER_DECISION_REQUIRED #2 yêu cầu Owner chấp nhận rủi ro.
+### Tu choi: RETRY_SAFE / RETRY_UNSAFE nhu frozen literals
 
-CRM T1-B ghi nhận: nếu Owner không đồng ý với delegation lifetime = 15 phút và cửa sổ revoke network failure, CRM sẽ cần:
-- Online session-authority design bổ sung (không trong scope CONTRACT-02B).
-- Hoặc thu hẹp use case.
-
-**Yêu cầu HRP**: xác nhận HRP đã present OWNER_DECISION_REQUIRED items này tới Owner và ghi lại Owner response. Nếu Owner đã ACK, ghi commit hash của evidence. Nếu Owner chưa quyết, giữ OPEN.
-
----
-
-## 3. Các điểm không chấp nhận trong MSG-025
-
-### Từ chối: RETRY_SAFE / RETRY_UNSAFE như frozen literals
-
-Frozen RetryClassSchema (errors.ts L17-24) chỉ có 5 giá trị: `NEVER | REAUTHENTICATE | REVIEW_REQUIRED | BOUNDED_SAME_KEY | RECONCILE_FIRST`. Không có `RETRY_SAFE` hay `RETRY_UNSAFE`. CRM T1-B đã sửa các ví dụ cũ trong conformance cases.
+Frozen RetryClassSchema (errors.ts L17-24) chi co 5 gia tri: NEVER | REAUTHENTICATE | REVIEW_REQUIRED | BOUNDED_SAME_KEY | RECONCILE_FIRST. Khong co RETRY_SAFE hay RETRY_UNSAFE. CRM T1-B da sua cac vi du cu trong conformance cases.
 
 - case_5_7 (DEPENDENCY_UNAVAILABLE): retryClass = BOUNDED_NEW_ASSERTION (per r4).
 - case_6_3 (unknown code forward compat): retryClass = <query-only-retry> (placeholder, not frozen).
 - case_6_5 (multiple errors): VALIDATION_ERROR messageKey = errors.validation; RATE_LIMITED retryClass = BOUNDED_NEW_ASSERTION, messageKey = errors.rateLimited.
 
-### Từ chối: "must succeed" cho retry
+### Tu choi: "must succeed" cho retry
 
-r6 REPLAY-VS-RETRY.md có "MUST SUCCEED OR RE-FAIL CLEANLY" cho retry after transient. r4 REC-002 §4 sửa: "Không cam kết retry transient failure sẽ thành công." CRM T1-B đã cập nhật case 5.2.
+r6 REPLAY-VS-RETRY.md co "MUST SUCCEED OR RE-FAIL CLEANLY" cho retry after transient. r4 REC-002 S4 sua: "Khong cam ket retry transient failure se thanh cong." CRM T1-B da cap nhat case 5.2.
 
-### Từ chối: "new correlationId each retry"
+### Tu choi: "new correlationId each retry"
 
-r6 REPLAY-VS-RETRY.md nói "retry is a NEW request with NEW jti, NEW correlationId." r4 sửa: cùng logical read giữ cùng correlationId. CRM T1-B đã ghi rõ trong cases/05A-retry-reauthorize.md.
+r6 REPLAY-VS-RETRY.md noi "retry is a NEW request with NEW jti, NEW correlationId." r4 sua: cung logical read giu cung correlationId. CRM T1-B da ghi ro trong cases/05A-retry-reauthorize.md.
 
 ---
 
-## 4. Items cần Owner decision trước real path
+## 4. Owner decisions da duyet (MSG-026)
 
-| ID | Item | Owner Required |
+Nguon: MSG-026 OWNER-DECISION.md, commit c0ede9aeaba3ba26d620ae4e535d9e6a77cf9343
+Manifest SHA-256: f2a7a4cb5ee7c3c7483f73298e2c703170a270bfacc72104473aa51a66e00612 (T0 verified 1/1)
+
+### Da duyet - 3 roles (OWNER_APPROVED)
+
+Owner cho phep ADMIN, HR_MANAGER, HR_STAFF su dung Talent context tu CRM, voi dieu kien:
+- HRP kiem tra effective user dang active, role va quyen tung ho so o moi query.
+- Khong mo rong quyen so voi HRP. Service-only khong duoc doc LaborProfile.
+- Projection duy nhat la identitySummary.fullNameRedacted, voi displayOnly=true; khong phone, CCCD hoac DTO noi bo.
+- Slice dau chi ho tro mot organizationId do HRP cung cap va bind server-side.
+
+### Da duyet - Delegation 15 phut (OWNER_APPROVED cho pilot)
+
+- Nguoi dung dang nhap va chu dong approve tai HRP.
+- Delegation toi da 15 phut, khong vuot han han session lien quan, khong tu gia han.
+- Khi exchange timeout khong ro ket qua: phai cancel va nhan ACK, hoac xac nhan expiry tu HRP, truoc khi mo approval moi.
+
+### Da duyet - Cua so revoke (OWNER_APPROVED dung pham vi)
+
+Owner chap nhan gioi han rui ro revoke cho pilot nay:
+- CRM logout/account switch phai chan su dung ngay tai CRM.
+- Neu revoke chua toi HRP do loi mang, delegation co the con hieu luc tai HRP den expiry, toi da thoi gian con lai cua han 15 phut.
+- Khi HRP revoke da commit, query di qua authorization checkpoint sau do phai bi tu choi.
+- Khong tuyen bo thu hoi tuyet doi xuyen he thong.
+
+### Van OPEN - Khong yeu cau Owner dong lai
+
+| ID | Item | Trang thai |
 |---|---|---|
-| HRP-OWNER-1 | Canonical organizationId value | Owner |
-| HRP-OWNER-2 | Delegation UX/lifetime (15 phút) + revoke network failure window | Owner |
-| HRP-OWNER-3 | Audit metadata retention/access/recovery | Owner/Operations |
-| HRP-OWNER-4 | External eligibility: xác nhận 3 HRP roles dùng Talent context | Owner |
-
-CRM T1-B không tự quyết các items này. Không tiến hành real path nếu Owner chưa đóng.
+| ORG-1 | Canonical organizationId cu the | OPEN - HRP cung cap |
+| AUDIT-1 | Audit metadata access/retention/recovery | OPEN - Owner/Operations |
 
 ---
 
-## 5. Những gì task này KHÔNG làm
+## 5. Distribution - Hieu chinh claim
 
-- Không chấp nhận RETRY_SAFE/RETRY_UNSAFE.
-- Không đóng Owner decisions.
-- Không mở implementation.
-- Không publish package.
-- Không audit 28 modules.
-- Không tự quyết delegation lifetime, revocation risk, audit retention.
+DISTRIBUTION-PROPOSAL.md duoc hieu chinh:
+
+CHINH SUA 1: "no frozen consumer impact" thanh "intended isolation; consumer compatibility NOT_EXECUTED"
+
+CHINH SUA 2: Bo sung section:
+
+"CACH HAI REPO CAI ARTIFACT
+
+Proposed distribution mechanism:
+
+1. Bilateral acceptance: Khi REC-004b duoc T0 bilateral accept, mot commit moi duoc tao trong neutral repo chua source file: packages/contracts/src/talent-context-read/v1.ts
+2. Build: Package maintainer chay tsc de tao dist/talent-context-read/v1.js va dist/talent-context-read/v1.d.ts
+3. Checksum: SHA-256 cua dist artifact duoc tinh va ghi vao provenance document
+4. CRM pin: CRM package.json ghi dependency: @hrp-engagement/contracts@0.0.9-contract02b.1 voi integrity hash tu buoc 3
+5. Detect change: Thay doi schema tao commit moi va artifact hash moi; CRM detect qua package-lock diff
+
+package.json changes (chi them, khong sua root export):
+  "dependencies": {
+    "@hrp-engagement/contracts": "0.0.9-contract02b.1"
+  },
+  "@hrp-engagement/contracts": {
+    "0.0.9-contract02b.1": {
+      "integrity": "sha256-<base64-checksum>",
+      "resolved": "https://internal-registry.example.com/@hrp-engagement/contracts/-hrp-engagement/contracts-0.0.9-contract02b.1.tgz",
+      "fileHashes": {
+        "dist/talent-context-read/v1.js": "sha256:<hex>"
+      }
+    }
+  }
+
+JSON_OK: Chi xac nhan JSON parse thanh cong; khong dam bao schema conformance."
 
 ---
 
-## 6. Tiếp theo
+## 6. Metadata ban giao
 
-1. HRP cung cấp HRP-REQ-1 (redaction vectors) và HRP-REQ-2 (transport shapes).
-2. Owner đóng HRP-OWNER-1..4.
-3. Hai T0 bilateral chốt seven-code error triples + BOUNDED_NEW_ASSERTION literal.
-4. CRM disposition delta tiếp theo sau khi nhận HRP response.
+| Thuoc tinh | Gia tri |
+|---|---|
+| Bundle path | reconciliation/crm/CONTRACT-02B/conformance/ |
+| Commit SHA | e63bb483b4c7616b0bd0034b481287fd70cb177f |
+| Bundle files | 19 (18 data files + 1 manifest.sha256) |
+| Manifest SHA-256 | <compute from conformance/manifest.sha256 bytes> |
+| MSG-026 commit | c0ede9aeaba3ba26d620ae4e535d9e6a77cf9343 |
+| MSG-026 manifest SHA | f2a7a4cb5ee7c3c7483f73298e2c703170a270bfacc72104473aa51a66e00612 |
+| Pull link | https://github.com/nobita6986/hrp-integration-contracts/pull/new/evidence/crm-contract-02b-conformance |
+
+Luu y: Pull link tren la link tao PR (tao PR moi), khong phai PR da duoc mo.
 
 ---
 
-## Manifest
+## 7. Nhung gi task nay KHONG lam
 
-Bundle: reconciliation/crm/CONTRACT-02B/conformance/
-17 files. manifest.sha256 at conformance/manifest.sha256.
+- Khong chap nhan RETRY_SAFE / RETRY_UNSAFE.
+- Khong dong Owner decisions da duyet (khong yeu cau Owner dong lai).
+- Khong mo implementation.
+- Khong publish package.
+- Khong audit 28 modules.
+- Khong tu quyet delegation lifetime, revocation risk, audit retention.
+- Khong tu gui HRP (dang trong trang thai T0 CRM da ghi nhan, chua tuyen bo).
+
+---
+
+## 8. Tiep theo
+
+1. HRP cung cap HRP-REQ-1 (redaction vectors) va HRP-REQ-2 (transport shapes).
+2. HRP cung cap canonical organizationId (ORG-1).
+3. Owner/Operations quyet dinh AUDIT-1.
+4. Hai T0 bilateral chot seven-code error triples + BOUNDED_NEW_ASSERTION literal.
+5. CRM disposition tiep theo sau khi nhan HRP response.

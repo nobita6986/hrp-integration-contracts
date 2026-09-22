@@ -331,7 +331,8 @@
         {
           "code": "UNKNOWN_COMMAND_OUTCOME",
           "messageKey": "errors.unknownCommandOutcome",
-          "retryClass": "RECONCILE_FIRST"
+          "retryClass": "RECONCILE_FIRST",
+          "note": "EXPECT_REJECT: Server MUST NOT return empty errors[]. This case shows consumer fallback behavior when server misbehaves. CORR-4 clarified."
         }
       ]
     },

@@ -18,7 +18,7 @@ Muc tieu
 4. Khong copy toan bo frozen package vao neutral bundle.
 
 Proposed Source Location
-------------------------
+----------------------
 | Artifact              | Path                                                                 |
 | Source authority      | packages/contracts/src/talent-context-read/v1.ts trong neutral repo |
 | Entrypoint wire name  | @hrp-engagement/contracts/talent-context-read/v1                   |
@@ -28,63 +28,75 @@ Package owner phe duyet distribution.
 
 Proposed Exports (TypeScript)
 -----------------------------
-// Schema types
-export const TalentContextReadTargetSchema: z.ZodType<TalentContextReadTarget>;
-export const TalentContextReadFieldSchema: z.ZodType<TalentContextReadField>;
-export const TalentContextReadQueryRequestSchema: z.ZodType<TalentContextReadQueryRequest>;
-export const TalentContextReadResultSchema: z.ZodType<TalentContextReadResult>;
-export const TalentContextReadErrorSchema: z.ZodType<TalentContextReadError>;
-export const TalentContextReadErrorResponseSchema: z.ZodType<TalentContextReadErrorResponse>;
-export const parseTalentContextReadResponse: (status: number, body: unknown) => ParseResult;
-
-// Named types
-export type TalentContextReadTarget = { kind: 'TALENT'; laborProfileId: string };
-export type TalentContextReadField = 'identitySummary' | 'placementCase' | 'availability' | 'currentRelationship' | 'nextAction' | 'recentInteractions' | 'contactability' | 'suppressionSummary';
+Schema exports:
+  TalentContextReadTargetSchema
+  TalentContextReadFieldSchema
+  TalentContextReadQueryRequestSchema
+  TalentContextReadResultSchema
+  TalentContextReadErrorSchema
+  TalentContextReadErrorResponseSchema
+  parseTalentContextReadResponse
 
 Consumer import:
-  import { parseTalentContextReadResponse, TalentContextReadQueryRequestSchema } from '@hrp-engagement/contracts/talent-context-read/v1';
+  import { parseTalentContextReadResponse, TalentContextReadQueryRequestSchema } from "@hrp-engagement/contracts/talent-context-read/v1";
 
 Khong re-export vao root hoac generic command parser.
 
 Proposed package.json Addition
--------------------------------
+-----------------------------
 Candidate version: @hrp-engagement/contracts@0.0.9-contract02b.1
 
-{
-  "name": "@hrp-engagement/contracts",
-  "version": "0.0.9-contract02b.1",
-  "private": true,
+JSON excerpt:
   "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
+    ".": { "import": "./dist/index.js", "types": "./dist/index.d.ts" },
     "./talent-context-read/v1": {
       "import": "./dist/talent-context-read/v1.js",
       "types": "./dist/talent-context-read/v1.d.ts"
     }
   }
-}
 
 Ghi chu:
 - "private": true -- khong public npm; chi internal consumers qua artifact registry.
 - Root export "./" giu nguyen; old consumers khong bi anh huong.
 - ESM only cho consumer moi; khong tao CJS condition khi chua co consumer can.
+- "intended isolation" -- query module duoc thiet ke de khong anh huong root exports.
+  Consumer compatibility testing: NOT_EXECUTED trong task nay.
+  Khong tuyen bo zero impact tu source inspection.
 
-Build va Artifact
------------------
-- Source TypeScript compiled qua tsc vao dist/talent-context-read/v1.js va dist/talent-context-read/v1.d.ts.
-- Package build output duoc commit vao neutral repo (hoac publish len internal artifact registry).
-- Source file packages/contracts/src/talent-context-read/v1.ts duoc quan ly trong neutral repo.
-- Khong copy toan bo frozen package (errors.ts, primitives.ts, envelopes.ts, etc.) vao neutral bundle.
+Cach Hai Repo Cai Artifact
+-------------------------
+Day la co che de xuat, chua phai che do da duyet. Bilateral decision truoc implementation.
 
-Reproducibility
---------------
-1. Pin point: Consumers lock @hrp-engagement/contracts@0.0.9-contract02b.1 trong package.json / lockfile.
-2. Change detection: Thay doi schema can commit moi -> artifact hash moi -> consumers phat hien qua lockfile diff.
-3. Manifest bundle: Provenance document trong neutral repo ghi commit hash goc cua source.
-4. Source integrity: Neu artifact duoc publish, verify qua integrity hash trong package metadata.
-5. Breaking change: Dung module path moi /v2 hoac package version moi; khong sua frozen v1.
+1. Bilateral acceptance: Khi REC-004b duoc T0 bilateral accept, mot commit moi
+   duoc tao trong neutral repo chua source file:
+   packages/contracts/src/talent-context-read/v1.ts
+
+2. Build: Package maintainer chay tsc de tao:
+   dist/talent-context-read/v1.js
+   dist/talent-context-read/v1.d.ts
+
+3. Checksum: SHA-256 cua moi artifact file duoc tinh va ghi vao provenance document.
+   Chi du lieu nay duoc dung de verify pin.
+
+4. CRM pin: CRM package.json ghi dependency:
+   "@hrp-engagement/contracts": "0.0.9-contract02b.1"
+   voi integrity hash tu buoc 3.
+
+5. Detect change: Thay doi schema tao commit moi va artifact hash moi;
+   CRM detect qua package-lock diff.
+
+6. Breaking change: Dung module path moi /v2 hoac package version moi;
+   khong sua frozen v1.
+
+JSON_OK Chi chung minh JSON hop le
+---------------------------------
+JSON.parse() thanh cong chi xac nhan cau truc JSON dung, khong dam bao:
+- Schema conformance
+- TypeScript type matching
+- Business logic correctness
+- Frozen contract compatibility
+
+Khong tuyen bo schema conformance tu JSON_OK.
 
 Versioning Boundaries
 --------------------
@@ -98,10 +110,10 @@ Old consumers giu nguyen version/lockfile.
 
 Consumer Compatibility
 ---------------------
-| Consumer              | Impact                      | Action                                              |
-| Old consumers         | Khong anh huong             | Giu nguyen version/lockfile                          |
-| New consumers (B.03)  | Can pin new version + subpath | Import tu ./talent-context-read/v1                   |
-| Root export/lockfile  | Kiem ca hai                 | Package maintainer verify truoc publish              |
+| Consumer              | Intended impact                      | Action                                              |
+| Old consumers         | Intended isolation; NOT_EXECUTED      | Giu nguyen version/lockfile                          |
+| New consumers (B.03)  | Can pin new version + subpath          | Import tu ./talent-context-read/v1                   |
+| Root export/lockfile  | Intended isolation; NOT_EXECUTED      | Package maintainer verify truoc publish              |
 
 Consumer audit ownership:
 - CRM: inventory package imports/root re-exports, B.03 parser, error renderer, locale message keys, retry helpers.
@@ -109,7 +121,7 @@ Consumer audit ownership:
 - Package maintainer: export-map/types/build tren old root consumers lan new ESM subpath.
 
 Open Items
-----------
+---------
 | ID    | Item                                                           | Owner           |
 | DIST-1 | Reserve version 0.0.9-contract02b.1 trong registry           | Package maintainer |
 | DIST-2 | Xac nhan package placement (subpath vs separate package)       | Bilateral       |
@@ -117,7 +129,7 @@ Open Items
 | DIST-4 | Consumer lockfile migration plan                                | CRM T1-B        |
 
 Nhung gi task nay KHONG LAM
----------------------------
+--------------------------
 - Khong copy toan bo frozen package vao neutral bundle.
 - Khong publish package.
 - Khong reserve version trong registry.

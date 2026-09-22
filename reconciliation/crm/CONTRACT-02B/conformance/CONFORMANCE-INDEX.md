@@ -85,6 +85,20 @@ See cases/01-valid-read.md and cases/04-fields.md.
 - All r4 items recorded as PROPOSED in CORRECTION-DELTA.md.
 - r3 followup items (8a28678) remain valid: retryClass=NEVER for INTERNAL_ERROR, STRUCT-1..3.
 
+## Owner Disposition (MSG-026)
+
+Source: reconciliation/hrp/CONTRACT-02B-owner-disposition/r1/OWNER-DECISION.md @ commit c0ede9aeaba3ba26d620ae4e535d9e6a77cf9343
+Manifest raw SHA-256: f2a7a4cb5ee7c3c7483f73298e2c703170a270bfacc72104473aa51a66e00612 (T0 verified 1/1)
+
+### Approved (OWNER_APPROVED, in scope of HRP current authorities)
+- 3 roles (ADMIN, HR_MANAGER, HR_STAFF): use Talent context from CRM, with conditions (HRP checks effective user/role/permissions per query; no expansion beyond HRP; service-only cannot read LaborProfile; sole projection is identitySummary.fullNameRedacted + displayOnly=true; one organizationId from HRP, bind server-side).
+- Delegation UX/lifetime: 15 minutes, no auto-refresh; controlled pilot. User approves at HRP.
+- Revoke network-failure window: revoke may not be instant; approved within Owner-confirmed scope (HRP revoke-commit; checkpoint reject thereafter).
+
+### OPEN (Owner not yet closed; do NOT request Owner to reopen approved items)
+- ORG-1: Canonical organizationId value (HRP-supplied).
+- AUDIT-1: Audit metadata access/retention/recovery (Owner/Operations).
+
 ## Confirmation Points for HRP
 
 Each case notes HRP-PENDING points. See case files for "HRP confirmation points" sections.

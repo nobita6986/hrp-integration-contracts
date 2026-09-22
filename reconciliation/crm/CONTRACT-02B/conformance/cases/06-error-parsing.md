@@ -173,7 +173,9 @@ Expected consumer behavior:
 
 HRP confirmation point: confirm errors[] size upper bound; confirm BOUNDED_NEW_ASSERTION literal.
 
-### Case 6.6 - Missing errors[] - MUST be treated as INTERNAL_ERROR-like at consumer
+### Case 6.6 - Missing errors[] - Server MUST NOT; consumer fallback behavior
+
+**EXPECT_REJECT** — this is a negative protocol case. Server MUST NOT return empty errors[].
 
 Input synthetic:
 Server response with empty errors[]:
@@ -186,12 +188,14 @@ Server response with empty errors[]:
 }
 ```
 
-Expected consumer behavior:
-- Treat as UNKNOWN_COMMAND_OUTCOME-like fallback per CORR-4.
-- retryClass=RECONCILE_FIRST (frozen UNKNOWN_COMMAND_OUTCOME triple at errors.ts L59-61).
-- MUST NOT crash.
-- Log empty errors as anomaly.
-- Nguon decision/AC: CORR-4 (frozen errors.ts L59-61).
+Expected behavior:
+- Server behavior: MUST NOT emit empty errors[] on FAILED status. This is a server-side protocol violation.
+- If server misbehaves (MISBEHAVIOR, not valid response): consumer treats it as INTERNAL_ERROR-like fallback (generic error UX; no retry).
+- Consumer MUST NOT crash on malformed server response.
+- Log empty errors as anomaly (server-side misbehavior).
+- retryClass guidance: consumer maps this to NEVER (do not retry the server misbehavior).
+- Source: this case documents a RECONCILE_FIRST case in a NEGATIVE fixture. RECONCILE_FIRST belongs to the frozen UNKNOWN_COMMAND_OUTCOME code, which is NOT in the seven-code query profile. It does NOT appear in valid query responses.
+- Nguon decision/AC: CORR-4 (frozen errors.ts L59-61); this is a negative test, not a valid query response.
 - Status: PROPOSED.
 
 ## What these cases do NOT cover

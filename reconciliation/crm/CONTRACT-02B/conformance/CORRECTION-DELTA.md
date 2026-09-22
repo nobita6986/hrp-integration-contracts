@@ -236,8 +236,29 @@ type TalentContextReadField =
 | CORR-2b | fixtures/errors.json | MUST | FORBIDDEN: use frozen errors.forbidden |
 | CORR-2c | fixtures/errors.json | MUST | VALIDATION_ERROR: use frozen errors.validation |
 | CORR-3 | fixtures/errors.json | MUST | DEPENDENCY_UNAVAILABLE: use frozen errors.dependencyUnavailable |
-| CORR-4 | fixtures/errors.json | PROPOSED | Empty errors fallback: use UNKNOWN_COMMAND_OUTCOME / errors.unknownCommandOutcome |
+| CORR-4 | fixtures/errors.json | PROPOSED | Empty errors fallback: use UNKNOWN_COMMAND_OUTCOME / errors.unknownCommandOutcome (EXPECT_REJECT in 6.6: server MUST NOT return empty errors[]) |
 | STRUCT-1 | fixtures/requests.json | PROPOSED | Add correlationId + organizationId to request envelope |
 | STRUCT-2 | fixtures/requests.json | PROPOSED | Expand actor shape with serviceId + delegationRef |
 | STRUCT-3 | fixtures/requests.json | PROPOSED | fieldAllowlist enum type (TalentContextReadField) |
 | TEXT | cases/06-error-parsing.md | MUST | Remove "MAY schedule backoff retry" for INTERNAL_ERROR |
+
+## Delta-r5 (T1-B correction, post MSG-026)
+
+| ID | File | Severity | Description |
+|---|---|---|---|
+| MSGS-1 | OUTGOING-MESSAGE.md | MUST | Sync Owner decisions: 3 roles APPROVED (with conditions), delegation 15 min APPROVED, revoke network-failure window APPROVED. ORG-1 + AUDIT-1 remain OPEN. Source: MSG-026 c0ede9aeaba3ba26d620ae4e535d9e6a77cf9343. |
+| MSGS-2 | CONFORMANCE-INDEX.md | MUST | Add "Owner Disposition (MSG-026)" section recording 3-role, lifetime, revoke approvals and 2 OPEN items. |
+| MSGS-3 | cases/06-error-parsing.md | MUST | Case 6.6 (empty errors[]): mark EXPECT_REJECT. Server MUST NOT return empty errors[]. RECONCILE_FIRST belongs to frozen UNKNOWN_COMMAND_OUTCOME; does NOT appear in valid query responses. |
+| MSGS-4 | fixtures/errors.json | MUST | Case 6.6: update note to "EXPECT_REJECT: Server MUST NOT return empty errors[]. This case shows consumer fallback behavior when server misbehaves." |
+| MSGS-5 | DISTRIBUTION-PROPOSAL.md | MUST | Replace "no frozen consumer impact" with "intended isolation; consumer compatibility NOT_EXECUTED". Add "Cach Hai Repo Cai Artifact" section: bilateral acceptance, build, checksum, CRM pin, lockfile detection, breaking-change handling. Clarify JSON_OK only proves JSON parseability, not schema conformance. |
+| MSGS-6 | OUTGOING-MESSAGE.md | MUST | Replace Owner-OPEN list with already-approved items, marking ORG-1 + AUDIT-1 as still OPEN. Distribution section references proposed mechanism (no claim of isolation impact). Metadata section: 19 files = 18 data + 1 manifest; pull link is "create PR" not "open PR". |
+| MSGS-7 | manifest.sha256 | MUST | Regenerated without self-referential entry. Records 18 data file SHA-256. Manifest itself NOT hashed into manifest. |
+| MSGS-8 | README.md | MUST | Add HRP Owner disposition source line. Files in supplement updated to 18 data + 1 manifest = 19. Manifest encoding statement updated. |
+
+### Frozen binding rules reaffirmed (delta-r5)
+
+- VALIDATION_ERROR / FORBIDDEN / NOT_FOUND / INTERNAL_ERROR -> retryClass = NEVER.
+- AUTHENTICATION_REQUIRED -> REAUTHENTICATE.
+- RATE_LIMITED / DEPENDENCY_UNAVAILABLE -> BOUNDED_NEW_ASSERTION.
+- RETRY_SAFE / RETRY_UNSAFE are NOT frozen literals; do not reintroduce.
+- RECONCILE_FIRST is from frozen UNKNOWN_COMMAND_OUTCOME only; do NOT place in valid query response fixture.
