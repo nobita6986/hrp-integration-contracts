@@ -1,240 +1,526 @@
 {
-  "_purpose": "DRAFT synthetic request bodies for CONTRACT-02B conformance discussion. Not signed, not executable.",
-  "_encoding": "JSON, UTF-8, LF, no BOM",
-  "_placeholder_policy": "All credentials and identifiers use placeholder tokens; HRP must confirm exact issuer/algorithm/TTL/jti/delegation-format.",
-  "_cross_reference": "See cases/*.md for case-level behavior. See ../GAP-LIST.md for HRP-PENDING items.",
-  "case_1_1_valid_read_fullNameRedacted_displayOnly_true": {
-    "shape": "TalentContextReadQueryRequestSchema (proposed)",
+  "_status": "Status: DRAFT / NOT_EXECUTED. These are synthetic design examples aligned with HRP MSG-025, not executable schemas or runtime evidence. Technical proposals still require bilateral acceptance. Owner approvals are limited by MSG-026.",
+  "_notes": "Scenario metadata is outside body. All IDs are synthetic, not configured org/user/delegation authorities. Authentication/delegation preconditions must be supplied by the future harness.",
+  "case_1_1_valid_read": {
     "body": {
       "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
       "actor": {
         "kind": "DELEGATED_USER",
-        "serviceId": "<PLACEHOLDER: HRP-PENDING serviceId>",
-        "userId": "00000000-0000-0000-0000-00000000a001",
-        "delegationRef": "<PLACEHOLDER: HRP-PENDING delegationRef>"
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
       },
-      "fieldAllowlist": [
-        "identitySummary.fullNameRedacted",
-        "identitySummary.displayOnly"
-      ],
-      "displayOnly": true,
       "target": {
         "kind": "TALENT",
-        "laborProfileId": "00000000-0000-4000-8000-00000000b001"
+        "laborProfileId": "labor-profile-synthetic"
       },
-      "correlationId": "<placeholder-correlationId>",
-      "organizationId": "<PLACEHOLDER: pinned organizationId per HRP r3 DECISION-REGISTER>"
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
     },
-    "credentials_placeholder": {
-      "s2s_assertion": "<PLACEHOLDER: HRP-PENDING kid, algorithm, TTL>",
-      "delegation_token": "<PLACEHOLDER: HRP-PENDING format, lifetime>"
-    },
-    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema).",
-    "note_struct_correction": "STRUCT-1/2 applied: correlationId + organizationId added; actor expanded per HRP r3 REC-004B-PROPOSAL. PROPOSED."
+    "preconditions": [
+      "valid service assertion and active bound delegation",
+      "effective HRP user authorized for target"
+    ],
+    "expected": "200 direct result"
   },
-  "case_1_2_request_phoneRedacted_unsupported": {
-    "shape": "TalentContextReadQueryRequestSchema (proposed)",
+  "case_2_1_service_only": {
     "body": {
       "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "SERVICE",
+        "serviceId": "crm-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "expected": "DENY_NO_READ",
+    "exactFailurePrecedence": "OPEN: distinguish invalid actor shape from authenticated service-only permission denial; do not assert a universal 401"
+  },
+  "case_2_2_delegation_binding_mismatch": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
       "actor": {
         "kind": "DELEGATED_USER",
-        "serviceId": "<PLACEHOLDER: HRP-PENDING serviceId>",
-        "userId": "00000000-0000-0000-0000-00000000a001",
-        "delegationRef": "<PLACEHOLDER: HRP-PENDING delegationRef>"
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
       },
-      "fieldAllowlist": [
-        "identitySummary.fullNameRedacted",
-        "identitySummary.phoneRedacted"
-      ],
       "target": {
         "kind": "TALENT",
-        "laborProfileId": "00000000-0000-4000-8000-00000000b001"
-      },
-      "correlationId": "<placeholder-correlationId>",
-      "organizationId": "<PLACEHOLDER: pinned organizationId per HRP r3 DECISION-REGISTER>"
-    },
-    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema).",
-    "note_struct_correction": "STRUCT-1/2 applied: correlationId + organizationId added; actor expanded per HRP r3 REC-004B-PROPOSAL. PROPOSED."
-  },
-  "case_1_3_request_unknown_fakeVersion_field": {
-    "body": {
-      "schemaVersion": "1",
-      "actor": {
-        "kind": "DELEGATED_USER",
-        "serviceId": "<PLACEHOLDER: HRP-PENDING serviceId>",
-        "userId": "00000000-0000-0000-0000-00000000a001",
-        "delegationRef": "<PLACEHOLDER: HRP-PENDING delegationRef>"
+        "laborProfileId": "labor-profile-synthetic"
       },
       "fieldAllowlist": [
-        "identitySummary.fullNameRedacted",
-        "identitySummary.fakeVersion"
-      ],
-      "target": {
-        "kind": "TALENT",
-        "laborProfileId": "00000000-0000-4000-8000-00000000b001"
-      },
-      "correlationId": "<placeholder-correlationId>",
-      "organizationId": "<PLACEHOLDER: pinned organizationId per HRP r3 DECISION-REGISTER>"
+        "identitySummary"
+      ]
     },
-    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema).",
-    "note_struct_correction": "STRUCT-1/2 applied: correlationId + organizationId added; actor expanded per HRP r3 REC-004B-PROPOSAL. PROPOSED."
-  },
-  "case_2_1_service_only_no_actor": {
-    "body": {
-      "schemaVersion": "1",
-      "fieldAllowlist": [
-        "identitySummary.fullNameRedacted"
-      ],
-      "target": {
-        "kind": "TALENT",
-        "laborProfileId": "00000000-0000-4000-8000-00000000b001"
-      },
-      "correlationId": "<placeholder-correlationId>",
-      "organizationId": "<PLACEHOLDER: pinned organizationId per HRP r3 DECISION-REGISTER>"
-    },
-    "note": "No 'actor' body. Pure service-only attempt. MUST be rejected.",
-    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema).",
-    "note_struct_correction": "STRUCT-1/2 applied: correlationId + organizationId added; actor expanded per HRP r3 REC-004B-PROPOSAL. PROPOSED."
-  },
-  "case_2_2_service_only_stub_actor_no_delegation": {
-    "body": {
-      "schemaVersion": "1",
-      "actor": {
-        "kind": "DELEGATED_USER",
-        "serviceId": "<PLACEHOLDER: HRP-PENDING serviceId>",
-        "userId": "00000000-0000-0000-0000-00000000a001",
-        "delegationRef": "<PLACEHOLDER: HRP-PENDING delegationRef>"
-      },
-      "fieldAllowlist": [
-        "identitySummary.fullNameRedacted"
-      ],
-      "target": {
-        "kind": "TALENT",
-        "laborProfileId": "00000000-0000-4000-8000-00000000b001"
-      },
-      "correlationId": "<placeholder-correlationId>",
-      "organizationId": "<PLACEHOLDER: pinned organizationId per HRP r3 DECISION-REGISTER>"
-    },
-    "note": "Body claims an actor but no delegation token is attached.",
-    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema).",
-    "note_struct_correction": "STRUCT-1/2 applied: correlationId + organizationId added; actor expanded per HRP r3 REC-004B-PROPOSAL. PROPOSED."
+    "preconditions": [
+      "valid assertion and syntactically valid actor",
+      "delegation belongs to another bound session"
+    ],
+    "expected": "403 FORBIDDEN"
   },
   "case_2_3a_user_inactive": {
-    "delegation_state": "valid",
-    "resolved_user_state": "INACTIVE"
-  },
-  "case_2_3b_delegation_revoked": {
-    "delegation_state": "REVOKED",
-    "resolved_user_state": "ACTIVE"
-  },
-  "case_2_4_pinned_org_mismatch": {
-    "delegation_state": "valid",
-    "delegation_organizationId_claim": "00000000-0000-0000-0000-00000000c0ff",
-    "pinned_organizationId_for_service": "00000000-0000-0000-0000-00000000dead",
-    "note": "Mismatch on purpose. Must reject before lookup."
-  },
-  "case_3_1_hidden_object": {
-    "laborProfileId": "00000000-0000-4000-8000-00000000b001",
-    "note": "Real id, hidden from caller. Must return NOT_FOUND same as Case 3.2."
-  },
-  "case_3_2_nonexistent_object": {
-    "laborProfileId": "00000000-0000-4000-8000-00000000ffff",
-    "note": "Syntactically valid but resolves to nothing. Must return NOT_FOUND."
-  },
-  "case_3_3_auth_failure_no_id_echo": {
-    "s2s_assertion_state": "INVALID (missing kid)",
-    "laborProfileId_in_body": "00000000-0000-4000-8000-00000000b001",
-    "note": "401 error MUST NOT echo the laborProfileId in body."
-  },
-  "case_3_4_validation_malformed_uuid": {
     "body": {
       "schemaVersion": "1",
-      "fieldAllowlist": [
-        "identitySummary.fullNameRedacted"
-      ],
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
       "target": {
         "kind": "TALENT",
-        "laborProfileId": "not-a-uuid"
+        "laborProfileId": "labor-profile-synthetic"
       },
-      "correlationId": "<placeholder-correlationId>",
-      "organizationId": "<PLACEHOLDER: pinned organizationId per HRP r3 DECISION-REGISTER>"
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
     },
-    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema).",
-    "note_struct_correction": "STRUCT-1/2 applied: correlationId + organizationId added; actor expanded per HRP r3 REC-004B-PROPOSAL. PROPOSED."
+    "preconditions": [
+      "otherwise valid request",
+      "user inactive"
+    ],
+    "expected": "403 FORBIDDEN; no unauthorized object read"
+  },
+  "case_2_3b_delegation_revoked": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "preconditions": [
+      "otherwise valid request",
+      "delegation revoked"
+    ],
+    "expected": "403 FORBIDDEN; no unauthorized object read"
+  },
+  "case_2_4_wrong_org": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "preconditions": [
+      "otherwise valid request",
+      "request org differs from server registration"
+    ],
+    "expected": "403 FORBIDDEN; no unauthorized object read"
+  },
+  "case_3_1_hidden": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "preconditions": [
+      "authenticated and delegated",
+      "object hidden by effective-user permission"
+    ],
+    "expected": "404 NOT_FOUND"
+  },
+  "case_3_2_missing": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "preconditions": [
+      "authenticated and delegated",
+      "object does not exist"
+    ],
+    "expected": "404 NOT_FOUND"
+  },
+  "case_3_3_invalid_assertion": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "preconditions": [
+      "missing or invalid assertion"
+    ],
+    "expected": "401 AUTHENTICATION_REQUIRED"
+  },
+  "case_3_4_empty_canonical_id": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": ""
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "expected": "422 VALIDATION_ERROR",
+    "note": "Empty identifier violates the referenced bounded ID constraint. Do not invent a UUID-only constraint."
   },
   "case_4_1_supported": {
-    "fieldAllowlist": [
-      "identitySummary.fullNameRedacted",
-      "identitySummary.displayOnly"
-    ]
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "expected": "200 identitySummary, unavailableFields=[]"
   },
-  "case_4_2_unsupported_phoneRedacted": {
-    "fieldAllowlist": [
-      "identitySummary.fullNameRedacted",
-      "identitySummary.phoneRedacted"
-    ]
+  "case_4_2_known_unsupported": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary",
+        "availability"
+      ]
+    },
+    "expected": "200 identitySummary, unavailableFields=[availability]"
   },
-  "case_4_3_unrequested_displayOnly": {
-    "fieldAllowlist": [
-      "identitySummary.fullNameRedacted"
-    ]
+  "case_4_3_unrequested_identity": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "availability"
+      ]
+    },
+    "expected": "200 no identitySummary, unavailableFields=[availability]"
   },
   "case_4_4_unknown_field": {
-    "fieldAllowlist": [
-      "identitySummary.fullNameRedacted",
-      "identitySummary.addressStreet"
-    ]
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary.phoneRedacted"
+      ]
+    },
+    "expected": "422 VALIDATION_ERROR"
   },
-  "case_4_5_duplicated_field": {
-    "fieldAllowlist": [
-      "identitySummary.fullNameRedacted",
-      "identitySummary.fullNameRedacted"
-    ]
+  "case_4_5_duplicate": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary",
+        "identitySummary"
+      ]
+    },
+    "expected": "422 VALIDATION_ERROR"
   },
-  "case_4_6_empty_allowlist": {
-    "fieldAllowlist": []
+  "case_4_6_empty": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": []
+    },
+    "expected": "422 VALIDATION_ERROR"
   },
-  "case_4_7_raw_phone_attempt": {
-    "fieldAllowlist": [
-      "identitySummary.fullNameRedacted",
-      "identitySummary.rawPhone"
-    ]
+  "case_4_7_raw_pii": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "cccdNumber"
+      ]
+    },
+    "expected": "422 VALIDATION_ERROR"
   },
-  "case_5_1_replay_same_jti": {
-    "jti": "<placeholder-jti-value>",
-    "note": "Same jti re-sent. MUST be 401."
+  "case_5_1_replay": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "assertion": "same previously consumed jti",
+    "expected": "401 AUTHENTICATION_REQUIRED"
   },
-  "case_5_2_retry_after_5xx": {
-    "previous_response": "HTTP 503 DEPENDENCY_UNAVAILABLE",
-    "new_request_jti": "<new-placeholder-jti>",
-    "new_request_correlationId": "<new-placeholder-corr>",
-    "note": "Same business intent. New credential."
+  "case_5_2_retry_after_503": {
+    "firstBody": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "retryBody": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "firstJti": "synthetic-attempt-1",
+    "retryJti": "synthetic-attempt-2",
+    "expected": "full reauthorization; success or appropriate current error, never guaranteed success"
   },
-  "case_5_3_retry_after_429_past_window": {
-    "previous_response": "HTTP 429 RATE_LIMITED",
-    "new_request_jti": "<new-placeholder-jti>",
-    "note": "Retry-after window has passed."
+  "case_5_3_retry_after_429": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "preconditions": [
+      "bounded retry budget remains",
+      "respect valid Retry-After",
+      "fresh assertion/jti"
+    ],
+    "expected": "reauthorize, correlationId unchanged for logical query"
   },
-  "case_5_4_retry_after_403": {
-    "previous_response": "HTTP 403 FORBIDDEN",
-    "new_request_jti": "<new-placeholder-jti>",
-    "note": "Must remain 403. No permission flip."
+  "case_5_4_forbidden": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "expected": "no automatic retry; any later authorized user action is evaluated anew"
   },
-  "case_5_5_retry_after_422_identical_body": {
-    "previous_response": "HTTP 422 VALIDATION_ERROR",
-    "new_request_jti": "<new-placeholder-jti>",
-    "new_request_body_identical_to_prior": true,
-    "note": "Body was not fixed. Must remain 422."
-  },
-  "case_5_6_retry_after_404_same_id": {
-    "previous_response": "HTTP 404 NOT_FOUND",
-    "new_request_jti": "<new-placeholder-jti>",
-    "new_request_laborProfileId": "00000000-0000-4000-8000-00000000ffff",
-    "note": "Object state unchanged. Must remain 404."
-  },
-  "case_5_7_replay_store_unavailable": {
-    "s2s_assertion": "<fresh-jti>",
-    "replay_store_state": "DOWN"
-  },
-  "_note_fieldAllowlist_enum": "STRUCT-3: fieldAllowlist values should match TalentContextReadField enum per HRP r3 REC-004B-PROPOSAL L71-79. Unknown strings rejected 422 per existing AC. PROPOSED."
+  "case_5_7_authority_down": {
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "actor": {
+        "kind": "DELEGATED_USER",
+        "serviceId": "crm-synthetic",
+        "userId": "hrp-user-synthetic",
+        "delegationRef": "delegation-synthetic"
+      },
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "fieldAllowlist": [
+        "identitySummary"
+      ]
+    },
+    "preconditions": [
+      "replay/delegation/user authority unavailable"
+    ],
+    "expected": "503 fail-closed; no stale allow"
+  }
 }

@@ -1,62 +1,26 @@
-# GAP-LIST - Things Still Open (must close before executable conformance)
+# Remaining gaps
+Status: DRAFT / NOT_EXECUTED. These are synthetic design examples aligned with HRP MSG-025, not executable schemas or runtime evidence. Technical proposals still require bilateral acceptance. Owner approvals are limited by MSG-026.
 
-These gaps explain why this bundle is DRAFT and READY FOR T0 REVIEW, not executable.
+## OWNER_APPROVED — do not reopen
+- ADMIN/HR_MANAGER/HR_STAFF external eligibility with current object permissions.
+- HRP explicit consent, reapproval on uncertain exchange after cancel/confirmed expiry.
+- Delegation maximum 15 minutes, bounded by session lifetimes, no auto-refresh.
+- CRM immediate local blocking plus bounded HRP expiry window when revoke delivery fails, controlled pilot only.
 
-## Issuer/Algorithm/TTL/Keys (HRP-PENDING, OPEN)
+## OPEN — Owner/HRP operations
+ORG-1: HRP supplies canonical organizationId/registration, not CRM-invented value.
+AUDIT-1: metadata access, retention and recovery responsibility; no raw token/body/PII.
 
-- HRP-1. issuer URL string / issuer identifier (HRP decides).
-- HRP-2. signing algorithm (HRP decides).
-- HRP-3. TTL value (HRP decides).
-- HRP-4. clock skew tolerance (HRP decides).
-- HRP-5. key rotation cadence (HRP decides).
-- HRP-6. kid discovery / JWKS endpoint (HRP decides).
+## PROPOSED — bilateral engineering
+AUTH-1: MSG-025 recommends RS256, assertion TTL<=60s/skew30s, pinned issuer/audiences/key provisioning; not final just because Owner approved delegation lifetime.
+AUTH-2: receipt entropy/lifetime, immutable tuple and atomic consume/cancel; exact issuance/exchange/cancel request/response/path shapes and failure precedence remain HRP-REQ-2.
+AUTH-3: retry/replay retention to exp+skew, fencing after lost state and key lifecycle including proposed rotation overlap.
+AUTH-4: callback/session integration and safe error precedence for malformed actor versus unauthorized delegation.
+WIRE-1: exact query shapes, seven-code parser and BOUNDED_NEW_ASSERTION proposal.
+DIST-1: accepted neutral source commit, package/subpath/version and reproducible private artifact distribution. See DISTRIBUTION-PROPOSAL.md.
+PII-1: redaction algorithm and synthetic test vectors, including Unicode/short/missing/unsafe values; HRP-REQ-1.
 
-## Delegation (HRP-PENDING, OPEN)
-
-- HRP-7. delegation issuance/transport mechanism (HRP r6 leaves the surface open).
-- HRP-8. delegation format (HRP decides).
-- HRP-9. delegation lifetime (HRP decides).
-- HRP-10. binding mechanism (service-user-organization-request) (HRP decides).
-
-## Replay Token (HRP-PENDING, OPEN)
-
-- HRP-11. jti format (HRP decides).
-- HRP-12. replay store technology (HRP decides).
-- HRP-13. replay store retention (HRP decides).
-
-## Revoke / Retry (HRP-PENDING, OPEN)
-
-- HRP-14. revocation event sources (HRP decides).
-- HRP-15. revocation propagation latency (HRP decides).
-- HRP-16. retry-after windows for 429 / 503 (HRP decides).
-
-## Role Policy (HRP-PENDING, OPEN)
-
-- HRP-17. role allowlist (HRP-illustrative: ADMIN/HR_MANAGER/HR_STAFF; HRP confirms/revises).
-- HRP-18. capability tags (e.g., CAN_READ_TALENT_CONTEXT) - future impl requirement.
-
-## Error Contract (HRP-PENDING for new codes)
-
-- ERR-1. NOT_FOUND: PROPOSED in r6 REC-004B; HRP confirms.
-- ERR-2. INTERNAL_ERROR: PROPOSED in r6 REC-004B; HRP confirms.
-- ERR-3. exact placement of new codes (separate file vs in-place) - bilateral.
-- ERR-4. parser scope (shared vs query-specific) - bilateral.
-
-## Pinned Configuration (HRP-PENDING)
-
-- CFG-1. pinned organizationId (single-org in slice dau theo HRP r6 DESIGN-RESPONSE.md D-03 sec 7).
-- CFG-2. service registration binding mechanism (HRP decides).
-
-## Why these gaps matter
-
-These gaps prevent turning these DRAFT examples into executable conformance tests because:
-
-- Without HRP-1..HRP-6 the request signature cannot be canonicalized.
-- Without HRP-7..HRP-10 the delegation cannot be constructed.
-- Without HRP-11..HRP-13 the replay test case cannot assert.
-- Without HRP-14..HRP-16 the revocation/retry cases cannot assert.
-- Without HRP-17..HRP-18 the role checks cannot be canonicalized.
-- Without ERR-1..ERR-4 the new error codes cannot be added to a fixture set.
-- Without CFG-1..CFG-2 the wrong-org case cannot be wired.
-
-Until HRP supplies these, the cases remain DRAFT examples for design discussion only.
+Replay-store backend/library and implementation layout are HRP engineering choices under agreed constraints, not reasons to ask Owner to design infrastructure.
+No blanket new capability tag/JWKS endpoint required by this bundle.
+Frozen schema remains authority for existing constraints. These examples do not introduce UUID-only identifiers.
+No endpoint, package or runtime gate is opened by closing a documentation gap.

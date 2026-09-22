@@ -1,341 +1,308 @@
 {
-  "_purpose": "DRAFT synthetic error response bodies for CONTRACT-02B conformance discussion.",
-  "_encoding": "JSON, UTF-8, LF, no BOM",
-  "_placeholder_policy": "Codes are illustrative. NOT_FOUND/INTERNAL_ERROR are PROPOSED. Frozen codes (VALIDATION_ERROR/AUTHENTICATION_REQUIRED/FORBIDDEN/RATE_LIMITED/DEPENDENCY_UNAVAILABLE) are AGREED_DIRECTION reuse.",
-  "_safety_floor": "No SQL, no stack trace, no PII, no exception class name, no environment hints MUST appear in any error body.",
-  "case_2_1_service_only_no_actor": {
-    "httpStatus": 401,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "AUTHENTICATION_REQUIRED",
-          "messageKey": "errors.authenticationRequired",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "note": "CORR-2a: Frozen messageKey required. CONFIRMED: errors.authenticationRequired per errors.ts L34."
-  },
-  "case_2_2_service_only_stub_actor_no_delegation": {
-    "httpStatus": 401,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "AUTHENTICATION_REQUIRED",
-          "messageKey": "errors.authenticationRequired",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "note": "CORR-2a applied."
-  },
-  "case_2_3a_user_inactive": {
-    "httpStatus": 403,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "FORBIDDEN",
-          "messageKey": "errors.forbidden",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "note": "CORR-2b: Frozen messageKey required. CONFIRMED: errors.forbidden per errors.ts L37."
-  },
-  "case_2_3b_delegation_revoked": {
-    "httpStatus": 403,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "FORBIDDEN",
-          "messageKey": "errors.forbidden",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "note": "CORR-2b applied."
-  },
-  "case_2_4_pinned_org_mismatch": {
-    "httpStatus": 403,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "FORBIDDEN",
-          "messageKey": "errors.forbidden",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "note": "CORR-2b applied."
-  },
-  "case_3_1_hidden_object": {
-    "httpStatus": 404,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "NOT_FOUND",
-          "messageKey": "errors.talentContext.read.hidden",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "existence_oracle_check": "MUST be byte-equivalent to case_3_2_nonexistent_object for observable wire shape."
-  },
-  "case_3_2_nonexistent_object": {
-    "httpStatus": 404,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "NOT_FOUND",
-          "messageKey": "errors.talentContext.read.hidden",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "existence_oracle_check": "Same wire shape as case_3_1_hidden_object."
-  },
-  "case_3_3_auth_failure_no_id_echo": {
-    "httpStatus": 401,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "AUTHENTICATION_REQUIRED",
-          "messageKey": "errors.authenticationRequired",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "id_echo_check": "Body MUST NOT echo the laborProfileId value submitted in the request.",
-    "note": "CORR-2a applied."
-  },
-  "case_3_4_validation_malformed_uuid": {
-    "httpStatus": 422,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "VALIDATION_ERROR",
-          "messageKey": "errors.validation",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "note": "CORR-2c: Frozen messageKey required. CONFIRMED: errors.validation per errors.ts L32."
-  },
-  "case_4_4_unknown_field": {
-    "httpStatus": 422,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "VALIDATION_ERROR",
-          "messageKey": "errors.validation",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "note": "CORR-2c applied."
-  },
-  "case_5_1_replay_same_jti": {
-    "httpStatus": 401,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "AUTHENTICATION_REQUIRED",
-          "messageKey": "errors.authenticationRequired",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "note": "CORR-2a applied."
-  },
-  "case_5_4_retry_after_403": {
-    "httpStatus": 403,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "FORBIDDEN",
-          "messageKey": "errors.forbidden",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "note": "CORR-2b applied."
-  },
-  "case_5_5_retry_after_422_identical_body": {
-    "httpStatus": 422,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "VALIDATION_ERROR",
-          "messageKey": "errors.validation",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "note": "CORR-2c applied."
-  },
-  "case_5_6_retry_after_404_same_id": {
-    "httpStatus": 404,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "NOT_FOUND",
-          "messageKey": "errors.talentContext.read.hidden",
-          "retryClass": "NEVER"
-        }
-      ]
-    },
-    "note": "Same body as Case 3.1/3.2. NOT_FOUND is consistent across retry attempts for same id."
-  },
-  "case_5_7_replay_store_unavailable": {
-    "httpStatus": 503,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "DEPENDENCY_UNAVAILABLE",
-          "messageKey": "errors.dependencyUnavailable",
-          "retryClass": "BOUNDED_NEW_ASSERTION"
-        }
-      ]
-    },
-    "note": "CORR-3: Frozen messageKey required. CONFIRMED: errors.dependencyUnavailable per errors.ts L55. CORR-5B: DEPENDENCY_UNAVAILABLE retryClass=BOUNDED_NEW_ASSERTION per r4 REC-004B. Fixed from RETRY_SAFE."
-  },
-  "case_6_3_unknown_code_forward_compat": {
-    "httpStatus": 422,
-    "body": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "BRAND_NEW_CODE_FROM_FUTURE_RELEASE",
-          "messageKey": "errors.talentContext.future.something",
-          "retryClass": "<query-only-retry>"
-        }
-      ]
-    },
-    "note": "Consumer parser must NOT crash on unknown code. This case is illustrative of forward compatibility. CORR-6B: RETRY_SAFE removed (not frozen). Frozen RetryClassSchema: NEVER|REAUTHENTICATE|REVIEW_REQUIRED|BOUNDED_SAME_KEY|RECONCILE_FIRST."
-  },
-  "case_6_4_internal_error_no_leak": {
-    "httpStatus": 500,
-    "body_safe": {
-      "schemaVersion": "1",
-      "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
-      "errors": [
-        {
-          "code": "INTERNAL_ERROR",
-          "messageKey": "errors.talentContext.internal",
-          "retryClass": "NEVER",
-          "note": "CORR-1a: messageKey corrected from errors.talentContext.read.internal to errors.talentContext.internal per r4 REC-004B."
-        }
-      ]
-    },
-    "body_NOT_safe_examples": [
-      {
-        "reason_for_NO": "SQL leak",
-        "example_rejected": "SELECT * FROM LaborProfile WHERE id = '00000000-0000-4000-8000-00000000b001'"
-      },
-      {
-        "reason_for_NO": "stack trace leak",
-        "example_rejected": "at Object.<anonymous> (/var/www/src/domains/talent/labor-profile.read-service.ts:178:23)"
-      },
-      {
-        "reason_for_NO": "PII leak",
-        "example_rejected": "user john.doe@example.com attempted access to LaborProfile 00000000-..."
-      },
-      {
-        "reason_for_NO": "exception class name leak",
-        "example_rejected": "TypeError: Cannot read property 'phoneNumber' of undefined"
-      },
-      {
-        "reason_for_NO": "environment hints leak",
-        "example_rejected": "PG_DATA=/var/lib/postgresql/data; ECONNREFUSED 127.0.0.1:5432"
+  "_status": "Status: DRAFT / NOT_EXECUTED. These are synthetic design examples aligned with HRP MSG-025, not executable schemas or runtime evidence. Technical proposals still require bilateral acceptance. Owner approvals are limited by MSG-026.",
+  "_notes": "Valid examples follow the proposed query-only seven-code profile, not frozen ContractErrorSchema. Fixture metadata is never inside wire bodies.",
+  "valid": {
+    "VALIDATION_ERROR": {
+      "httpStatus": 422,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "VALIDATION_ERROR",
+            "messageKey": "errors.validation",
+            "retryClass": "NEVER"
+          }
+        ]
       }
-    ],
-    "policy": "The unsafe examples MUST NEVER appear in any error body. The safe body is the only acceptable shape.",
-    "note": "CORR-1 applied: retryClass changed from RETRY_SAFE to NEVER per HRP r3 REC-004B-PROPOSAL. CONFIRMED: NEVER per frozen ERROR_POLICIES L54-56."
+    },
+    "AUTHENTICATION_REQUIRED": {
+      "httpStatus": 401,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "AUTHENTICATION_REQUIRED",
+            "messageKey": "errors.authenticationRequired",
+            "retryClass": "REAUTHENTICATE"
+          }
+        ]
+      }
+    },
+    "FORBIDDEN": {
+      "httpStatus": 403,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "FORBIDDEN",
+            "messageKey": "errors.forbidden",
+            "retryClass": "NEVER"
+          }
+        ]
+      }
+    },
+    "RATE_LIMITED": {
+      "httpStatus": 429,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "RATE_LIMITED",
+            "messageKey": "errors.rateLimited",
+            "retryClass": "BOUNDED_NEW_ASSERTION"
+          }
+        ]
+      }
+    },
+    "DEPENDENCY_UNAVAILABLE": {
+      "httpStatus": 503,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "DEPENDENCY_UNAVAILABLE",
+            "messageKey": "errors.dependencyUnavailable",
+            "retryClass": "BOUNDED_NEW_ASSERTION"
+          }
+        ]
+      }
+    },
+    "NOT_FOUND": {
+      "httpStatus": 404,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "NOT_FOUND",
+            "messageKey": "errors.talentContext.notFound",
+            "retryClass": "NEVER"
+          }
+        ]
+      }
+    },
+    "INTERNAL_ERROR": {
+      "httpStatus": 500,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "INTERNAL_ERROR",
+            "messageKey": "errors.talentContext.internal",
+            "retryClass": "NEVER"
+          }
+        ]
+      }
+    }
   },
-  "case_6_5_multiple_errors": {
-    "httpStatus": 429,
+  "hidden_object": {
+    "httpStatus": 404,
     "body": {
       "schemaVersion": "1",
       "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
+      "correlationId": "crm-query-synthetic-001",
       "errors": [
         {
-          "code": "VALIDATION_ERROR",
-          "messageKey": "errors.validation",
+          "code": "NOT_FOUND",
+          "messageKey": "errors.talentContext.notFound",
           "retryClass": "NEVER"
-        },
-        {
-          "code": "RATE_LIMITED",
-          "messageKey": "errors.rateLimited",
-          "retryClass": "BOUNDED_NEW_ASSERTION"
         }
       ]
-    },
-    "note": "Consumer policy: prioritize user-fixable (VALIDATION_ERROR) before scheduling retry on rate-limit signal. CORR-6C: RETRY_SAFE->BOUNDED_NEW_ASSERTION; messageKey fixed per frozen. CORR-6C: RETRY_SAFE->BOUNDED_NEW_ASSERTION; VALIDATION_ERROR/RATE_LIMITED messageKey fixed per frozen."
+    }
   },
-  "case_6_6_empty_errors_array": {
-    "httpStatus": 500,
-    "body_safe": {
+  "nonexistent_object": {
+    "httpStatus": 404,
+    "body": {
       "schemaVersion": "1",
       "status": "FAILED",
-      "correlationId": "<corr-placeholder>",
+      "correlationId": "crm-query-synthetic-001",
       "errors": [
         {
-          "code": "UNKNOWN_COMMAND_OUTCOME",
-          "messageKey": "errors.unknownCommandOutcome",
-          "retryClass": "RECONCILE_FIRST",
-          "note": "EXPECT_REJECT: Server MUST NOT return empty errors[]. This case shows consumer fallback behavior when server misbehaves. CORR-4 clarified."
+          "code": "NOT_FOUND",
+          "messageKey": "errors.talentContext.notFound",
+          "retryClass": "NEVER"
         }
       ]
+    }
+  },
+  "negative": {
+    "unknown_code": {
+      "expected": "EXPECT_REJECT_PROTOCOL_FAILURE",
+      "httpStatus": 422,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "FUTURE_UNKNOWN_CODE",
+            "messageKey": "errors.validation",
+            "retryClass": "NEVER"
+          }
+        ]
+      }
     },
-    "note": "CORR-4: Changed from INTERNAL_ERROR+RETRY_UNSAFE to UNKNOWN_COMMAND_OUTCOME+RECONCILE_FIRST per frozen errors.ts L59-61. PROPOSED."
+    "command_only": {
+      "expected": "EXPECT_REJECT_PROTOCOL_FAILURE",
+      "httpStatus": 500,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "UNKNOWN_COMMAND_OUTCOME",
+            "messageKey": "errors.unknownCommandOutcome",
+            "retryClass": "RECONCILE_FIRST"
+          }
+        ]
+      }
+    },
+    "empty_errors": {
+      "expected": "EXPECT_REJECT_PROTOCOL_FAILURE",
+      "httpStatus": 500,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": []
+      }
+    },
+    "multiple_errors": {
+      "expected": "EXPECT_REJECT_PROTOCOL_FAILURE",
+      "httpStatus": 429,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "VALIDATION_ERROR",
+            "messageKey": "errors.validation",
+            "retryClass": "NEVER"
+          },
+          {
+            "code": "RATE_LIMITED",
+            "messageKey": "errors.rateLimited",
+            "retryClass": "BOUNDED_NEW_ASSERTION"
+          }
+        ]
+      }
+    },
+    "wrong_retry": {
+      "expected": "EXPECT_REJECT_PROTOCOL_FAILURE",
+      "httpStatus": 401,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "AUTHENTICATION_REQUIRED",
+            "messageKey": "errors.authenticationRequired",
+            "retryClass": "NEVER"
+          }
+        ]
+      }
+    },
+    "old_command_retry": {
+      "expected": "EXPECT_REJECT_PROTOCOL_FAILURE",
+      "httpStatus": 503,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "DEPENDENCY_UNAVAILABLE",
+            "messageKey": "errors.dependencyUnavailable",
+            "retryClass": "BOUNDED_SAME_KEY"
+          }
+        ]
+      }
+    },
+    "wrong_key": {
+      "expected": "EXPECT_REJECT_PROTOCOL_FAILURE",
+      "httpStatus": 404,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "NOT_FOUND",
+            "messageKey": "errors.talentContext.read.hidden",
+            "retryClass": "NEVER"
+          }
+        ]
+      }
+    },
+    "extra_field": {
+      "expected": "EXPECT_REJECT_PROTOCOL_FAILURE",
+      "httpStatus": 500,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "INTERNAL_ERROR",
+            "messageKey": "errors.talentContext.internal",
+            "retryClass": "NEVER",
+            "note": "non-wire annotation"
+          }
+        ]
+      }
+    },
+    "http_mismatch": {
+      "expected": "EXPECT_REJECT_PROTOCOL_FAILURE",
+      "httpStatus": 500,
+      "body": {
+        "schemaVersion": "1",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "NOT_FOUND",
+            "messageKey": "errors.talentContext.notFound",
+            "retryClass": "NEVER"
+          }
+        ]
+      }
+    },
+    "unknown_version": {
+      "expected": "EXPECT_REJECT_PROTOCOL_FAILURE",
+      "httpStatus": 404,
+      "body": {
+        "schemaVersion": "2",
+        "status": "FAILED",
+        "correlationId": "crm-query-synthetic-001",
+        "errors": [
+          {
+            "code": "NOT_FOUND",
+            "messageKey": "errors.talentContext.notFound",
+            "retryClass": "NEVER"
+          }
+        ]
+      }
+    },
+    "transport_html": {
+      "expected": "EXPECT_REJECT_PROTOCOL_FAILURE",
+      "httpStatus": 404,
+      "body": "<html>route missing</html>"
+    }
   }
 }

@@ -1,91 +1,119 @@
 {
-  "_purpose": "DRAFT synthetic success result bodies for CONTRACT-02B conformance discussion.",
-  "_encoding": "JSON, UTF-8, LF, no BOM",
-  "_placeholder_policy": "Timestamps and ids are illustrative; HRP must confirm exact projection fields.",
-
-  "case_1_1_valid_read_fullNameRedacted_displayOnly_true": {
+  "_status": "Status: DRAFT / NOT_EXECUTED. These are synthetic design examples aligned with HRP MSG-025, not executable schemas or runtime evidence. Technical proposals still require bilateral acceptance. Owner approvals are limited by MSG-026.",
+  "_redaction": "*** is a synthetic shape placeholder, NOT an approved redaction algorithm/vector. HRP must provide redaction vectors.",
+  "case_1_1_valid": {
     "httpStatus": 200,
     "body": {
       "schemaVersion": "1",
-      "kind": "TALENT",
-      "laborProfileId": "00000000-0000-4000-8000-00000000b001",
-      "resolvedAt": "2026-09-22T04:00:00.000Z",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
       "identitySummary": {
-        "fullNameRedacted": "Nguyen Van A***",
-        "displayOnly": true
-      }
-    },
-    "no_phone_in_body": true,
-    "no_cccd_in_body": true,
-    "no_snapshotVersion": true,
-    "no_synthetic_version": true,
-    "resolvedAt_semantics": "query processing time, not concurrency/cache/version marker"
-  },
-
-  "case_4_1_supported_with_unavailableFields_empty": {
-    "httpStatus": 200,
-    "body": {
-      "schemaVersion": "1",
-      "kind": "TALENT",
-      "laborProfileId": "00000000-0000-4000-8000-00000000b001",
-      "resolvedAt": "2026-09-22T04:00:00.000Z",
-      "identitySummary": {
-        "fullNameRedacted": "Nguyen Van A***",
+        "schemaVersion": "1",
+        "fullNameRedacted": "***",
         "displayOnly": true
       },
-      "unavailableFields": []
+      "unavailableFields": [],
+      "resolvedAt": "2026-09-22T04:00:00.000Z"
     }
   },
-
-  "case_4_2_unsupported_phoneRedacted_omitted": {
+  "case_4_1_supported": {
     "httpStatus": 200,
     "body": {
       "schemaVersion": "1",
-      "kind": "TALENT",
-      "laborProfileId": "00000000-0000-4000-8000-00000000b001",
-      "resolvedAt": "2026-09-22T04:00:00.000Z",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
       "identitySummary": {
-        "fullNameRedacted": "Nguyen Van A***",
+        "schemaVersion": "1",
+        "fullNameRedacted": "***",
+        "displayOnly": true
+      },
+      "unavailableFields": [],
+      "resolvedAt": "2026-09-22T04:00:00.000Z"
+    }
+  },
+  "case_4_2_known_unsupported": {
+    "httpStatus": 200,
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "identitySummary": {
+        "schemaVersion": "1",
+        "fullNameRedacted": "***",
         "displayOnly": true
       },
       "unavailableFields": [
-        {
-          "path": "identitySummary.phoneRedacted",
-          "reason": "SLICE_POLICY"
-        }
-      ]
-    },
-    "note": "This is the (A) option for Case 4.2. HRP may also adopt (B) HTTP 422."
-  },
-
-  "case_4_3_unrequested_displayOnly_not_returned": {
-    "httpStatus": 200,
-    "body": {
-      "schemaVersion": "1",
-      "kind": "TALENT",
-      "laborProfileId": "00000000-0000-4000-8000-00000000b001",
-      "resolvedAt": "2026-09-22T04:00:00.000Z",
-      "identitySummary": {
-        "fullNameRedacted": "Nguyen Van A***"
-      },
-      "note_unrequested": "identitySummary.displayOnly was not in fieldAllowlist; omitted."
+        "availability"
+      ],
+      "resolvedAt": "2026-09-22T04:00:00.000Z"
     }
   },
-
-  "case_4_6_empty_allowlist_option_A": {
+  "case_4_3_unrequested": {
     "httpStatus": 200,
     "body": {
       "schemaVersion": "1",
-      "kind": "TALENT",
-      "laborProfileId": "00000000-0000-4000-8000-00000000b001",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "unavailableFields": [
+        "availability"
+      ],
+      "resolvedAt": "2026-09-22T04:00:00.000Z"
+    }
+  },
+  "case_4_8_redaction_unavailable": {
+    "httpStatus": 200,
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "unavailableFields": [
+        "identitySummary"
+      ],
       "resolvedAt": "2026-09-22T04:00:00.000Z"
     },
-    "note": "Option (A): empty allowlist yields empty identitySummary. HRP may adopt (B) HTTP 422 instead."
+    "requestFieldAllowlist": [
+      "identitySummary"
+    ],
+    "note": "If safe redaction unavailable, omit identitySummary; do not return an empty projection."
   },
-
-  "case_5_2_retry_success_after_5xx": {
+  "case_5_2_possible_retry_success": {
     "httpStatus": 200,
-    "body_same_as_case_1_1": true,
-    "note": "Successful retry yields the same shape as the canonical Case 1.1 body. New correlationId."
+    "body": {
+      "schemaVersion": "1",
+      "correlationId": "crm-query-synthetic-001",
+      "organizationId": "org-synthetic-only",
+      "target": {
+        "kind": "TALENT",
+        "laborProfileId": "labor-profile-synthetic"
+      },
+      "identitySummary": {
+        "schemaVersion": "1",
+        "fullNameRedacted": "***",
+        "displayOnly": true
+      },
+      "unavailableFields": [],
+      "resolvedAt": "2026-09-22T04:00:00.000Z"
+    },
+    "note": "Only one possible retry outcome. Same logical correlationId; authorization/query rerun, result data/time may differ."
   }
 }

@@ -1,121 +1,16 @@
-# Category 4: requested-supported / requested-unsupported / unrequested
+# 04 — Projection selection
+Status: DRAFT / NOT_EXECUTED. These are synthetic design examples aligned with HRP MSG-025, not executable schemas or runtime evidence. Technical proposals still require bilateral acceptance. Owner approvals are limited by MSG-026.
 
-## Status
-
-PROPOSED. DRAFT only.
-
-## Source of Decision / AC
-
-- HRP r6 DESIGN-RESPONSE.md D-03 sec 2: projection is minimum (identitySummary.fullNameRedacted, displayOnly=true); phoneRedacted OMITTED in slice dau; raw phone/CCCD NEVER returned.
-- HRP r6 D-03 sec 2: project accepts semantics requested-supported / requested-unsupported / unrequested and unavailableFields.
-- CRM r6 REC-002 AC #12: unknown field in fieldAllowlist -> VALIDATION_ERROR 422.
-
-## Why this category
-
-The slice is intentionally narrow. fieldAllowlist behavior must be explicit so the consumer knows what to expect.
-
-## Cases
-
-### Case 4.1 - requested-supported
-
-Input synthetic:
-- fieldAllowlist: ["identitySummary.fullNameRedacted", "identitySummary.displayOnly"].
-
-Expected behavior:
-- HTTP 200.
-- Response contains identitySummary.fullNameRedacted and identitySummary.displayOnly=true.
-- No unavailableFields entry needed (or empty list).
-- Nguon decision/AC: D-03 sec 2 (HRP r6); AGREED_DIRECTION.
-- Status: AGREED_DIRECTION.
-
-### Case 4.2 - requested-unsupported
-
-Input synthetic:
-- fieldAllowlist: ["identitySummary.fullNameRedacted", "identitySummary.phoneRedacted"].
-
-Expected behavior:
-- HTTP 200.
-- Response contains identitySummary.fullNameRedacted.
-- Response OMITS identitySummary.phoneRedacted.
-- Response includes unavailableFields: ["identitySummary.phoneRedacted"].
-- MessageKey for unavailableFields entries MAY indicate the field is omitted due to slice policy.
-- Nguon decision/AC: D-03 sec 2 (HRP r6); AGREED_DIRECTION semantics. PROPOSED on exact wire shape.
-- Status: PROPOSED (HRP confirms unavailableFields shape).
-
-HRP confirmation point: confirm HTTP 200 + unavailableFields vs HTTP 422.
-
-### Case 4.3 - unrequested (do not include even if available)
-
-Input synthetic:
-- fieldAllowlist: ["identitySummary.fullNameRedacted"] (no displayOnly requested).
-
-Expected behavior:
-- HTTP 200.
-- Response contains identitySummary.fullNameRedacted.
-- Response does NOT include identitySummary.displayOnly (unrequested fields are not returned).
-- Nguon decision/AC: D-03 sec 2 (HRP r6); AGREED_DIRECTION.
-- Status: AGREED_DIRECTION.
-
-### Case 4.4 - unknown field in allowlist (REJECT)
-
-Input synthetic:
-- fieldAllowlist: ["identitySummary.fullNameRedacted", "identitySummary.addressStreet"].
-
-Expected behavior:
-- HTTP 422 VALIDATION_ERROR.
-- Code: VALIDATION_ERROR.
-- messageKey: errors.talentContext.fieldAllowlist.unknown.
-- MUST NOT proceed to lookup.
-- Nguon decision/AC: REC-002 AC #12.
-- Status: AGREED_DIRECTION.
-
-### Case 4.5 - duplicated field in allowlist (idempotency)
-
-Input synthetic:
-- fieldAllowlist: ["identitySummary.fullNameRedacted", "identitySummary.fullNameRedacted"].
-
-Expected behavior:
-- HTTP 200 or HTTP 200 after de-duplication (idempotent), NOT a 422.
-- The duplicate collapses to one field.
-- Nguon decision/AC: PROPOSED. CRM T1-B drafts idempotent.
-- Status: PROPOSED (HRP confirms).
-
-HRP confirmation point: idempotent de-duplication vs strict rejection.
-
-### Case 4.6 - empty fieldAllowlist
-
-Input synthetic:
-- fieldAllowlist: [].
-
-Expected behavior (two acceptable options):
-- (A) HTTP 200 with empty result body (schemaVersion, kind, laborProfileId, resolvedAt only).
-- (B) HTTP 422 VALIDATION_ERROR.
-- Nguon decision/AC: PROPOSED.
-- Status: PROPOSED.
-
-HRP confirmation point: A vs B.
-
-### Case 4.7 - fieldAllowlist includes phone/CCCD raw
-
-Input synthetic:
-- fieldAllowlist: ["identitySummary.fullNameRedacted", "identitySummary.rawPhone"].
-
-Expected behavior:
-- HRP r6 D-03 sec 2: NO raw phone, NO CCCD.
-- Option (A) HTTP 200, rawPhone omitted + unavailableFields with reason messageKey indicating policy.
-- Option (B) HTTP 422 VALIDATION_ERROR (REC-002 AC #13 generalizes raw phone/CCCD attempt to FORBIDDEN 403; this case folds the unknown-policy field into 422).
-- Nguon decision/AC: D-03 sec 2 + REC-002 AC #13.
-- Status: PROPOSED.
-
-HRP confirmation point: A vs B AND whether AC #13 FORBIDDEN should apply to allowlist (vs only direct attempt).
-
-## What these cases do NOT cover
-
-- Real schema validation (placeholder).
-- Real i18n messageKey catalogue.
-- Timing-side-channel analysis.
-
-## Out-of-scope points
-
-- Protobuf/JSON shape of unavailableFields entries.
-- Whether displayOnly should be auto-applied regardless of allowlist.
+fieldAllowlist contains projection names, not dotted field paths.
+Known names: identitySummary, placementCase, availability, currentRelationship, nextAction, recentInteractions, contactability, suppressionSummary.
+Only identitySummary is supported in this slice.
+- Request identitySummary -> return the complete minimal projection, including displayOnly=true and schemaVersion='1'.
+- Request identitySummary + availability -> identitySummary plus unavailableFields=['availability'].
+- Request availability only -> no identitySummary; unavailableFields=['availability'].
+- Dotted path identitySummary.phoneRedacted, raw phone/CCCD or any unknown string -> 422.
+- Duplicates or empty list -> 422 (unique 1..8).
+- Unsafe/unavailable redaction -> omit identitySummary and mark identitySummary unavailable, only if requested.
+unavailableFields is an array of known projection-name strings, not path/reason objects.
+Unrequested projections appear in neither data nor unavailableFields.
+Object authorization denial is not converted into projection unavailability.
+See fixtures/requests.json case_4_* and fixtures/results.json case_4_*.
