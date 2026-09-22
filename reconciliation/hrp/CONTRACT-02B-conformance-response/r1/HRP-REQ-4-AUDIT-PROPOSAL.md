@@ -12,4 +12,3 @@ retention job, access policy, or recovery process.
 
 The proposal deliberately does not settle REC-001-OPS, REC-003, or
 cross-system revocation guarantees.
-
