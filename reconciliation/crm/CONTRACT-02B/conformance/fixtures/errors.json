@@ -269,8 +269,9 @@
       "errors": [
         {
           "code": "INTERNAL_ERROR",
-          "messageKey": "errors.talentContext.read.internal",
-          "retryClass": "NEVER"
+          "messageKey": "errors.talentContext.internal",
+          "retryClass": "NEVER",
+          "note": "CORR-1a: messageKey corrected from errors.talentContext.read.internal to errors.talentContext.internal per r4 REC-004B."
         }
       ]
     },
