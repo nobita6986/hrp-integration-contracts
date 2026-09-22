@@ -20,6 +20,15 @@ These are recorded as future runtime test requirements in
 `assertion-profile.test.mjs` (suite: Pure validators do not assert runtime invariants).
 No mock-based PASS is granted.
 
+## Query-only retry/error profile
+
+The `BOUNDED_NEW_ASSERTION` retry literal in `QueryRetryClassSchema` is module-local
+and does NOT appear in the frozen `RetryClassSchema`. The seven-query-error triples
+do NOT alter frozen command triples for VALIDATION_ERROR, AUTHENTICATION_REQUIRED,
+and FORBIDDEN (code/messageKey reused, retryClass overridden for RATE_LIMITED and
+DEPENDENCY_UNAVAILABLE). NOT_FOUND and INTERNAL_ERROR are new additions with their
+own messageKeys. No frozen error policy is changed.
+
 ## Schema version scope
 
 The literal `'1'` in `MODULE_SCHEMA_VERSION` is module-local. It is not a
@@ -122,6 +131,49 @@ No release version reserved. Not published. Frozen package is not touched.
 | delegation-conformance.test.mjs | 28 | 4 |
 | assertion-profile.test.mjs | 20 | 6 |
 | Total | 111 | 16 |
+
+## Trusted key provisioning (EP-02)
+
+Per EP-02, CRM signing private key resides in a restricted server secret manager.
+HRP registration receives public JWK/PEM plus key thumbprint through authenticated
+restricted operations handover. Verify issuer/service/environment/audience bindings
+out-of-band, and verify a non-production signature challenge before activation.
+
+No JWKS discovery endpoint or untrusted `jku`/`x5u` fetch is introduced.
+No automated PKI platform. Manual overlapping rotation for pilot.
+kid is 1..64 of `[A-Za-z0-9._-]`, unique within issuer, never reused for
+different key material.
+
+Emergency compromise/service disable overrides overlap immediately; cleanup must
+use a remaining valid cleanup-authorized key or authenticated HRP local operations.
+
+## Replay authority (EP-03)
+
+Per EP-03, a durable PostgreSQL authority service is recommended for replay
+consumption. The table schema must be unique by `(iss, serviceId, aud, jti)`,
+atomic insert, committed BEFORE downstream work in a separate transaction.
+A failed query or exchange does NOT roll back jti consumption. Storage must be
+shared by all accepting instances; no process-local replay cache.
+
+**Retention:** each jti entry is retained through `absolute exp + 30 seconds`,
+then deleted. No early eviction. A shared HRP authority clock reading from the
+replay/authority database is used for `verifierNow` and consumption deadlines,
+not independently drifting worker clocks.
+
+**Recovery fence (EP-03 section 2):** if consumed jti history is rolled back,
+ALL assertion verifiers are fenced and in-flight acceptance/issuance work is stopped.
+A coordinated barrier time F is established on the authority clock only after
+every accepting node acknowledges the fence and earlier transactions are settled
+or terminated. The fence persists outside the state being restored. Keep fence
+until verifier time ≥ F + 120 seconds. An assertion accepted at F could have
+iat = F + 30, exp = F + 90, exp + skew = F + 120 — hence the 120-second
+upper bound under EP-01.
+
+If delegation/revocation authority itself was rolled back, the 120-second wait
+is NOT sufficient: keep grant/read fenced, invalidate all potentially affected
+delegations/pending receipts before reopening. Owner audit recovery approval
+remains separate. Cleanup resumes only when its authority transaction can
+durably commit. Restoration never revives consent.
 
 ## Consumer-readiness inputs
 
