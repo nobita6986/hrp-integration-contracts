@@ -1,0 +1,16 @@
+{
+  "name": "@hrp-integration-contracts/talent-context-read-dev",
+  "version": "0.0.0-dev.0",
+  "private": true,
+  "description": "Dev-only harness for CONTRACT-03A shared schemas (CONTRACT-02B TalentContextRead v1 + delegation operations + redaction)",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "tsc -p tsconfig.json && node --test tests/talent-context-read/*.test.mjs",
+    "test:only": "node --test tests/talent-context-read/*.test.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.7.3",
+    "zod": "3.24.2"
+  }
+}
