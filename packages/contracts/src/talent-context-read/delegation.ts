@@ -2,48 +2,44 @@
 import {
   OrganizationIdSchema,
   CanonicalIdSchema,
+  CrmBindingSchema,
+  PendingRequestIdSchema,
+  HandoffProofSchema,
+  ReceiptSchema,
+  DelegationRefSchema,
+  CallbackStateSchema,
+  CsrfTokenSchema,
+  SingleScopeArraySchema,
+  BindingTimestampSchema,
 } from './primitives.js';
 
 // ============================================================================
-// Delegation operation schemas - S28 TRANSPORT sections 1-4.
+// Delegation operation schemas - S28 TRANSPORT sections 1-5.
 // Distinct from query envelope; NO shared error parser with query.
+//
+// F-02 corrections:
+//   - pendingRequestId is in the PATH of exchange and cancel, not in the body.
+//   - delegation error envelope is { status: 'FAILED', error: { code } }
+//     only. No messageKey, no detail.
+//   - Added: handoff request, approval decision, APPROVED/DENIED callback
+//     outcomes, CSRF token schemas.
+//   - Internal/aggregate DTOs are separate from wire schemas.
 // ============================================================================
 
-/**
- * Immutable CRM binding B:
- * { organizationId, crmSubject, crmSessionHandle, crmSessionDeadline, callbackId }
- */
-export const CrmBindingSchema = z
-  .object({
-    organizationId: OrganizationIdSchema,
-    crmSubject: CanonicalIdSchema,
-    crmSessionHandle: z.string().min(1).max(128),
-    crmSessionDeadline: z.string().min(20).max(40).datetime({ offset: true }),
-    callbackId: z.string().min(1).max(64),
-  })
-  .strict();
-
-/** Canonical ID encodings (EP-05). 46 ASCII chars after prefix. */
-const prefixedOpaque = (prefix) =>
-  z.string().regex(
-    new RegExp('^' + prefix + '[A-Za-z0-9_-]{43}$'),
-    'must start with ' + prefix + ' and have 43 base64url chars',
-  );
-
-export const PendingRequestIdSchema = prefixedOpaque('pd_');
-export const HandoffProofSchema = prefixedOpaque('hp_');
-export const ReceiptSchema = prefixedOpaque('rc_');
-export const DelegationRefSchema = prefixedOpaque('dg_');
-export const CallbackStateSchema = prefixedOpaque('st_');
-
-/** Single fixed scope literal - arrays contain exactly this one value. */
-export const SINGLE_SCOPE_LITERAL = 'talent-context:read:identitySummary';
-export const SingleScopeArraySchema = z
-  .array(z.literal(SINGLE_SCOPE_LITERAL))
-  .length(1);
+// Re-export for backward compatibility in the same module.
+export {
+  PendingRequestIdSchema,
+  HandoffProofSchema,
+  ReceiptSchema,
+  DelegationRefSchema,
+  CallbackStateSchema,
+  SingleScopeArraySchema,
+  CrmBindingSchema,
+};
 
 // ============================================================================
 // Create delegation request (backend POST)
+// Body: B + requestedScopes + callbackState.
 // ============================================================================
 
 export const CreateDelegationRequestSchema = z
@@ -51,7 +47,7 @@ export const CreateDelegationRequestSchema = z
     organizationId: OrganizationIdSchema,
     crmSubject: CanonicalIdSchema,
     crmSessionHandle: z.string().min(1).max(128),
-    crmSessionDeadline: z.string().min(20).max(40).datetime({ offset: true }),
+    crmSessionDeadline: BindingTimestampSchema,
     callbackId: z.string().min(1).max(64),
     requestedScopes: SingleScopeArraySchema,
     callbackState: CallbackStateSchema,
@@ -61,23 +57,88 @@ export const CreateDelegationRequestSchema = z
 export const CreateDelegationSuccessSchema = z
   .object({
     pendingRequestId: PendingRequestIdSchema,
-    expiresAt: z.string().min(20).max(40).datetime({ offset: true }),
+    expiresAt: BindingTimestampSchema,
     handoffProof: HandoffProofSchema,
-    handoffExpiresAt: z.string().min(20).max(40).datetime({ offset: true }),
+    handoffExpiresAt: BindingTimestampSchema,
   })
   .strict();
 
 // ============================================================================
-// Exchange (receipt -> delegation)
+// Browser handoff (HRP front-door form POST).
+// Body: pendingRequestId + handoffProof + callbackState.
+// pendingRequestId is NOT authenticated by itself; HRP verifies
+// digest/binding/deadline + consumes the proof atomically once.
+// ============================================================================
+
+export const BrowserHandoffRequestSchema = z
+  .object({
+    pendingRequestId: PendingRequestIdSchema,
+    handoffProof: HandoffProofSchema,
+    callbackState: CallbackStateSchema,
+  })
+  .strict();
+
+// ============================================================================
+// Approval decision (browser front-door form POST).
+// Local CSRF token bound to HRP session + pending flow.
+// Body: pendingRequestId + decision + csrfToken.
+// ============================================================================
+
+export const ApprovalDecisionSchema = z.enum(['APPROVE', 'DENY']);
+
+export const ApprovalDecisionRequestSchema = z
+  .object({
+    pendingRequestId: PendingRequestIdSchema,
+    decision: ApprovalDecisionSchema,
+    csrfToken: CsrfTokenSchema,
+  })
+  .strict();
+
+// ============================================================================
+// Callback outcome (HRP -> CRM browser response).
+// Two outcomes with DIFFERENT shapes:
+//   APPROVED: { pendingRequestId, callbackState, outcome: 'APPROVED', receipt }
+//   DENIED:   { pendingRequestId, callbackState, outcome: 'DENIED' }
+//
+// Receipt accompanies APPROVED only. DENIED never carries a receipt.
+// Both share the common header (pendingRequestId, callbackState, outcome).
+// ============================================================================
+
+const CallbackOutcomeHeader = z
+  .object({
+    pendingRequestId: PendingRequestIdSchema,
+    callbackState: CallbackStateSchema,
+    outcome: z.enum(['APPROVED', 'DENIED']),
+  })
+  .strict();
+
+export const ApprovedCallbackOutcomeSchema = CallbackOutcomeHeader.extend({
+  outcome: z.literal('APPROVED'),
+  receipt: ReceiptSchema,
+}).strict();
+
+export const DeniedCallbackOutcomeSchema = CallbackOutcomeHeader.extend({
+  outcome: z.literal('DENIED'),
+}).strict();
+
+export const CallbackOutcomeSchema = z.union([
+  ApprovedCallbackOutcomeSchema,
+  DeniedCallbackOutcomeSchema,
+]);
+
+// ============================================================================
+// Exchange (receipt -> delegation).
+// pendingRequestId is in the route PATH:
+//   POST /api/.../delegation-requests/{pendingRequestId}/exchange
+// Body normative: B + receipt (no pendingRequestId, no delegationRef).
 // ============================================================================
 
 export const ExchangeDelegationRequestSchema = z
   .object({
-    pendingRequestId: PendingRequestIdSchema,
     organizationId: OrganizationIdSchema,
     crmSubject: CanonicalIdSchema,
     crmSessionHandle: z.string().min(1).max(128),
-    crmSessionDeadline: z.string().min(20).max(40).datetime({ offset: true }),
+    crmSessionDeadline: BindingTimestampSchema,
     callbackId: z.string().min(1).max(64),
     receipt: ReceiptSchema,
   })
@@ -87,12 +148,15 @@ export const ExchangeDelegationSuccessSchema = z
   .object({
     delegationRef: DelegationRefSchema,
     effectiveHrpUserId: CanonicalIdSchema,
-    expiresAt: z.string().min(20).max(40).datetime({ offset: true }),
+    expiresAt: BindingTimestampSchema,
   })
   .strict();
 
 // ============================================================================
-// Cancel pending (S28 section 4)
+// Cancel pending.
+// pendingRequestId is in the route PATH:
+//   POST /api/.../delegation-requests/{pendingRequestId}/cancel
+// Body normative: B + reason.
 // ============================================================================
 
 export const CancelDelegationReasonSchema = z.enum([
@@ -103,18 +167,19 @@ export const CancelDelegationReasonSchema = z.enum([
 
 export const CancelDelegationRequestSchema = z
   .object({
-    pendingRequestId: PendingRequestIdSchema,
     organizationId: OrganizationIdSchema,
     crmSubject: CanonicalIdSchema,
     crmSessionHandle: z.string().min(1).max(128),
-    crmSessionDeadline: z.string().min(20).max(40).datetime({ offset: true }),
+    crmSessionDeadline: BindingTimestampSchema,
     callbackId: z.string().min(1).max(64),
     reason: CancelDelegationReasonSchema,
   })
   .strict();
 
 // ============================================================================
-// Revoke (S28 section 4)
+// Revoke.
+// delegationRef IS in the authenticated POST BODY (NOT URL).
+// Body: B + delegationRef + reason.
 // ============================================================================
 
 export const RevokeDelegationReasonSchema = z.enum([
@@ -125,12 +190,12 @@ export const RevokeDelegationReasonSchema = z.enum([
 
 export const RevokeDelegationRequestSchema = z
   .object({
-    delegationRef: DelegationRefSchema,
     organizationId: OrganizationIdSchema,
     crmSubject: CanonicalIdSchema,
     crmSessionHandle: z.string().min(1).max(128),
-    crmSessionDeadline: z.string().min(20).max(40).datetime({ offset: true }),
+    crmSessionDeadline: BindingTimestampSchema,
     callbackId: z.string().min(1).max(64),
+    delegationRef: DelegationRefSchema,
     reason: RevokeDelegationReasonSchema,
   })
   .strict();
@@ -146,8 +211,15 @@ export const DelegationAckSchema = z
   .strict();
 
 // ============================================================================
-// Delegation error envelope (S28 TRANSPORT section 5)
-// DISTINCT from query seven-code parser.
+// Delegation error envelope (F-02):
+//   { status: 'FAILED', error: { code } }  — no messageKey, no detail.
+// Backend errors table from S28 TRANSPORT section 5:
+//   401 AUTHENTICATION_REQUIRED
+//   403 FORBIDDEN
+//   422 VALIDATION_ERROR
+//   429 RATE_LIMITED
+//   503 DEPENDENCY_UNAVAILABLE
+//   500 INTERNAL_ERROR
 // ============================================================================
 
 export const DELEGATION_ERROR_HTTP_STATUS = Object.freeze({
@@ -157,15 +229,6 @@ export const DELEGATION_ERROR_HTTP_STATUS = Object.freeze({
   RATE_LIMITED: 429,
   DEPENDENCY_UNAVAILABLE: 503,
   INTERNAL_ERROR: 500,
-});
-
-export const DELEGATION_ERROR_MESSAGE_KEY = Object.freeze({
-  AUTHENTICATION_REQUIRED: 'errors.authenticationRequired',
-  FORBIDDEN: 'errors.forbidden',
-  VALIDATION_ERROR: 'errors.validation',
-  RATE_LIMITED: 'errors.rateLimited',
-  DEPENDENCY_UNAVAILABLE: 'errors.dependencyUnavailable',
-  INTERNAL_ERROR: 'errors.talentContext.internal',
 });
 
 export const DelegationErrorCodeSchema = z.enum([
@@ -180,18 +243,8 @@ export const DelegationErrorCodeSchema = z.enum([
 export const DelegationErrorSchema = z
   .object({
     code: DelegationErrorCodeSchema,
-    messageKey: z.string(),
   })
-  .strict()
-  .superRefine((value, ctx) => {
-    if (value.messageKey !== DELEGATION_ERROR_MESSAGE_KEY[value.code]) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ['messageKey'],
-        message: 'messageKey does not match delegation triple for code ' + value.code,
-      });
-    }
-  });
+  .strict();
 
 export const DelegationErrorResponseSchema = z
   .object({
@@ -199,3 +252,30 @@ export const DelegationErrorResponseSchema = z
     error: DelegationErrorSchema,
   })
   .strict();
+
+// ============================================================================
+// Internal aggregate DTO (NOT a wire schema).
+// Internal-only record combining immutable B, scope, audience, deadline hashes,
+// HRP session id and effective user id. Exposed only to internal callers and
+// tests; never accepted on any HTTP route or browser surface.
+// ============================================================================
+
+export const InternalAggregateRecordSchema = z
+  .object({
+    schemaVersion: z.literal('1-internal'),
+    pendingRequestId: PendingRequestIdSchema,
+    serviceId: CanonicalIdSchema,
+    binding: CrmBindingSchema,
+    scope: z.literal('talent-context:read:identitySummary'),
+    audience: z.string().min(1).max(256),
+    callbackState: CallbackStateSchema,
+    effectiveHrpUserId: CanonicalIdSchema.optional(),
+    receiptDigest: z.string().regex(/^[A-Fa-f0-9]{64}$/).optional(),
+    handoffProofDigest: z.string().regex(/^[A-Fa-f0-9]{64}$/).optional(),
+    createdAt: BindingTimestampSchema,
+    pendingExpiresAt: BindingTimestampSchema,
+    state: z.enum(['PENDING', 'APPROVED', 'DENIED', 'EXCHANGED', 'CANCELLED', 'REVOKED', 'EXPIRED']),
+  })
+  .strict();
+
+export type InternalAggregateRecord = z.infer<typeof InternalAggregateRecordSchema>;

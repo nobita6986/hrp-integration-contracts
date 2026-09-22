@@ -1,4 +1,4 @@
-﻿import {
+import {
   TalentContextReadResultSchema,
 } from './query-types.js';
 import {
@@ -8,17 +8,12 @@ import {
 
 // ============================================================================
 // Parser - REC-004B section 1 + S28 TRANSPORT section 5.
+// Parses HTTP status + unknown body.
+//   - 200: direct result, no wrapper.
+//   - non-2xx: error envelope; HTTP must match frozen triple.
+//   - unknown version/code/field or shape mismatch: PROTOCOL_ERROR, no fallback.
 // ============================================================================
 
-/**
- * parseTalentContextReadResponse: HTTP status + unknown body.
- *
- * - 200: MUST parse direct result. No wrapper.
- * - non-2xx: MUST parse query error envelope and verify status/code/shape.
- * - unknown version/code/field or shape mismatch: PROTOCOL_ERROR, not raw body.
- * - transport 404 (no body) is NOT treated as object NOT_FOUND unless body
- *   parses correctly.
- */
 export function parseTalentContextReadResponse(httpStatus, body) {
   if (typeof body !== 'object' || body === null || Array.isArray(body)) {
     return {
@@ -39,11 +34,7 @@ export function parseTalentContextReadResponse(httpStatus, body) {
         reason: '200 body failed TalentContextReadResult validation',
       };
     }
-    return {
-      success: true,
-      status: 'OK',
-      result: parsed.data,
-    };
+    return { success: true, status: 'OK', result: parsed.data };
   }
 
   const errParsed = TalentContextReadErrorResponseSchema.safeParse(body);

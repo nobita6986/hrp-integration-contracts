@@ -10,7 +10,7 @@ import {
 
 const validBaseRequest = {
   schemaVersion: '1', correlationId: 'q-12345678', organizationId: 'org-abc',
-  actor: { kind: 'DELEGATED_USER', serviceId: 'svc-hrp-crm', userId: 'user-12345', delegationRef: 'dg-123456789012345678901234567890123456' },
+  actor: { kind: 'DELEGATED_USER', serviceId: 'svc-hrp-crm', userId: 'user-12345', delegationRef: 'dg_' + 'A'.repeat(43) },
   target: { kind: 'TALENT', laborProfileId: 'labor-98765' },
   fieldAllowlist: ['identitySummary'],
 };

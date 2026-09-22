@@ -2,7 +2,19 @@
 
 ## Deviations from MSG-028 / REC-004B / EP-01..EP-06
 
-None. Implementation matches all accepted design documents.
+None. The implementation matches all accepted design documents. Where the
+r2 baseline (`f9cc493`) did not cover an accepted requirement, this
+correction batch (current commit) supplies the missing surface WITHOUT
+changing the agreed semantics:
+
+| F-ID | Subject | Status |
+| --- | --- | --- |
+| F-01 | Pure assertion/profile validators | Implemented in `assertion.ts`. |
+| F-02 | Exact delegation wire (path/body split; code-only error; handoff/decision/callback schemas; CSRF) | Implemented in `delegation.ts` and `delegation-conformance.test.mjs`. |
+| F-03 | Canonical token encoder (prefix + 32 decoded bytes + base64url roundtrip) | Implemented in `primitives.ts` (`canonicalTokenSchema`). |
+| F-04 | Immutable binding grammar + UTC-Z deadline | Implemented in `primitives.ts` (`BindingTimestampSchema`); `IsoTimestampSchema` left untouched for non-binding surfaces. |
+| F-05 | Redaction FEFF, SMP, segmenter, byte bound, omission | Implemented in `redaction.ts`; verified in `redaction-probes.test.mjs`. |
+| F-06 | Request/result conformance helper | Implemented in `conformance.ts`; pinned-vector driven tests replace `assert.ok(true)`. |
 
 ## Pure-validator scope limits
 

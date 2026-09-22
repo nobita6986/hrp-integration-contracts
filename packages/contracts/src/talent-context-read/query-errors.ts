@@ -1,4 +1,4 @@
-﻿import { z } from 'zod';
+import { z } from 'zod';
 import { CorrelationIdSchema, ModuleSchemaVersionSchema } from './primitives.js';
 
 // ============================================================================
@@ -81,10 +81,6 @@ export const TalentContextReadErrorSchema = queryErrorBase.superRefine((value, c
   }
 });
 
-/**
- * Error response envelope. Schema version, status FAILED, correlationId echo,
- * errors array with EXACTLY one error in v1.
- */
 export const TalentContextReadErrorResponseSchema = z
   .object({
     schemaVersion: ModuleSchemaVersionSchema,

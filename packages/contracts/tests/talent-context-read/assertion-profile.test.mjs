@@ -58,7 +58,7 @@ describe('EP-01 query target shape', () => {
 describe('EP-01 delegated user actor', () => {
   test('valid DELEGATED_USER', () => {
     const r = QueryDelegatedUserActorSchema.safeParse({
-      kind: 'DELEGATED_USER', serviceId: 'svc-1', userId: 'u-1', delegationRef: 'dr-1',
+      kind: 'DELEGATED_USER', serviceId: 'svc-1', userId: 'u-1', delegationRef: 'dg_' + 'A'.repeat(43),
     });
     assert.equal(r.success, true);
   });
