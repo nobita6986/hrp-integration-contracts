@@ -9,7 +9,9 @@
       "schemaVersion": "1",
       "actor": {
         "kind": "DELEGATED_USER",
-        "userId": "00000000-0000-0000-0000-00000000a001"
+        "serviceId": "<PLACEHOLDER: HRP-PENDING serviceId>",
+        "userId": "00000000-0000-0000-0000-00000000a001",
+        "delegationRef": "<PLACEHOLDER: HRP-PENDING delegationRef>"
       },
       "fieldAllowlist": [
         "identitySummary.fullNameRedacted",
@@ -19,13 +21,16 @@
       "target": {
         "kind": "TALENT",
         "laborProfileId": "00000000-0000-4000-8000-00000000b001"
-      }
+      },
+      "correlationId": "<placeholder-correlationId>",
+      "organizationId": "<PLACEHOLDER: pinned organizationId per HRP r3 DECISION-REGISTER>"
     },
     "credentials_placeholder": {
       "s2s_assertion": "<PLACEHOLDER: HRP-PENDING kid, algorithm, TTL>",
       "delegation_token": "<PLACEHOLDER: HRP-PENDING format, lifetime>"
     },
-    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema)."
+    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema).",
+    "note_struct_correction": "STRUCT-1/2 applied: correlationId + organizationId added; actor expanded per HRP r3 REC-004B-PROPOSAL. PROPOSED."
   },
   "case_1_2_request_phoneRedacted_unsupported": {
     "shape": "TalentContextReadQueryRequestSchema (proposed)",
@@ -33,7 +38,9 @@
       "schemaVersion": "1",
       "actor": {
         "kind": "DELEGATED_USER",
-        "userId": "00000000-0000-0000-0000-00000000a001"
+        "serviceId": "<PLACEHOLDER: HRP-PENDING serviceId>",
+        "userId": "00000000-0000-0000-0000-00000000a001",
+        "delegationRef": "<PLACEHOLDER: HRP-PENDING delegationRef>"
       },
       "fieldAllowlist": [
         "identitySummary.fullNameRedacted",
@@ -42,16 +49,21 @@
       "target": {
         "kind": "TALENT",
         "laborProfileId": "00000000-0000-4000-8000-00000000b001"
-      }
+      },
+      "correlationId": "<placeholder-correlationId>",
+      "organizationId": "<PLACEHOLDER: pinned organizationId per HRP r3 DECISION-REGISTER>"
     },
-    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema)."
+    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema).",
+    "note_struct_correction": "STRUCT-1/2 applied: correlationId + organizationId added; actor expanded per HRP r3 REC-004B-PROPOSAL. PROPOSED."
   },
   "case_1_3_request_unknown_fakeVersion_field": {
     "body": {
       "schemaVersion": "1",
       "actor": {
         "kind": "DELEGATED_USER",
-        "userId": "00000000-0000-0000-0000-00000000a001"
+        "serviceId": "<PLACEHOLDER: HRP-PENDING serviceId>",
+        "userId": "00000000-0000-0000-0000-00000000a001",
+        "delegationRef": "<PLACEHOLDER: HRP-PENDING delegationRef>"
       },
       "fieldAllowlist": [
         "identitySummary.fullNameRedacted",
@@ -60,9 +72,12 @@
       "target": {
         "kind": "TALENT",
         "laborProfileId": "00000000-0000-4000-8000-00000000b001"
-      }
+      },
+      "correlationId": "<placeholder-correlationId>",
+      "organizationId": "<PLACEHOLDER: pinned organizationId per HRP r3 DECISION-REGISTER>"
     },
-    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema)."
+    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema).",
+    "note_struct_correction": "STRUCT-1/2 applied: correlationId + organizationId added; actor expanded per HRP r3 REC-004B-PROPOSAL. PROPOSED."
   },
   "case_2_1_service_only_no_actor": {
     "body": {
@@ -73,17 +88,22 @@
       "target": {
         "kind": "TALENT",
         "laborProfileId": "00000000-0000-4000-8000-00000000b001"
-      }
+      },
+      "correlationId": "<placeholder-correlationId>",
+      "organizationId": "<PLACEHOLDER: pinned organizationId per HRP r3 DECISION-REGISTER>"
     },
     "note": "No 'actor' body. Pure service-only attempt. MUST be rejected.",
-    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema)."
+    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema).",
+    "note_struct_correction": "STRUCT-1/2 applied: correlationId + organizationId added; actor expanded per HRP r3 REC-004B-PROPOSAL. PROPOSED."
   },
   "case_2_2_service_only_stub_actor_no_delegation": {
     "body": {
       "schemaVersion": "1",
       "actor": {
         "kind": "DELEGATED_USER",
-        "userId": "00000000-0000-0000-0000-00000000a001"
+        "serviceId": "<PLACEHOLDER: HRP-PENDING serviceId>",
+        "userId": "00000000-0000-0000-0000-00000000a001",
+        "delegationRef": "<PLACEHOLDER: HRP-PENDING delegationRef>"
       },
       "fieldAllowlist": [
         "identitySummary.fullNameRedacted"
@@ -91,10 +111,13 @@
       "target": {
         "kind": "TALENT",
         "laborProfileId": "00000000-0000-4000-8000-00000000b001"
-      }
+      },
+      "correlationId": "<placeholder-correlationId>",
+      "organizationId": "<PLACEHOLDER: pinned organizationId per HRP r3 DECISION-REGISTER>"
     },
     "note": "Body claims an actor but no delegation token is attached.",
-    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema)."
+    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema).",
+    "note_struct_correction": "STRUCT-1/2 applied: correlationId + organizationId added; actor expanded per HRP r3 REC-004B-PROPOSAL. PROPOSED."
   },
   "case_2_3a_user_inactive": {
     "delegation_state": "valid",
@@ -132,9 +155,12 @@
       "target": {
         "kind": "TALENT",
         "laborProfileId": "not-a-uuid"
-      }
+      },
+      "correlationId": "<placeholder-correlationId>",
+      "organizationId": "<PLACEHOLDER: pinned organizationId per HRP r3 DECISION-REGISTER>"
     },
-    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema)."
+    "note_target_wrapper": "kind and laborProfileId wrapped under 'target' per r4/r6 DELTA-PROPOSAL.md (HRP-proposed additive TalentContextReadQueryRequestSchema).",
+    "note_struct_correction": "STRUCT-1/2 applied: correlationId + organizationId added; actor expanded per HRP r3 REC-004B-PROPOSAL. PROPOSED."
   },
   "case_4_1_supported": {
     "fieldAllowlist": [
@@ -209,5 +235,6 @@
   "case_5_7_replay_store_unavailable": {
     "s2s_assertion": "<fresh-jti>",
     "replay_store_state": "DOWN"
-  }
+  },
+  "_note_fieldAllowlist_enum": "STRUCT-3: fieldAllowlist values should match TalentContextReadField enum per HRP r3 REC-004B-PROPOSAL L71-79. Unknown strings rejected 422 per existing AC. PROPOSED."
 }

@@ -64,7 +64,15 @@ See cases/01-valid-read.md and cases/04-fields.md.
 - D-04: r6 REC-004B + HRP r6 DESIGN-RESPONSE.md (error envelope: reuse frozen codes; query-specific codes PROPOSED).
 - REPLAY-VS-RETRY.md: r6 (replay token one-shot; retry is new request).
 
+## Additional Source: HRP CONTRACT-02B followup r3
+
+- Commit 8a28678: reconciliation/hrp/CONTRACT-02B-followup/r3/
+- Introduces retryClass=NEVER for INTERNAL_ERROR (not RETRY_SAFE).
+- Introduces STRUCT-1..3 for request envelope, actor shape, fieldAllowlist enum.
+- All HRP r3 items recorded as PROPOSED in CORRECTION-DELTA.md.
+
 ## Confirmation Points for HRP
 
 Each case notes HRP-PENDING points. See case files for "HRP confirmation points" sections.
-See GAP-LIST.md for the full list.
+See GAP-LIST.md for the full list of open items.
+See CORRECTION-DELTA.md for the complete correction log.

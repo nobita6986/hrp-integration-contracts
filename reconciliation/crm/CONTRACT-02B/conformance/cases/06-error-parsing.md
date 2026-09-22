@@ -135,11 +135,12 @@ Expected server behavior (i.e. what MUST NOT leak):
 - No environment hints: "/var/lib/postgresql/data/..."
 
 Expected consumer behavior:
-- Parser sees INTERNAL_ERROR - maps to generic "try again" UX.
-- retryClass=RETRY_SAFE - consumer MAY schedule backoff retry.
+- Parser sees INTERNAL_ERROR - maps to generic error UX.
+- retryClass=NEVER (CORR-1: corrected from RETRY_SAFE per HRP r3 REC-004B-PROPOSAL; PROPOSED awaiting HRP confirmation).
+- Consumer MUST NOT schedule a retry on INTERNAL_ERROR.
 - MUST NOT echo any of the unsafe variants (even if they appear; consumer should treat the body as opaque beyond code/retryClass/correlationId).
 - Nguon decision/AC: HRP r6 D-04 sec 2 ("INTERNAL_ERROR MUST NOT leak exception, SQL, stack trace or PII").
-- Status: AGREED_DIRECTION.
+- Status: PROPOSED (HRP r3 proposes NEVER; awaiting bilateral confirmation).
 
 ### Case 6.5 - Multiple errors in errors[] - MUST parse all
 
