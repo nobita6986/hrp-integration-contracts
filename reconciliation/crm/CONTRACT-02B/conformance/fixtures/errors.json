@@ -238,11 +238,11 @@
         {
           "code": "DEPENDENCY_UNAVAILABLE",
           "messageKey": "errors.dependencyUnavailable",
-          "retryClass": "RETRY_SAFE"
+          "retryClass": "BOUNDED_NEW_ASSERTION"
         }
       ]
     },
-    "note": "CORR-3: Frozen messageKey required. CONFIRMED: errors.dependencyUnavailable per errors.ts L55."
+    "note": "CORR-3: Frozen messageKey required. CONFIRMED: errors.dependencyUnavailable per errors.ts L55. CORR-5B: DEPENDENCY_UNAVAILABLE retryClass=BOUNDED_NEW_ASSERTION per r4 REC-004B. Fixed from RETRY_SAFE."
   },
   "case_6_3_unknown_code_forward_compat": {
     "httpStatus": 422,
@@ -254,11 +254,11 @@
         {
           "code": "BRAND_NEW_CODE_FROM_FUTURE_RELEASE",
           "messageKey": "errors.talentContext.future.something",
-          "retryClass": "RETRY_SAFE"
+          "retryClass": "<query-only-retry>"
         }
       ]
     },
-    "note": "Consumer parser must NOT crash on unknown code. This case is illustrative of forward compatibility."
+    "note": "Consumer parser must NOT crash on unknown code. This case is illustrative of forward compatibility. CORR-6B: RETRY_SAFE removed (not frozen). Frozen RetryClassSchema: NEVER|REAUTHENTICATE|REVIEW_REQUIRED|BOUNDED_SAME_KEY|RECONCILE_FIRST."
   },
   "case_6_4_internal_error_no_leak": {
     "httpStatus": 500,
@@ -308,17 +308,17 @@
       "errors": [
         {
           "code": "VALIDATION_ERROR",
-          "messageKey": "errors.talentContext.field.bad",
+          "messageKey": "errors.validation",
           "retryClass": "NEVER"
         },
         {
           "code": "RATE_LIMITED",
-          "messageKey": "errors.talentContext.rate.tooMany",
-          "retryClass": "RETRY_SAFE"
+          "messageKey": "errors.rateLimited",
+          "retryClass": "BOUNDED_NEW_ASSERTION"
         }
       ]
     },
-    "note": "Consumer policy: prioritize user-fixable (VALIDATION_ERROR) before scheduling retry on rate-limit signal."
+    "note": "Consumer policy: prioritize user-fixable (VALIDATION_ERROR) before scheduling retry on rate-limit signal. CORR-6C: RETRY_SAFE->BOUNDED_NEW_ASSERTION; messageKey fixed per frozen. CORR-6C: RETRY_SAFE->BOUNDED_NEW_ASSERTION; VALIDATION_ERROR/RATE_LIMITED messageKey fixed per frozen."
   },
   "case_6_6_empty_errors_array": {
     "httpStatus": 500,

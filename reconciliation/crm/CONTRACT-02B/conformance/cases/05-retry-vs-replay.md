@@ -2,14 +2,17 @@
 
 ## Status
 
-- Replay vs retry semantics: AGREED_DIRECTION (r6 REPLAY-VS-RETRY.md).
+- Replay credential (jti one-shot): AGREED_DIRECTION (r6 REPLAY-VS-RETRY.md).
+- Retry semantics (correlationId kept; new jti; reauthorize): PROPOSED (r4 followup REC-002 §4). See `cases/05A-retry-reauthorize.md` for corrected retry cases.
+- Retry literal `BOUNDED_NEW_ASSERTION` vs `BOUNDED_SAME_KEY`: PROPOSED (r4 followup REC-004B §3). See `cases/05C-seven-code-parser.md`.
 - Implementation specifics (jti format, replay store, retry-after): OPEN, HRP-PENDING.
 - DRAFT only.
+- **NOTE**: r6 "NEW correlationId for each retry" is corrected by r4 followup. See CORR-05 in CORRECTION-DELTA.md.
 
 ## Source of Decision / AC
 
-- r6 REPLAY-VS-RETRY.md: replay token is one-shot; retry is a NEW request with NEW jti, NEW correlationId.
-- r6 REPLAY-VS-RETRY.md: "jti consumption is atomic (SET-if-absent with fail-closed semantics)".
+- r6 REPLAY-VS-RETRY.md: replay token is one-shot; jti consumption is atomic (SET-if-absent with fail-closed semantics).
+- **r4 followup REC-002 §4**: retry giữ cùng `correlationId` cho cùng logical read; mỗi attempt dùng assertion/jti mới; refresh do user chủ động là logical read mới nên correlationId mới.
 - r6 REPLAY-VS-RETRY.md: "Replay store unavailability = DEPENDENCY_UNAVAILABLE (503), reject closed".
 - CRM r6 REC-002 AC #5: Concurrent replay (duplicate jti) -> AUTHENTICATION_REQUIRED 401.
 - CRM r6 REC-002 AC #14: Replay store unavailable -> DEPENDENCY_UNAVAILABLE 503.
@@ -38,16 +41,29 @@ Nguon decision/AC:
 
 Status: AGREED_DIRECTION.
 
-### Case 5.2 - Retry with NEW jti after transient 5xx (DEPENDENCY_UNAVAILABLE) - MUST SUCCEED OR RE-FAIL CLEANLY
+### Case 5.2 - Retry with NEW jti after transient 5xx (DEPENDENCY_UNAVAILABLE) - reauthorize and retry
 
 Input synthetic:
 - Previous response: HTTP 503 DEPENDENCY_UNAVAILABLE (server-side upstream transient).
-- Caller now issues NEW request with NEW jti, NEW correlationId, same business intent (same laborProfileId, same fieldAllowlist).
+- Caller now issues NEW request with NEW jti, same logical correlationId (same business intent), same laborProfileId, same fieldAllowlist.
 
 Expected behavior:
-- HTTP 200 with normal result OR HTTP 5xx again (a fresh transient failure is acceptable).
-- MUST NOT echo the old correlationId.
-- The replay store is untouched for the prior jti (prior jti remains consumed; this is a fresh credential).
+- HTTP 200 (nếu transient đã giải quyết) HOẶC HTTP 5xx lại (fresh transient failure vẫn possible) HOẶC HTTP 403 (nếu revoke xảy ra giữa attempt).
+- **Không semantic guarantee rằng retry thành công.** Retry là do caller quyết, không phải server promise.
+- Server recheck toàn bộ: auth + delegation + user + org + object authorization.
+- After 5xx: `retryClass: BOUNDED_NEW_ASSERTION` per r4 query-only profile; caller bounded/backoff, assertion mới.
+- response body vẫn giữ cùng `correlationId: C` (same logical read).
+
+Nguon decision/AC:
+- r4 REC-002 §4 (retry không phải replay).
+- r4 REC-002 §3 (mọi retry kiểm toàn bộ auth/authz lại).
+- r4 REC-004B §3 (BOUNDED_NEW_ASSERTION cho transient errors).
+- r6 REPLAY-VS-RETRY.md (retry distinction).
+- CRM r6 REC-002 AC #14.
+
+Status: PROPOSED.
+
+HRP confirmation point: HRP-13, HRP-16.
 
 Nguon decision/AC:
 - r6 REPLAY-VS-RETRY.md (retry distinction).

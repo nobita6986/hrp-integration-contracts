@@ -5,6 +5,9 @@
 - CRM r6 commit (content): eb586247fe1a147bc904ff69d49104e8609943ff
 - CRM r7 commit (metadata): f908de06ed22a204c2cecfa8f051b5130216e8c3
 - HRP response r6 commit: a2a5efa9f6e22e8beb1e858054a2585d343b4bea
+- HRP followup r4 bundle (MSG-025): commit 53e6db53a929409b1dc7b512a1ec897a3af5b659
+  - Bundle: reconciliation/hrp/CONTRACT-02B-followup/r4/
+  - Manifest raw SHA-256: e6f9dd0e2810525fde4743af16aca4bc6b2045dbe7c8de2f86c5aa8a49ee99f8 (T0 verified 5/5 entries)
 - Bundle location: reconciliation/crm/CONTRACT-02B/conformance/
 - Status: DRAFT, READY FOR T0 REVIEW
 
@@ -51,7 +54,10 @@ See cases/01-valid-read.md and cases/04-fields.md.
 - See cases/04-fields.md.
 
 ### Category 5: Retry valid query vs replay credential
-- See cases/05-retry-vs-replay.md.
+- See cases/05-retry-vs-replay.md (replay one-shot: AGREED_DIRECTION).
+- See cases/05A-retry-reauthorize.md (retry semantics per r4: same correlationId, new jti, reauthorize; PROPOSED).
+- See cases/05B-exchange-cancel-receipt.md (issuance/exchange/cancel; NEW capability, PROPOSED).
+- See cases/05C-seven-code-parser.md (seven-code query parser; BOUNDED_NEW_ASSERTION literal; PROPOSED).
 
 ### Category 6: Consumer error parser handling
 - See cases/06-error-parsing.md.
@@ -62,14 +68,22 @@ See cases/01-valid-read.md and cases/04-fields.md.
 - D-02: r6 REC-002 + HRP r6 DESIGN-RESPONSE.md (additive read result schema, no snapshotVersion).
 - D-03: r6 REC-002 + HRP r6 DESIGN-RESPONSE.md (S2S + DELEGATED_USER + effective user + org binding server-side).
 - D-04: r6 REC-004B + HRP r6 DESIGN-RESPONSE.md (error envelope: reuse frozen codes; query-specific codes PROPOSED).
-- REPLAY-VS-RETRY.md: r6 (replay token one-shot; retry is new request).
+- REPLAY-VS-RETRY.md: r6 (replay token one-shot; retry distinction per r4: same logical correlationId + new jti).
+- r4 REC-002 §1-5: issuance/exchange/cancel/retry/revoke (NEW capability).
+- r4 REC-004B §3: seven-code parser + BOUNDED_NEW_ASSERTION literal.
 
-## Additional Source: HRP CONTRACT-02B followup r3
+## Additional Source: HRP CONTRACT-02B followup r4 (MSG-025)
 
-- Commit 8a28678: reconciliation/hrp/CONTRACT-02B-followup/r3/
-- Introduces retryClass=NEVER for INTERNAL_ERROR (not RETRY_SAFE).
-- Introduces STRUCT-1..3 for request envelope, actor shape, fieldAllowlist enum.
-- All HRP r3 items recorded as PROPOSED in CORRECTION-DELTA.md.
+- Commit 53e6db53a929409b1dc7b512a1ec897a3af5b659: reconciliation/hrp/CONTRACT-02B-followup/r4/
+- Delta over r3:
+  - Exchange/cancel/receipt lifecycle (NEW capability, HRP-owned).
+  - Retry corrections: same logical correlationId + new jti + reauthorize (not "must succeed" or "new correlationId each retry").
+  - BOUNDED_NEW_ASSERTION literal proposal (not frozen; query-only).
+  - Seven-code query parser (frozen 5 codes + 2 query additions + query-only retry literal).
+  - Revocation race; authority store unavailability.
+  - Exact issuance/exchange/cancel transport shapes still OPEN (HRP-PENDING).
+- All r4 items recorded as PROPOSED in CORRECTION-DELTA.md.
+- r3 followup items (8a28678) remain valid: retryClass=NEVER for INTERNAL_ERROR, STRUCT-1..3.
 
 ## Confirmation Points for HRP
 

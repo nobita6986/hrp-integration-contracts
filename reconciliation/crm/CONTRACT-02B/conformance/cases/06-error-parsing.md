@@ -89,20 +89,21 @@ Server response with a code the consumer parser does NOT know yet:
     {
       "code": "BRAND_NEW_CODE_FROM_FUTURE_RELEASE",
       "messageKey": "errors.talentContext.future.something",
-      "retryClass": "RETRY_SAFE"
+      "retryClass": "<query-only-retry>"
     }
   ]
 }
 ```
 
+NOTE: `RETRY_SAFE` is NOT a frozen literal (frozen `RetryClassSchema` has 5 values only: `NEVER | REAUTHENTICATE | REVIEW_REQUIRED | BOUNDED_SAME_KEY | RECONCILE_FIRST`). The literal above uses `<query-only-retry>` as placeholder; actual future codes must use one of the frozen values or the query-only literal if bilateral accepts `BOUNDED_NEW_ASSERTION`.
+
 Expected consumer behavior:
 - Parser does NOT crash on unknown code.
 - Consumer MAY treat the response as a generic failure with a logged unknown-code warning.
-- MAY honor retryClass if known (RETRY_SAFE -> schedule backoff; NEVER -> suppress).
 - MUST NOT echo raw code or messageKey to end-user.
-- The exhaustiveness of switch statements MUST be avoided (per CRM r6 REC-004B principle, even though that exact principle is now applied to the parser since the codes are additive).
-- Nguon decision/AC: r6 REC-004B (forward-compat note).
-- Status: PROPOSED. CRM T1-B drafts the policy; HRP can revise.
+- The exhaustiveness of switch statements MUST be avoided (per r4 REC-004B §3, query-local discriminated union; unknown code → protocol failure).
+- Nguon decision/AC: r4 REC-004B §3 (forward-compat: unknown code → protocol failure; not retryClass-based dispatch).
+- Status: PROPOSED.
 
 HRP confirmation point: confirm no requirement that consumers exhaustively handle codes (vs. a parser that requires exhaustiveness).
 
@@ -118,12 +119,14 @@ Server response (placeholder; shows the safety floor):
   "errors": [
     {
       "code": "INTERNAL_ERROR",
-      "messageKey": "errors.talentContext.read.internal",
-      "retryClass": "RETRY_SAFE"
+      "messageKey": "errors.talentContext.internal",
+      "retryClass": "NEVER"
     }
   ]
 }
 ```
+
+NOTE: `RETRY_SAFE` was removed (CORR-1 applied). Frozen `RetryClassSchema` has no `RETRY_SAFE`. INTERNAL_ERROR retryClass = NEVER per r4 REC-004B §3.
 
 NOTE: The synthetic response above is the safe shape. The NOT-safe variants listed below MUST NOT appear in the response and MUST NOT be inferred by the consumer.
 
@@ -152,21 +155,23 @@ Server response with two errors:
   "status": "FAILED",
   "correlationId": "<corr-...>",
   "errors": [
-    {"code": "VALIDATION_ERROR", "messageKey": "errors.talentContext.field.bad", "retryClass": "NEVER"},
-    {"code": "RATE_LIMITED", "messageKey": "errors.talentContext.rate.tooMany", "retryClass": "RETRY_SAFE"}
+    {"code": "VALIDATION_ERROR", "messageKey": "errors.validation", "retryClass": "NEVER"},
+    {"code": "RATE_LIMITED", "messageKey": "errors.rateLimited", "retryClass": "BOUNDED_NEW_ASSERTION"}
   ]
 }
 ```
 
+NOTE: `errors.talentContext.rate.tooMany` and `RETRY_SAFE` removed per CORR-2c and r4 REC-004B §3. RATE_LIMITED uses frozen messageKey + query-only BOUNDED_NEW_ASSERTION per r4.
+
 Expected consumer behavior:
 - Parser iterates ALL entries.
 - Consumer MAY prioritize: VALIDATION_ERROR first (user-fixable), then RATE_LIMITED.
-- retryClass=RETRY_SAFE only if at least one entry says RETRY_SAFE AND the higher-priority entries do not say NEVER - this is a consumer policy decision.
+- retryClass resolved per-entry; query-only retry profile: BOUNDED_NEW_ASSERTION allows bounded retry with new assertion.
 - MUST NOT crash.
-- Nguon decision/AC: r6 REC-004B (error envelope).
-- Status: AGREED_DIRECTION.
+- Nguon decision/AC: r4 REC-004B §3 (query-local discriminated union).
+- Status: PROPOSED.
 
-HRP confirmation point: confirm errors[] size upper bound (bilateral).
+HRP confirmation point: confirm errors[] size upper bound; confirm BOUNDED_NEW_ASSERTION literal.
 
 ### Case 6.6 - Missing errors[] - MUST be treated as INTERNAL_ERROR-like at consumer
 
@@ -182,14 +187,12 @@ Server response with empty errors[]:
 ```
 
 Expected consumer behavior:
-- Treat as INTERNAL_ERROR-like fallback.
-- retryClass=RETRY_UNSAFE (cannot classify).
+- Treat as UNKNOWN_COMMAND_OUTCOME-like fallback per CORR-4.
+- retryClass=RECONCILE_FIRST (frozen UNKNOWN_COMMAND_OUTCOME triple at errors.ts L59-61).
 - MUST NOT crash.
 - Log empty errors as anomaly.
-- Nguon decision/AC: PROPOSED (CRM T1-B drafts; HRP can revise).
+- Nguon decision/AC: CORR-4 (frozen errors.ts L59-61).
 - Status: PROPOSED.
-
-HRP confirmation point: confirm server MUST always include at least one error entry on FAILED status.
 
 ## What these cases do NOT cover
 
