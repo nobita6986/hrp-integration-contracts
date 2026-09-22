@@ -2,8 +2,8 @@
 
 ## Proposed algorithm
 
-\`identitySummary.fullNameRedacted\` is optional and is the only personal
-presentation field in this slice. \`displayOnly\` is always \`true\`. It is not
+`identitySummary.fullNameRedacted` is optional and is the only personal
+presentation field in this slice. `displayOnly` is always `true`. It is not
 a canonical name, a matching key, or an authorization input.
 
 1. Read the canonical HRP display-name value only after the effective-user
@@ -19,7 +19,7 @@ a canonical name, a matching key, or an authorization input.
    infer a substitute from phone, email, document data, or another profile
    field.
 5. For every remaining token, emit its first grapheme followed by exactly two
-   bullet characters (\`••\`). Join masked tokens with one space. The output
+   bullet characters (`••`). Join masked tokens with one space. The output
    therefore reveals initials only, not original token length or suffix.
 6. If the required Unicode grapheme segmentation facility is unavailable or
    produces an error, omit the field fail-closed.
@@ -32,19 +32,18 @@ into an error message or log.
 
 These are invented examples, not production data.
 
-| Input | Expected \`fullNameRedacted\` | Rationale |
+| Input | Expected `fullNameRedacted` | Rationale |
 | --- | --- | --- |
-| \`Nguyễn Văn An\` | \`N•• V•• A••\` | NFC Vietnamese letters; three safe tokens. |
-| \`Élodie Durand\` | \`É•• D••\` | Decomposed accent normalizes to NFC before segmentation. |
-| \`李 小龍\` | \`李•• 小••\` | Unicode letters; each token has at least two graphemes. |
-| \`O'Connor\` | \`O••\` | Apostrophe is permitted but not reproduced. |
-| \`Жан-Поль\` | \`Ж••\` | Hyphen is permitted but not reproduced. |
-| \`A\` | omitted | One-grapheme token cannot be safely redacted. |
+| `Nguyễn Văn An` | `N•• V•• A••` | NFC Vietnamese letters; three safe tokens. |
+| `Élodie Durand` | `É•• D••` | Decomposed accent normalizes to NFC before segmentation. |
+| `李 小龍` | `李•• 小••` | Unicode letters; each token has at least two graphemes. |
+| `O'Connor` | `O••` | Apostrophe is permitted but not reproduced. |
+| `Жан-Поль` | `Ж••` | Hyphen is permitted but not reproduced. |
+| `A` | omitted | One-grapheme token cannot be safely redacted. |
 | whitespace only | omitted | No presentation value. |
-| \`A1pha Name\` | omitted | Digits are outside the safe input class. |
-| \`User\\u202EName\` | omitted | Bidi control is rejected. |
-| \`👩‍💻 Test\` | omitted | Pictograph input is rejected. |
+| `A1pha Name` | omitted | Digits are outside the safe input class. |
+| `User\\u202EName` | omitted | Bidi control is rejected. |
+| `👩‍💻 Test` | omitted | Pictograph input is rejected. |
 
-No phone number, national ID/CCCD, raw \`LaborProfileDetailDto\`, source name,
+No phone number, national ID/CCCD, raw `LaborProfileDetailDto`, source name,
 or unsupported requested field is emitted when omission occurs.
-

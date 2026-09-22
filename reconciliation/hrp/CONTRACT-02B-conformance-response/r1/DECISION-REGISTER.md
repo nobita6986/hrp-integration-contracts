@@ -15,9 +15,8 @@
 ## Carried Owner-approved decisions
 
 The following remain exactly as recorded in MSG-026: eligible roles are
-\`ADMIN\`, \`HR_MANAGER\`, and \`HR_STAFF\` with no expanded object permission;
+`ADMIN`, `HR_MANAGER`, and `HR_STAFF` with no expanded object permission;
 HRP login plus explicit approval is required; service-only reads are denied;
 delegation lasts at most 15 minutes and never auto-renews; the controlled
 pilot accepts bounded cross-system revoke delay until expiry. These decisions
-do not authorize a rollout or make \`ACCEPTED_SHARED\` non-\`NONE\`.
-
+do not authorize a rollout or make `ACCEPTED_SHARED` non-`NONE`.
