@@ -1,0 +1,1603 @@
+{
+  "reviewedSha": "272e883ef48c552054849905d7b75695b7ac4d8f",
+  "observedHead": "272e883ef48c552054849905d7b75695b7ac4d8f",
+  "observedAt": "2026-09-23T10:17:31.213Z",
+  "node": "v24.19.0",
+  "integrity": [
+    {
+      "path": "packages/contracts/manifest.sha256",
+      "sha256": "7c0e8d1a1956bbce95a53a12f652031ab7e46ab153be0b4cdceef25bc2d9a4c5",
+      "entries": [
+        {
+          "file": "packages/contracts/package-lock.json",
+          "expected": "ecda1d3c0ac846740fe1f44f79563313ec5909ccd8da52d4b4a6a4de0b86dd43",
+          "actual": "ecda1d3c0ac846740fe1f44f79563313ec5909ccd8da52d4b4a6a4de0b86dd43",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/package.json",
+          "expected": "724fd1405aefad7f969bca7edddae2daffc5c97cd750507e21c5b7ef8f665396",
+          "actual": "724fd1405aefad7f969bca7edddae2daffc5c97cd750507e21c5b7ef8f665396",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/scripts/generate-manifest.mjs",
+          "expected": "31799e5f7916d9df76aa5fb9703ed034b32f35c668af0164787b5d5d367b3b2c",
+          "actual": "31799e5f7916d9df76aa5fb9703ed034b32f35c668af0164787b5d5d367b3b2c",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/assertion.ts",
+          "expected": "de8672e2db7ab22f68affa009c521374f6074d9da4f0299ef32902da4ed361cc",
+          "actual": "de8672e2db7ab22f68affa009c521374f6074d9da4f0299ef32902da4ed361cc",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/conformance.ts",
+          "expected": "49c7ff1162a3f856febc144e08cc38358e0c16de84262a7f3a35927bd2fae3a8",
+          "actual": "49c7ff1162a3f856febc144e08cc38358e0c16de84262a7f3a35927bd2fae3a8",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/delegation.ts",
+          "expected": "cf11119bcd9da1ead4bc0e29986f557de79c406641d925486470ea11b9ab8921",
+          "actual": "cf11119bcd9da1ead4bc0e29986f557de79c406641d925486470ea11b9ab8921",
+          "match": true,
+          "utf8": true,
+          "bom": true,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/index.ts",
+          "expected": "7a2cbc82242cac2609594bebdcaee2ca04710f272c7ef218974168484f4e0a4b",
+          "actual": "7a2cbc82242cac2609594bebdcaee2ca04710f272c7ef218974168484f4e0a4b",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/package.json",
+          "expected": "05b7d717deb12201272469363567bf44a70a231d81f44b4ed5e15c9a3f283f46",
+          "actual": "05b7d717deb12201272469363567bf44a70a231d81f44b4ed5e15c9a3f283f46",
+          "match": true,
+          "utf8": true,
+          "bom": true,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/primitives.ts",
+          "expected": "30f8fcb258cdf565745786f15be6f4cff45ba8ccb16fe3a7363fb7ae4eb8b0d6",
+          "actual": "30f8fcb258cdf565745786f15be6f4cff45ba8ccb16fe3a7363fb7ae4eb8b0d6",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/query-errors.ts",
+          "expected": "d4268d55dd0deadcdee2e6b58400956c5370f118ace74e483dbe6169d3e7e697",
+          "actual": "d4268d55dd0deadcdee2e6b58400956c5370f118ace74e483dbe6169d3e7e697",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/query-parser.ts",
+          "expected": "bd695eb6d743ace4e26e656c52e29fbc776accac5936767fd2bfb11e4dea05d7",
+          "actual": "bd695eb6d743ace4e26e656c52e29fbc776accac5936767fd2bfb11e4dea05d7",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/query-types.ts",
+          "expected": "fc005908a366ed6fd6b94329fd358a8ae24ed7094b23fa7be97fbbccd8846e5d",
+          "actual": "fc005908a366ed6fd6b94329fd358a8ae24ed7094b23fa7be97fbbccd8846e5d",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/redaction.ts",
+          "expected": "dcaabbc9eba44e359cdbad9da4f8848f0fc069c4cf8e47b0eb12e3184e4aa449",
+          "actual": "dcaabbc9eba44e359cdbad9da4f8848f0fc069c4cf8e47b0eb12e3184e4aa449",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/fixtures/redaction-vectors.fixtures.json",
+          "expected": "35a3729fb6492892ca2d6b772187d8006bcf09cd3d983428fe9e46b5ab73785f",
+          "actual": "35a3729fb6492892ca2d6b772187d8006bcf09cd3d983428fe9e46b5ab73785f",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/generator/generator-manifest.test.mjs",
+          "expected": "755aa70405777b6ff62f67a605951f094980e9eb960f9537717c2c52b350c8c1",
+          "actual": "755aa70405777b6ff62f67a605951f094980e9eb960f9537717c2c52b350c8c1",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/assertion-profile.test.mjs",
+          "expected": "b20ae50d63682cd445a6b00885c92f408802a57a9deb86d58038e5f534331f86",
+          "actual": "b20ae50d63682cd445a6b00885c92f408802a57a9deb86d58038e5f534331f86",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": true,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/assertion-validators.test.mjs",
+          "expected": "35f549268d1504bbf8dbf3a64fdee0cbd4bd664218e3130c5c3b423667299c3d",
+          "actual": "35f549268d1504bbf8dbf3a64fdee0cbd4bd664218e3130c5c3b423667299c3d",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/conformance-helper.test.mjs",
+          "expected": "ce0e6b0c52613753711af4b8cac05cb0283b120886d836208c59d63d59ddb5d2",
+          "actual": "ce0e6b0c52613753711af4b8cac05cb0283b120886d836208c59d63d59ddb5d2",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/delegation-conformance.test.mjs",
+          "expected": "cfd35bd4f9878d3d96ccb38eac7e7c66c9bc81366227c5be2241869b5de5f539",
+          "actual": "cfd35bd4f9878d3d96ccb38eac7e7c66c9bc81366227c5be2241869b5de5f539",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": true,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/query-conformance.test.mjs",
+          "expected": "b5da8348389b0ff77fe3036fb5671fdfd0b3504d0292b331625937e75a183fe8",
+          "actual": "b5da8348389b0ff77fe3036fb5671fdfd0b3504d0292b331625937e75a183fe8",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": true,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/redaction-probes.test.mjs",
+          "expected": "705c9c6b3fec8b6cbd35d745c3aa1fcd1a500aa6f8cde7e618c834f0820764df",
+          "actual": "705c9c6b3fec8b6cbd35d745c3aa1fcd1a500aa6f8cde7e618c834f0820764df",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/redaction-vectors.test.mjs",
+          "expected": "770a5c3277e65aed0d1fd4773fdc8ac64a9bd2bfe558379052993b105eb0a77c",
+          "actual": "770a5c3277e65aed0d1fd4773fdc8ac64a9bd2bfe558379052993b105eb0a77c",
+          "match": true,
+          "utf8": true,
+          "bom": true,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tsconfig.json",
+          "expected": "c18b9065f718d026a0a01cc684dbf9144d07af9b40e1124f31096659892d90b3",
+          "actual": "c18b9065f718d026a0a01cc684dbf9144d07af9b40e1124f31096659892d90b3",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "reconciliation/crm/CONTRACT-03A/r2/manifest.txt",
+      "sha256": "adff813d6cc72c932ca95d2c57f1606737c99fbd31f0734ae6f15467a8445209",
+      "entries": [
+        {
+          "file": "reconciliation/crm/CONTRACT-03A/r2/README.md",
+          "expected": "a9e3455d4a63cb158119af023c9cd0c862d09adbf6586776e5e09da8439b7337",
+          "actual": "a9e3455d4a63cb158119af023c9cd0c862d09adbf6586776e5e09da8439b7337",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "reconciliation/crm/CONTRACT-03A/r2/AC-EVIDENCE.md",
+          "expected": "f497ebdbcd61d87ebbc7914f8212e4568e2fe2a8f9c5908985d7735cdd2eb1c1",
+          "actual": "f497ebdbcd61d87ebbc7914f8212e4568e2fe2a8f9c5908985d7735cdd2eb1c1",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "reconciliation/crm/CONTRACT-03A/r2/NOTES.md",
+          "expected": "4c8bd8b2effb47ee72e11c772492b3ff6bd7c9fbe9558622db2ac227e8a3de75",
+          "actual": "4c8bd8b2effb47ee72e11c772492b3ff6bd7c9fbe9558622db2ac227e8a3de75",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "reconciliation/crm/CONTRACT-03A/r2/I-01-CLOSURE.md",
+          "expected": "2bd4cead0e3a3addffd1d0b3bfec6524e50aca50e996da30b3625f696228ebe4",
+          "actual": "2bd4cead0e3a3addffd1d0b3bfec6524e50aca50e996da30b3625f696228ebe4",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "vectorHash": "a7e7ae0b32629a9dedd2a20031086460a606271c5cf305bbc76c14a76783e428",
+  "vectorBytes": 4118,
+  "vectorDeltas": [],
+  "records": [
+    {
+      "id": "pin checkout source/config/test/docs bytes to reviewed commit",
+      "expected": [],
+      "actual": [],
+      "pass": true
+    },
+    {
+      "id": "I01 all manifest entries raw-blob SHA256 match",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "I01 coverage complete",
+      "expected": [],
+      "actual": [],
+      "pass": true
+    },
+    {
+      "id": "I01 covered files strict UTF8 no NUL or replacement",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "I01 generator LF no BOM",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "I01 generator verify exit zero",
+      "expected": 0,
+      "actual": 0,
+      "pass": true
+    },
+    {
+      "id": "I01 generator verify leaves all tracked file bytes unchanged",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F01 accepted EP01 claims must parse",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F01 accepted EP01 query profile must pass entrypoint",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F01 accepted EP01 create profile must pass entrypoint",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F01 reject HS256 through entrypoint",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 reject generic JWT typ through entrypoint",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 reject wrong registered issuer",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 reject arbitrary string scope",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 reject nbf",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 reject unapproved organizationIdDigest",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 reject negative epoch",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 reject unsafe integer epoch",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 exp+skew boundary rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 wrong body hash rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 crit rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 raw escaped duplicate rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 raw nested duplicate rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 query accepted actor cannot be stripped/rejected by claims schema",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 exchange excludes path id",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 exchange rejects body path id",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F02 code-only delegation error",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 exchange result effective user mandatory",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 supported Buffer fallback canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 supported Buffer fallback canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 supported Buffer fallback canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 create valid binding",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 create reject {\"callbackId\":\"bad id\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 create reject {\"crmSessionHandle\":\"bad\\nhandle\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 create reject {\"crmSessionHandle\":\"_session\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 create reject {\"crmSessionHandle\":\"-session\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 create reject {\"crmSessionDeadline\":\"2026-02-30T10:00:00Z\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 create reject {\"crmSessionDeadline\":\"2026-09-23T17:00:00+07:00\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange valid binding",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange reject {\"callbackId\":\"bad id\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange reject {\"crmSessionHandle\":\"bad\\nhandle\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange reject {\"crmSessionHandle\":\"_session\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange reject {\"crmSessionHandle\":\"-session\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange reject {\"crmSessionDeadline\":\"2026-02-30T10:00:00Z\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange reject {\"crmSessionDeadline\":\"2026-09-23T17:00:00+07:00\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel valid binding",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel reject {\"callbackId\":\"bad id\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel reject {\"crmSessionHandle\":\"bad\\nhandle\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel reject {\"crmSessionHandle\":\"_session\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel reject {\"crmSessionHandle\":\"-session\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel reject {\"crmSessionDeadline\":\"2026-02-30T10:00:00Z\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel reject {\"crmSessionDeadline\":\"2026-09-23T17:00:00+07:00\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke valid binding",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke reject {\"callbackId\":\"bad id\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke reject {\"crmSessionHandle\":\"bad\\nhandle\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke reject {\"crmSessionHandle\":\"_session\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke reject {\"crmSessionHandle\":\"-session\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke reject {\"crmSessionDeadline\":\"2026-02-30T10:00:00Z\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke reject {\"crmSessionDeadline\":\"2026-09-23T17:00:00+07:00\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cleanup accepts syntactically valid past deadline",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 effectiveHrpUserId rejects whitespace grammar",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 Unicode Arabic",
+      "expected": "ع••",
+      "actual": "ع••",
+      "pass": true
+    },
+    {
+      "id": "F05 Unicode Hangul",
+      "expected": "홍••",
+      "actual": "홍••",
+      "pass": true
+    },
+    {
+      "id": "F05 Unicode Deseret",
+      "expected": "𐐀••",
+      "actual": "𐐀••",
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"﻿Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"A​B\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"Alpha\\tBeta\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"́Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"-Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"'Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"Alpha-\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"A\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"\\ud800Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"Q́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 result byte bound",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 missing segmenter omit",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 throwing segmenter omit",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F06 fixture authoritative hash correct",
+      "expected": "a7e7ae0b32629a9dedd2a20031086460a606271c5cf305bbc76c14a76783e428",
+      "actual": "a7e7ae0b32629a9dedd2a20031086460a606271c5cf305bbc76c14a76783e428",
+      "pass": true
+    },
+    {
+      "id": "F06 fixture authoritative byteCount correct",
+      "expected": 4118,
+      "actual": 4118,
+      "pass": true
+    },
+    {
+      "id": "F06 exact pinned vectors preserved",
+      "expected": [],
+      "actual": [],
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vietnamese",
+      "expected": {
+        "name": "N•• V•• A••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "N•• V•• A••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned decomposed",
+      "expected": {
+        "name": "É•• D••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "É•• D••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned one_han_token",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned multi_han",
+      "expected": {
+        "name": "小••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "小••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned apostrophe_inside",
+      "expected": {
+        "name": "O••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "O••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned hyphen_inside",
+      "expected": {
+        "name": "Ж••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "Ж••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned short",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned missing",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned whitespace",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned digit",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned bidi",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned emoji",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned leading_apostrophe",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned leading_hyphen",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned leading_mark",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned trailing_punctuation",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned one_letter_mark",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned combining_initial",
+      "expected": {
+        "name": "Q́••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "Q́••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned consecutive_punctuation",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned control_tab",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned unicode_spaces",
+      "expected": {
+        "name": "A•• B••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "A•• B••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned unrequested",
+      "expected": {
+        "name": null,
+        "unavailable": []
+      },
+      "actual": {
+        "name": null,
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported placementCase only when requested",
+      "expected": [
+        "placementCase"
+      ],
+      "actual": [
+        "placementCase"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported availability only when requested",
+      "expected": [
+        "availability"
+      ],
+      "actual": [
+        "availability"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported currentRelationship only when requested",
+      "expected": [
+        "currentRelationship"
+      ],
+      "actual": [
+        "currentRelationship"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported nextAction only when requested",
+      "expected": [
+        "nextAction"
+      ],
+      "actual": [
+        "nextAction"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported recentInteractions only when requested",
+      "expected": [
+        "recentInteractions"
+      ],
+      "actual": [
+        "recentInteractions"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported contactability only when requested",
+      "expected": [
+        "contactability"
+      ],
+      "actual": [
+        "contactability"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported suppressionSummary only when requested",
+      "expected": [
+        "suppressionSummary"
+      ],
+      "actual": [
+        "suppressionSummary"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 multiple requested marker set",
+      "expected": [
+        "contactability",
+        "identitySummary",
+        "placementCase"
+      ],
+      "actual": [
+        "contactability",
+        "identitySummary",
+        "placementCase"
+      ],
+      "pass": true
+    },
+    {
+      "id": "query VALIDATION_ERROR exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query VALIDATION_ERROR wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query VALIDATION_ERROR wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query VALIDATION_ERROR command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query AUTHENTICATION_REQUIRED exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query AUTHENTICATION_REQUIRED wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query AUTHENTICATION_REQUIRED wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query AUTHENTICATION_REQUIRED command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query FORBIDDEN exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query FORBIDDEN wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query FORBIDDEN wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query FORBIDDEN command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query RATE_LIMITED exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query RATE_LIMITED wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query RATE_LIMITED wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query RATE_LIMITED command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query DEPENDENCY_UNAVAILABLE exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query DEPENDENCY_UNAVAILABLE wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query DEPENDENCY_UNAVAILABLE wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query DEPENDENCY_UNAVAILABLE command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query NOT_FOUND exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query NOT_FOUND wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query NOT_FOUND wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query NOT_FOUND command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query INTERNAL_ERROR exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query INTERNAL_ERROR wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query INTERNAL_ERROR wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query INTERNAL_ERROR command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    }
+  ],
+  "summary": {
+    "total": 175,
+    "pass": 175,
+    "fail": 0
+  }
+}

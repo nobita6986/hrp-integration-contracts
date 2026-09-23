@@ -1,0 +1,13 @@
+START=2026-09-23T10:17:16.730Z
+NODE=v24.19.0
+COMMAND=npm.cmd run build
+CWD=C:\CodeApp\hrp-integration-contracts-worktrees\hrp-producer-recheck-272e883\packages\contracts
+
+> @hrp-integration-contracts/talent-context-read-dev@0.0.0-dev.0 build
+> tsc -p tsconfig.json
+
+
+STDERR:
+
+EXIT_CODE=0
+END=2026-09-23T10:17:18.065Z

@@ -1,0 +1,16 @@
+START=2026-09-23T10:17:08.418Z
+NODE=v24.19.0
+COMMAND=npm.cmd ci
+CWD=C:\CodeApp\hrp-integration-contracts-worktrees\hrp-producer-recheck-272e883\packages\contracts
+
+added 2 packages, and audited 3 packages in 8s
+
+1 package is looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+STDERR:
+
+EXIT_CODE=0
+END=2026-09-23T10:17:16.726Z
