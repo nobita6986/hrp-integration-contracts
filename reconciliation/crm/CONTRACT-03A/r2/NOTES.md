@@ -89,3 +89,11 @@ disposition.
 - Do not promote ACCEPTED_SHARED, do not open runtime.
 
 Status: READY_FOR_PRODUCER_RECHECK_AND_INDEPENDENT_DELTA_AUDIT.
+
+
+## Manifest summary
+
+- `packages/contracts/manifest.sha256` (committed blob `8c39e028a8bea57391e468df2ab8b753db2f464e`): 22 entries (source under `packages/contracts/src/talent-context-read/`, the portable fixture under `packages/contracts/tests/fixtures/`, every test under `packages/contracts/tests/talent-context-read/`, `scripts/generate-manifest.mjs`, plus `package.json`, `package-lock.json`, and `tsconfig.json`). Excludes `node_modules/`, `dist/`, and the manifest itself.
+- `reconciliation/crm/CONTRACT-03A/r2/manifest.txt` (no self-hash): 3 entries (`README.md`, `AC-EVIDENCE.md`, `NOTES.md`). Excludes `manifest.txt` itself.
+
+No machine paths. All entries resolved by `git hash-object` against the final committed raw blobs.

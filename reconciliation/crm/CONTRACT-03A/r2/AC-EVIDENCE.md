@@ -182,3 +182,8 @@ npm test
   activity, RLS, cancel atomicity.
 
 Status: READY_FOR_PRODUCER_RECHECK_AND_INDEPENDENT_DELTA_AUDIT.
+
+## Manifest
+
+- `packages/contracts/manifest.sha256` (committed blob `8c39e028a8bea57391e468df2ab8b753db2f464e`): 22 entries. Verified every entry matches the committed HEAD blob via `git ls-tree HEAD <path>`; ALL MATCH.
+- `reconciliation/crm/CONTRACT-03A/r2/manifest.txt` (no self-hash): 3 entries. Verified via the same `git ls-tree` parity check.

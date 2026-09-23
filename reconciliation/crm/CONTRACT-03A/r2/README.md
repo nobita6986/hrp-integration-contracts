@@ -128,20 +128,9 @@ checks but does NOT itself assert them.
 - The seven-code error envelope and the wire-side `pendingRequestId` /
   `delegationRef` placement from F-02 batch 1 (kept; no refactor).
 
-## Provenance
+## Manifest
 
-- Reviewed baseline: `22fc50e3deca5e6c816aab44088afe1d443e4867`
-- Audited baseline: `71dddddc7ba6ad5d2e8f775c9e76837ea558b46d`
-- Producer review baseline: `80a9b9aa53088700266712642a6998647d5c5ff6`
-- Implementation starting baseline: `1855b88d67f61e2efcdd2eaa2b888ba303bfc724`
-- Acceptance record: `reconciliation/hrp/CONTRACT-02B-bilateral-acceptance/r1/`
-- Accepted design: `c3a547dccc209496ac8ef407612ea857249d22fc`
-- Precedence: SPECIFICATION.md + ENGINEERING-PROFILE.md + DECISION-REGISTER.md
-- Branch: `codex/contract03a-schema-conformance`
-- Pinned vector source: `49f2dbc34cae66e8d63df5dd5d8cec0c008c4623`
-  (reconciliation/hrp/CONTRACT-02B-conformance-response/r2/REDACTION-VECTORS.json,
-  sha256 `a7e7ae0b32629a9dedd2a20031086460a606271c5cf305bbc76c14a76783e428`,
-  4118 bytes, 22 vectors). Portable in-delivery copy with provenance:
-  `packages/contracts/tests/fixtures/redaction-vectors.fixtures.json`.
+`packages/contracts/manifest.sha256` (committed blob `8c39e028a8bea57391e468df2ab8b753db2f464e`) covers 22 entries: source under `packages/contracts/src/talent-context-read/`, the portable fixture under `packages/contracts/tests/fixtures/`, every test under `packages/contracts/tests/talent-context-read/`, the `scripts/generate-manifest.mjs` tool, plus `package.json`, `package-lock.json`, and `tsconfig.json`. Excluded: `node_modules/`, `dist/`, and the manifest itself (no self-hash). Reproduced via `node packages/contracts/scripts/generate-manifest.mjs` (cwd = repo root).
 
-Status: READY_FOR_PRODUCER_RECHECK_AND_INDEPENDENT_DELTA_AUDIT.
+`reconciliation/crm/CONTRACT-03A/r2/manifest.txt` (no self-hash) covers 3 entries: `README.md`, `AC-EVIDENCE.md`, `NOTES.md`. Excluded: `manifest.txt` itself (no self-hash).
+
