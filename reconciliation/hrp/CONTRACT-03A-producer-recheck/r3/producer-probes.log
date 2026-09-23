@@ -1,0 +1,181 @@
+PASS pin checkout source/config/test/docs bytes to reviewed commit: []
+PASS I01 all manifest entries raw-blob SHA256 match: true
+PASS I01 coverage complete: []
+PASS I01 covered files strict UTF8 no NUL or replacement: true
+PASS I01 generator LF no BOM: true
+PASS I01 generator verify exit zero: 0
+PASS I01 generator verify leaves all tracked file bytes unchanged: true
+FAIL F01 accepted EP01 claims must parse: false
+FAIL F01 accepted EP01 query profile must pass entrypoint: false
+FAIL F01 accepted EP01 create profile must pass entrypoint: false
+PASS F01 implementation-shaped control (diagnostic, not wire approval): true
+FAIL F01 reject HS256 through entrypoint: true
+FAIL F01 reject generic JWT typ through entrypoint: true
+FAIL F01 reject wrong registered issuer: true
+FAIL F01 reject arbitrary string scope: true
+PASS F01 reject nbf: false
+PASS F01 reject unapproved organizationIdDigest: false
+FAIL F01 reject negative epoch: true
+FAIL F01 reject unsafe integer epoch: true
+PASS F01 exp+skew boundary rejected: false
+PASS F01 wrong body hash rejected: false
+PASS F01 crit rejected: false
+FAIL F01 raw escaped duplicate rejected: true
+FAIL F01 raw nested duplicate rejected: true
+FAIL F01 query accepted actor cannot be stripped/rejected by claims schema: false
+PASS F02 exchange excludes path id: true
+PASS F02 exchange rejects body path id: false
+PASS F02 code-only delegation error: true
+PASS F02 exchange result effective user mandatory: false
+PASS F03 PendingRequestIdSchema canonical byte 0: true
+PASS F03 PendingRequestIdSchema canonical byte 128: true
+PASS F03 PendingRequestIdSchema canonical byte 251: true
+PASS F03 PendingRequestIdSchema canonical byte 255: true
+PASS F03 PendingRequestIdSchema pad bits reject: false
+PASS F03 HandoffProofSchema canonical byte 0: true
+PASS F03 HandoffProofSchema canonical byte 128: true
+PASS F03 HandoffProofSchema canonical byte 251: true
+PASS F03 HandoffProofSchema canonical byte 255: true
+PASS F03 HandoffProofSchema pad bits reject: false
+PASS F03 ReceiptSchema canonical byte 0: true
+PASS F03 ReceiptSchema canonical byte 128: true
+PASS F03 ReceiptSchema canonical byte 251: true
+PASS F03 ReceiptSchema canonical byte 255: true
+PASS F03 ReceiptSchema pad bits reject: false
+PASS F03 DelegationRefSchema canonical byte 0: true
+PASS F03 DelegationRefSchema canonical byte 128: true
+PASS F03 DelegationRefSchema canonical byte 251: true
+PASS F03 DelegationRefSchema canonical byte 255: true
+PASS F03 DelegationRefSchema pad bits reject: false
+PASS F03 CallbackStateSchema canonical byte 0: true
+PASS F03 CallbackStateSchema canonical byte 128: true
+PASS F03 CallbackStateSchema canonical byte 251: true
+PASS F03 CallbackStateSchema canonical byte 255: true
+PASS F03 CallbackStateSchema pad bits reject: false
+PASS F03 JtiSchema canonical byte 0: true
+PASS F03 JtiSchema canonical byte 128: true
+PASS F03 JtiSchema canonical byte 251: true
+PASS F03 JtiSchema canonical byte 255: true
+PASS F03 JtiSchema pad bits reject: false
+PASS F03 CsrfTokenSchema canonical byte 0: true
+PASS F03 CsrfTokenSchema canonical byte 128: true
+PASS F03 CsrfTokenSchema canonical byte 251: true
+PASS F03 CsrfTokenSchema canonical byte 255: true
+PASS F03 CsrfTokenSchema pad bits reject: false
+FAIL F03 supported Buffer fallback canonical byte 0: false
+FAIL F03 supported Buffer fallback canonical byte 128: false
+FAIL F03 supported Buffer fallback canonical byte 255: false
+PASS F04 create valid binding: true
+PASS F04 create reject {"callbackId":"bad id"}: false
+PASS F04 create reject {"crmSessionHandle":"bad\nhandle"}: false
+FAIL F04 create reject {"crmSessionHandle":"_session"}: true
+FAIL F04 create reject {"crmSessionHandle":"-session"}: true
+PASS F04 create reject {"crmSessionDeadline":"2026-02-30T10:00:00Z"}: false
+PASS F04 create reject {"crmSessionDeadline":"2026-09-23T17:00:00+07:00"}: false
+PASS F04 exchange valid binding: true
+PASS F04 exchange reject {"callbackId":"bad id"}: false
+PASS F04 exchange reject {"crmSessionHandle":"bad\nhandle"}: false
+FAIL F04 exchange reject {"crmSessionHandle":"_session"}: true
+FAIL F04 exchange reject {"crmSessionHandle":"-session"}: true
+PASS F04 exchange reject {"crmSessionDeadline":"2026-02-30T10:00:00Z"}: false
+PASS F04 exchange reject {"crmSessionDeadline":"2026-09-23T17:00:00+07:00"}: false
+PASS F04 cancel valid binding: true
+PASS F04 cancel reject {"callbackId":"bad id"}: false
+PASS F04 cancel reject {"crmSessionHandle":"bad\nhandle"}: false
+FAIL F04 cancel reject {"crmSessionHandle":"_session"}: true
+FAIL F04 cancel reject {"crmSessionHandle":"-session"}: true
+PASS F04 cancel reject {"crmSessionDeadline":"2026-02-30T10:00:00Z"}: false
+PASS F04 cancel reject {"crmSessionDeadline":"2026-09-23T17:00:00+07:00"}: false
+PASS F04 revoke valid binding: true
+PASS F04 revoke reject {"callbackId":"bad id"}: false
+PASS F04 revoke reject {"crmSessionHandle":"bad\nhandle"}: false
+FAIL F04 revoke reject {"crmSessionHandle":"_session"}: true
+FAIL F04 revoke reject {"crmSessionHandle":"-session"}: true
+PASS F04 revoke reject {"crmSessionDeadline":"2026-02-30T10:00:00Z"}: false
+PASS F04 revoke reject {"crmSessionDeadline":"2026-09-23T17:00:00+07:00"}: false
+PASS F04 cleanup accepts syntactically valid past deadline: true
+FAIL F04 effectiveHrpUserId rejects whitespace grammar: true
+PASS F05 Unicode Arabic: "ع••"
+PASS F05 Unicode Hangul: "홍••"
+PASS F05 Unicode Deseret: "𐐀••"
+PASS F05 unsafe "﻿Alpha": false
+PASS F05 unsafe "A​B": false
+PASS F05 unsafe "Alpha\tBeta": false
+PASS F05 unsafe "́Alpha": false
+PASS F05 unsafe "-Alpha": false
+PASS F05 unsafe "'Alpha": false
+PASS F05 unsafe "Alpha-": false
+PASS F05 unsafe "A": false
+PASS F05 unsafe "\ud800Alpha": false
+PASS F05 unsafe "Q́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́: false
+PASS F05 unsafe "Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab": false
+PASS F05 unsafe "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: false
+PASS F05 result byte bound: false
+PASS F05 missing segmenter omit: false
+PASS F05 throwing segmenter omit: false
+PASS F06 fixture authoritative hash correct: "a7e7ae0b32629a9dedd2a20031086460a606271c5cf305bbc76c14a76783e428"
+PASS F06 fixture authoritative byteCount correct: 4118
+FAIL F06 exact pinned vectors preserved: [{"id":"vietnamese","expected":{"id":"vietnamese","input":"Nguyễn Văn An","requested":true,"expectedName":"N•• V•• A••","expectedUnavailableFields":[]},"actual":{"id":"vietnamese","input":"Nguyễn Văn An","requested":true,"expectedName":"N•• V•• A••"}},{"id":"decomposed","expected":{"id":"decomposed","input":"Élodie Durand","requested":true,"expectedName":"É•• D••","expectedUnavailableFields":[]},"actual":{"id":"decomposed","input":"Élodie Durand","requested":true,"expectedName":"É•• D••"}},{"id":"one_han_token","expected":{"id":"one_han_token","input":"李 小龍","requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"one_han_token","input":"李 小龍","requested":true,"expectedName":null}},{"id":"multi_han","expected":{"id":"multi_han","input":"小龍","requested":true,"expectedName":"小••","expectedUnavailableFields":[]},"actual":{"id":"multi_han","input":"小龍","requested":true,"expectedName":"小••"}},{"id":"apostrophe_inside","expected":{"id":"apostrophe_inside","input":"O'Connor","requested":true,"expectedName":"O••","expectedUnavailableFields":[]},"actual":{"id":"apostrophe_inside","input":"O'Connor","requested":true,"expectedName":"O••"}},{"id":"hyphen_inside","expected":{"id":"hyphen_inside","input":"Жан-Поль","requested":true,"expectedName":"Ж••","expectedUnavailableFields":[]},"actual":{"id":"hyphen_inside","input":"Жан-Поль","requested":true,"expectedName":"Ж••"}},{"id":"short","expected":{"id":"short","input":"A","requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"short","input":"A","requested":true,"expectedName":null}},{"id":"missing","expected":{"id":"missing","input":null,"requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"missing","input":null,"requested":true,"expectedName":null}},{"id":"whitespace","expected":{"id":"whitespace","input":"   ","requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"whitespace","input":"   ","requested":true,"expectedName":null}},{"id":"digit","expected":{"id":"digit","input":"A1pha Name","requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"digit","input":"A1pha Name","requested":true,"expectedName":null}},{"id":"bidi","expected":{"id":"bidi","input":"User‮Name","requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"bidi","input":"User‮Name","requested":true,"expectedName":null}},{"id":"emoji","expected":{"id":"emoji","input":"👩‍💻 Test","requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"emoji","input":"👩‍💻 Test","requested":true,"expectedName":null}},{"id":"leading_apostrophe","expected":{"id":"leading_apostrophe","input":"'Alpha","requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"leading_apostrophe","input":"'Alpha","requested":true,"expectedName":null}},{"id":"leading_hyphen","expected":{"id":"leading_hyphen","input":"-Alpha","requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"leading_hyphen","input":"-Alpha","requested":true,"expectedName":null}},{"id":"leading_mark","expected":{"id":"leading_mark","input":"́Alpha","requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"leading_mark","input":"́Alpha","requested":true,"expectedName":null}},{"id":"trailing_punctuation","expected":{"id":"trailing_punctuation","input":"Alpha-","requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"trailing_punctuation","input":"Alpha-","requested":true,"expectedName":null}},{"id":"one_letter_mark","expected":{"id":"one_letter_mark","input":"É","requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"one_letter_mark","input":"É","requested":true,"expectedName":null}},{"id":"combining_initial","expected":{"id":"combining_initial","input":"Q́uang","requested":true,"expectedName":"Q́••","expectedUnavailableFields":[]},"actual":{"id":"combining_initial","input":"Q́uang","requested":true,"expectedName":"Q́••"}},{"id":"consecutive_punctuation","expected":{"id":"consecutive_punctuation","input":"O''Connor","requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"consecutive_punctuation","input":"O''Connor","requested":true,"expectedName":null}},{"id":"control_tab","expected":{"id":"control_tab","input":"Alpha\tBeta","requested":true,"expectedName":null,"expectedUnavailableFields":["identitySummary"]},"actual":{"id":"control_tab","input":"Alpha\tBeta","requested":true,"expectedName":null}},{"id":"unicode_spaces","expected":{"id":"unicode_spaces","input":" Alpha Beta ","requested":true,"expectedName":"A•• B••","expectedUnavailableFields":[]},"actual":{"id":"unicode_spaces","input":" Alpha Beta ","requested":true,"expectedName":"A•• B••"}},{"id":"unrequested","expected":{"id":"unrequested","input":"Nguyễn Văn An","requested":false,"expectedName":null,"expectedUnavailableFields":[]},"actual":{"id":"unrequested","input":"Nguyễn Văn An","requested":false,"expectedName":null}}]
+PASS F06 pinned vietnamese: {"name":"N•• V•• A••","unavailable":[]}
+PASS F06 pinned decomposed: {"name":"É•• D••","unavailable":[]}
+PASS F06 pinned one_han_token: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned multi_han: {"name":"小••","unavailable":[]}
+PASS F06 pinned apostrophe_inside: {"name":"O••","unavailable":[]}
+PASS F06 pinned hyphen_inside: {"name":"Ж••","unavailable":[]}
+PASS F06 pinned short: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned missing: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned whitespace: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned digit: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned bidi: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned emoji: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned leading_apostrophe: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned leading_hyphen: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned leading_mark: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned trailing_punctuation: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned one_letter_mark: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned combining_initial: {"name":"Q́••","unavailable":[]}
+PASS F06 pinned consecutive_punctuation: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned control_tab: {"name":null,"unavailable":["identitySummary"]}
+PASS F06 pinned unicode_spaces: {"name":"A•• B••","unavailable":[]}
+PASS F06 pinned unrequested: {"name":null,"unavailable":[]}
+PASS F06 unsupported placementCase only when requested: ["placementCase"]
+PASS F06 unsupported availability only when requested: ["availability"]
+PASS F06 unsupported currentRelationship only when requested: ["currentRelationship"]
+PASS F06 unsupported nextAction only when requested: ["nextAction"]
+PASS F06 unsupported recentInteractions only when requested: ["recentInteractions"]
+PASS F06 unsupported contactability only when requested: ["contactability"]
+PASS F06 unsupported suppressionSummary only when requested: ["suppressionSummary"]
+PASS F06 multiple requested marker set: ["contactability","identitySummary","placementCase"]
+PASS query VALIDATION_ERROR exact triple: "QUERY_ERROR"
+PASS query VALIDATION_ERROR wrong HTTP: "PROTOCOL_ERROR"
+PASS query VALIDATION_ERROR wrong messageKey: "PROTOCOL_ERROR"
+PASS query VALIDATION_ERROR command retry literal: "PROTOCOL_ERROR"
+PASS query AUTHENTICATION_REQUIRED exact triple: "QUERY_ERROR"
+PASS query AUTHENTICATION_REQUIRED wrong HTTP: "PROTOCOL_ERROR"
+PASS query AUTHENTICATION_REQUIRED wrong messageKey: "PROTOCOL_ERROR"
+PASS query AUTHENTICATION_REQUIRED command retry literal: "PROTOCOL_ERROR"
+PASS query FORBIDDEN exact triple: "QUERY_ERROR"
+PASS query FORBIDDEN wrong HTTP: "PROTOCOL_ERROR"
+PASS query FORBIDDEN wrong messageKey: "PROTOCOL_ERROR"
+PASS query FORBIDDEN command retry literal: "PROTOCOL_ERROR"
+PASS query RATE_LIMITED exact triple: "QUERY_ERROR"
+PASS query RATE_LIMITED wrong HTTP: "PROTOCOL_ERROR"
+PASS query RATE_LIMITED wrong messageKey: "PROTOCOL_ERROR"
+PASS query RATE_LIMITED command retry literal: "PROTOCOL_ERROR"
+PASS query DEPENDENCY_UNAVAILABLE exact triple: "QUERY_ERROR"
+PASS query DEPENDENCY_UNAVAILABLE wrong HTTP: "PROTOCOL_ERROR"
+PASS query DEPENDENCY_UNAVAILABLE wrong messageKey: "PROTOCOL_ERROR"
+PASS query DEPENDENCY_UNAVAILABLE command retry literal: "PROTOCOL_ERROR"
+PASS query NOT_FOUND exact triple: "QUERY_ERROR"
+PASS query NOT_FOUND wrong HTTP: "PROTOCOL_ERROR"
+PASS query NOT_FOUND wrong messageKey: "PROTOCOL_ERROR"
+PASS query NOT_FOUND command retry literal: "PROTOCOL_ERROR"
+PASS query INTERNAL_ERROR exact triple: "QUERY_ERROR"
+PASS query INTERNAL_ERROR wrong HTTP: "PROTOCOL_ERROR"
+PASS query INTERNAL_ERROR wrong messageKey: "PROTOCOL_ERROR"
+PASS query INTERNAL_ERROR command retry literal: "PROTOCOL_ERROR"
+{"total":176,"pass":151,"fail":25}
+
+STDERR:
+
+EXIT_CODE=1

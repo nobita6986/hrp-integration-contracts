@@ -1,0 +1,381 @@
+START=2026-09-23T06:29:23.924Z
+NODE=v24.19.0
+COMMAND=npm.cmd test
+CWD=C:\CodeApp\hrp-integration-contracts-worktrees\hrp-producer-recheck-7c804c9\packages\contracts
+
+> @hrp-integration-contracts/talent-context-read-dev@0.0.0-dev.0 test
+> tsc -p tsconfig.json && node --test tests/talent-context-read/*.test.mjs && node --test tests/generator/*.test.mjs
+
+▶ EP-01 strict claims shape
+  ✔ correlationId bounds (2.5043ms)
+  ✔ correlationId opaque grammar (0.3826ms)
+  ✔ organizationId bounds (0.3549ms)
+  ✔ canonical id bounds (0.2472ms)
+  ✔ IsoTimestampSchema bounds (0.9775ms)
+  ✔ ModuleSchemaVersionSchema = 1 (0.3166ms)
+✔ EP-01 strict claims shape (6.6432ms)
+▶ EP-01 query target shape
+  ✔ target kind=TALENT only (0.8268ms)
+  ✔ target extras rejected (0.3746ms)
+✔ EP-01 query target shape (1.5386ms)
+▶ EP-01 delegated user actor
+  ✔ valid DELEGATED_USER (1.1472ms)
+  ✔ missing field rejected (0.3792ms)
+  ✔ wrong kind rejected (0.4933ms)
+✔ EP-01 delegated user actor (2.3342ms)
+▶ EP-05 field allowlist bounds
+  ✔ 1..8 unique (0.9492ms)
+  ✔ duplicates rejected (0.2633ms)
+  ✔ unavailable fields 0..8 (0.3906ms)
+  ✔ unknown field rejected (0.2155ms)
+✔ EP-05 field allowlist bounds (2.1195ms)
+▶ IdentitySummary shape
+  ✔ valid (0.4827ms)
+  ✔ fullNameRedacted required (0.1637ms)
+  ✔ displayOnly must be true (0.1582ms)
+  ✔ extras rejected (0.1255ms)
+✔ IdentitySummary shape (1.223ms)
+▶ Pure validators do not assert runtime invariants
+  ✔ these tests intentionally have no fake PASS (0.0946ms)
+✔ Pure validators do not assert runtime invariants (0.1724ms)
+▶ F-01 raw framing + duplicate-key detection
+  ✔ rejects empty string (1.1701ms)
+  ✔ rejects oversize string (0.1443ms)
+  ✔ rejects non-string (0.1107ms)
+  ✔ rejects non-brace prefix (0.1691ms)
+  ✔ rejects raw control characters (0.2456ms)
+  ✔ rejects raw FEFF (0.1673ms)
+  ✔ rejects raw bidi control in framing (0.2415ms)
+  ✔ rejects invalid JSON (0.1806ms)
+  ✔ detects duplicate top-level key even when JSON.parse would keep only the last (0.3493ms)
+  ✔ parses valid header (0.2879ms)
+✔ F-01 raw framing + duplicate-key detection (4.9159ms)
+▶ F-01 parsed-claims validation is separate from framing
+  ✔ missing iat rejected (2.2903ms)
+  ✔ extra field rejected (.strict) (0.4438ms)
+  ✔ iat must be integer (no fractional) (0.2989ms)
+  ✔ exp must be integer (0.2382ms)
+  ✔ non-canonical JTI rejected at claims layer (0.2136ms)
+  ✔ too-short JTI rejected at claims layer (0.1859ms)
+  ✔ valid claims pass (0.3537ms)
+  ✔ missing binding rejected (0.1938ms)
+  ✔ missing request rejected (0.1796ms)
+✔ F-01 parsed-claims validation is separate from framing (4.7404ms)
+▶ F-01 TTL/skew rules
+  ✔ exp must be > iat (0.2096ms)
+  ✔ TTL > cap (default 60s) rejected (0.0709ms)
+  ✔ within TTL/skew passes (0.1057ms)
+  ✔ boundary: now == exp + 30s rejected (0.1041ms)
+  ✔ boundary: now < exp + 30s accepted (0.07ms)
+  ✔ expired beyond skew rejected (0.0668ms)
+  ✔ iat in the future rejected (0.0575ms)
+✔ F-01 TTL/skew rules (0.9158ms)
+▶ F-01 audience must equal expectedAudience (per op)
+  ✔ audience match passes (1.0886ms)
+  ✔ audience mismatch rejected (0.1389ms)
+  ✔ operation audience is distinct across operations (0.1508ms)
+✔ F-01 audience must equal expectedAudience (per op) (1.5515ms)
+▶ F-01 subject must equal serviceId
+  ✔ matching serviceId passes (0.1652ms)
+  ✔ non-matching serviceId rejected (0.1022ms)
+✔ F-01 subject must equal serviceId (0.4124ms)
+▶ F-01 request binding (method/path/bodySha256 + organizationId/crmSubject)
+  ✔ all matching passes (0.2789ms)
+  ✔ method mismatch rejected (0.1208ms)
+  ✔ path mismatch rejected (0.101ms)
+  ✔ bodySha256 mismatch rejected (0.1175ms)
+  ✔ organizationId mismatch rejected (0.1715ms)
+  ✔ crmSubject mismatch rejected (0.1317ms)
+✔ F-01 request binding (method/path/bodySha256 + organizationId/crmSubject) (1.1889ms)
+▶ F-01 actor per operation profile
+  ✔ all 3 ops recognized (0.3146ms)
+  ✔ unknown operation rejected (0.1016ms)
+  ✔ create does not require effective user but does require active CRM session (0.1331ms)
+  ✔ exchange requires both (0.1817ms)
+  ✔ cleanup does not require active session (past deadline accepted) (0.1116ms)
+✔ F-01 actor per operation profile (1.0923ms)
+▶ F-01 limits exported
+  ✔ ASSERTION_LIMITS includes MAX_HEADER_LEN/DEFAULT_TTL/DEFAULT_SKEW (0.1288ms)
+✔ F-01 limits exported (0.2324ms)
+▶ F-01 single consumer-facing entrypoint validateAssertionProfile
+  ✔ profile PASS via entrypoint with valid header + claims + binding + audience (1.0366ms)
+  ✔ header layer reject: jku not accepted (8.2253ms)
+  ✔ header layer reject: unknown alg (0.3811ms)
+  ✔ audience layer reject: claims.aud does not match operation audience (0.3714ms)
+  ✔ subject layer reject: sub !== serviceId (0.3494ms)
+  ✔ ttl layer reject: now == exp + 30s boundary (0.3665ms)
+  ✔ binding layer reject: method mismatch (0.3222ms)
+  ✔ query surface: requires claims.actor.kind = DELEGATED_USER (0.3421ms)
+  ✔ issuance: rejects query actor (0.3225ms)
+✔ F-01 single consumer-facing entrypoint validateAssertionProfile (16.7689ms)
+▶ F-06 conformance helper semantics
+  ✔ SUPPORTED set == [identitySummary] (1.5458ms)
+  ✔ KNOWN_UNSUPPORTED has 7 entries (request-conformant, not projection-filled) (0.2111ms)
+  ✔ requested UNSAFE -> omit identitySummary + single marker (1.2544ms)
+  ✔ requested UNSAFE but with KNOWN_UNSUPPORTED also requested -> markers for both (0.2468ms)
+  ✔ known unsupported but NOT requested -> no marker (1.2349ms)
+  ✔ known unsupported AND requested -> marker only (0.3843ms)
+  ✔ unrequested field -> neither data nor marker (0.3527ms)
+✔ F-06 conformance helper semantics (6.7991ms)
+▶ F-06 expectedUnavailableFields comparison helper
+  ✔ compareUnavailableFields sorts before compare (0.3951ms)
+  ✔ compareUnavailableFields on different lengths returns false (0.3051ms)
+✔ F-06 expectedUnavailableFields comparison helper (1.1111ms)
+▶ F-06 - PINNED vectors (MSG-028) drive conformance assertions
+  ✔ vector: vietnamese (35.0437ms)
+  ✔ vector: decomposed (1.8653ms)
+  ✔ vector: one_han_token (0.3691ms)
+  ✔ vector: multi_han (1.3082ms)
+  ✔ vector: apostrophe_inside (0.3252ms)
+  ✔ vector: hyphen_inside (0.2435ms)
+  ✔ vector: short (0.2157ms)
+  ✔ vector: missing (0.1599ms)
+  ✔ vector: whitespace (0.6892ms)
+  ✔ vector: digit (0.1804ms)
+  ✔ vector: bidi (0.1131ms)
+  ✔ vector: emoji (0.1584ms)
+  ✔ vector: leading_apostrophe (0.1277ms)
+  ✔ vector: leading_hyphen (0.1262ms)
+  ✔ vector: leading_mark (0.1256ms)
+  ✔ vector: trailing_punctuation (0.1322ms)
+  ✔ vector: one_letter_mark (0.1971ms)
+  ✔ vector: combining_initial (0.2475ms)
+  ✔ vector: consecutive_punctuation (0.1157ms)
+  ✔ vector: control_tab (0.0834ms)
+  ✔ vector: unicode_spaces (1.282ms)
+  ✔ vector: unrequested (0.0964ms)
+  ✔ multiple known requested fields: unique + first-appearance order (0.2025ms)
+  ✔ portability: vectors loaded from portable fixture, no machine-path import (1.4508ms)
+✔ F-06 - PINNED vectors (MSG-028) drive conformance assertions (46.0926ms)
+▶ F-03 canonical token encoder
+  ✔ PendingRequestId accepts canonical 32-byte token (2.918ms)
+  ✔ PendingRequestId rejects wrong prefix (0.7167ms)
+  ✔ PendingRequestId rejects raw non-prefixed (0.8318ms)
+  ✔ PendingRequestId rejects too-short (0.3541ms)
+  ✔ PendingRequestId rejects too-long (0.3901ms)
+  ✔ PendingRequestId rejects padding (0.3002ms)
+  ✔ PendingRequestId rejects pad-bit mutated form (0.3066ms)
+  ✔ DelegationRef rejects arbitrary dr_1 (0.37ms)
+  ✔ Receipt canonical decode/re-encode equality (0.3318ms)
+  ✔ JtiSchema accepts canonical (0.4591ms)
+  ✔ CsrfTokenSchema accepts canonical (0.3041ms)
+✔ F-03 canonical token encoder (9.616ms)
+▶ F-02 Delegation create
+  ✔ valid create body parses (1.9848ms)
+  ✔ create success body parses (1.0725ms)
+  ✔ extra scope literal rejected (0.5269ms)
+  ✔ extra fields rejected (.strict) (0.5548ms)
+✔ F-02 Delegation create (4.5562ms)
+▶ F-02 Exchange path/body split
+  ✔ exchange body WITHOUT pendingRequestId is accepted (id is in PATH) (0.4706ms)
+  ✔ exchange body WITH pendingRequestId is REJECTED (id is in PATH, not body) (0.3038ms)
+  ✔ exchange success body parses (0.2118ms)
+✔ F-02 Exchange path/body split (1.1812ms)
+▶ F-02 Cancel path/body split
+  ✔ cancel body WITHOUT pendingRequestId is accepted (id is in PATH) (0.5244ms)
+  ✔ cancel body WITH pendingRequestId is REJECTED (0.2513ms)
+  ✔ unknown reason rejected (1.1828ms)
+✔ F-02 Cancel path/body split (2.1491ms)
+▶ F-02 Revoke body contains delegationRef
+  ✔ revoke body WITH delegationRef accepted (0.3906ms)
+  ✔ revoke wrong reason rejected (0.2004ms)
+✔ F-02 Revoke body contains delegationRef (0.7398ms)
+▶ F-02 Browser operation schemas
+  ✔ handoff body parses (0.3348ms)
+  ✔ approval decision APPROVE parses (0.2519ms)
+  ✔ approval decision DENY parses (0.1905ms)
+  ✔ approval decision with unknown value rejected (0.2099ms)
+  ✔ APPROVED callback requires receipt (0.2367ms)
+  ✔ APPROVED callback WITH receipt parses (0.1937ms)
+  ✔ DENIED callback WITHOUT receipt parses (0.1769ms)
+  ✔ DENIED callback WITH receipt rejected (DENIED never carries receipt) (0.3264ms)
+✔ F-02 Browser operation schemas (2.2688ms)
+▶ F-02 Delegation error envelope is code-only
+  ✔ valid AUTHENTICATION_REQUIRED (0.3295ms)
+  ✔ valid FORBIDDEN (0.0994ms)
+  ✔ valid VALIDATION_ERROR (0.0824ms)
+  ✔ valid RATE_LIMITED (0.071ms)
+  ✔ valid DEPENDENCY_UNAVAILABLE (0.0788ms)
+  ✔ valid INTERNAL_ERROR (0.0736ms)
+  ✔ messageKey field rejected (code-only by F-02) (0.1544ms)
+  ✔ extra fields rejected (strict) (0.1484ms)
+  ✔ status=OK rejected (0.1722ms)
+✔ F-02 Delegation error envelope is code-only (1.5636ms)
+▶ F-04 immutable CRM binding grammar + UTC-Z
+  ✔ valid binding parses (0.2489ms)
+  ✔ callbackId with space rejected (0.1894ms)
+  ✔ callbackId with newline rejected (0.1704ms)
+  ✔ crmSessionHandle with newline rejected (0.1497ms)
+  ✔ crmSessionDeadline +07:00 rejected (0.1311ms)
+  ✔ crmSessionDeadline UTC-Z accepted (0.1177ms)
+  ✔ past deadline with correct syntax accepted (cleanup retains immutable binding) (0.1107ms)
+✔ F-04 immutable CRM binding grammar + UTC-Z (1.4305ms)
+▶ Internal aggregate DTO separated from wire
+  ✔ internal DTO accepted (0.4641ms)
+✔ Internal aggregate DTO separated from wire (0.5964ms)
+▶ Single scope literal array
+  ✔ empty rejected (0.3288ms)
+  ✔ two entries rejected (0.1427ms)
+  ✔ wrong literal rejected (0.0974ms)
+  ✔ exact single literal accepted (0.0923ms)
+✔ Single scope literal array (0.9635ms)
+▶ ACK
+  ✔ ack parses (0.3644ms)
+  ✔ non-true rejected (0.1437ms)
+  ✔ extra field rejected (0.1234ms)
+✔ ACK (0.8191ms)
+▶ Q positive
+  ✔ valid base (3.8081ms)
+  ✔ 8 unique fields (0.5284ms)
+✔ Q positive (5.8161ms)
+▶ Q negative
+  ✔ wrong version rejected (0.8759ms)
+  ✔ extra laborProfileVersion rejected (0.3056ms)
+  ✔ USER actor rejected (0.2827ms)
+  ✔ short correlationId rejected (0.2933ms)
+  ✔ COMPANY target rejected (0.3945ms)
+  ✔ fieldAllowlist duplicate rejected (0.2844ms)
+  ✔ fieldAllowlist empty rejected (0.3052ms)
+✔ Q negative (3.3235ms)
+▶ R projection
+  ✔ valid parses (0.9815ms)
+  ✔ identitySummary in unavailableFields rejected (0.721ms)
+  ✔ identitySummary omitted other unavailable valid (0.2867ms)
+  ✔ unavailableFields duplicate rejected (0.2844ms)
+  ✔ displayOnly=false rejected (0.4836ms)
+  ✔ snapshotVersion extra rejected (0.3525ms)
+✔ R projection (3.5858ms)
+▶ 7-code errors
+  ✔ valid VALIDATION_ERROR (0.7438ms)
+  ✔ valid AUTHENTICATION_REQUIRED (0.1398ms)
+  ✔ valid FORBIDDEN (0.125ms)
+  ✔ valid RATE_LIMITED (0.1271ms)
+  ✔ valid DEPENDENCY_UNAVAILABLE (0.2626ms)
+  ✔ valid NOT_FOUND (0.156ms)
+  ✔ valid INTERNAL_ERROR (0.1706ms)
+  ✔ enum size 7 (0.1706ms)
+  ✔ empty errors rejected (0.2201ms)
+  ✔ multiple errors rejected (0.2109ms)
+  ✔ VERSION_CONFLICT rejected (0.2285ms)
+  ✔ UNKNOWN_COMMAND_OUTCOME rejected (1.1756ms)
+  ✔ BOUNDED_SAME_KEY rejected (0.2176ms)
+  ✔ wrong messageKey rejected (0.187ms)
+  ✔ wrong HTTP rejected (0.1363ms)
+  ✔ extra fields rejected (0.1576ms)
+  ✔ 404 null body not NOT_FOUND (0.0897ms)
+  ✔ 404 HTML not NOT_FOUND (0.0606ms)
+  ✔ no raw body leak (0.0911ms)
+✔ 7-code errors (5.5178ms)
+▶ F-05 FEFF/Cf rejection before normalization
+  ✔ FEFF + Alpha is REJECTED (not silently trimmed) (1.2402ms)
+  ✔ plain ZWNBSP is rejected (Cf category) (0.1998ms)
+  ✔ FEFF mid-string rejected (0.2268ms)
+✔ F-05 FEFF/Cf rejection before normalization (3.267ms)
+▶ F-05 Unicode outside BMP (code-point aware)
+  ✔ SMP letters (U+10400, U+10401) accepted (code-point, not UTF-16 code-unit) (23.0536ms)
+  ✔ two SMP tokens render as both initials (1.6352ms)
+✔ F-05 Unicode outside BMP (code-point aware) (25.0206ms)
+▶ F-05 output byte bound (UTF-8 <= 512)
+  ✔ 256 scalars with 254 combining marks + b yields output NOT exceeding 512 UTF-8 bytes (0.4862ms)
+  ✔ oversized input is OMITTED entirely (not truncated) (0.3748ms)
+  ✔ byte-bound at result-schema layer: 1536-byte UTF-8 payload rejected (0.3236ms)
+✔ F-05 output byte bound (UTF-8 <= 512) (1.5105ms)
+▶ F-05 segmentation failure => unsafe (not throw)
+  ✔ segmenter.throw is caught and reported as unsafe (1.9729ms)
+  ✔ missing Intl.Segmenter returns unsafe (no throw) (0.4002ms)
+✔ F-05 segmentation failure => unsafe (not throw) (2.6206ms)
+▶ F-05 code-point vs code-unit (SMP safety)
+  ✔ SMP first letter cluster counts as one grapheme, allows token (0.6195ms)
+✔ F-05 code-point vs code-unit (SMP safety) (0.8138ms)
+▶ F-05 producer-noted negative probes
+  ✔ apostrophe-leading Alpha (not a letter) is rejected (0.354ms)
+  ✔ hyphen-leading Alpha (not a letter) is rejected (0.2049ms)
+  ✔ trailing hyphen Alpha- rejected (0.3368ms)
+  ✔ digit leading Alpha-d-style rejected (2.0596ms)
+✔ F-05 producer-noted negative probes (4.8597ms)
+▶ F-05 Unicode property escapes cover Arabic/Hangul/supplementary plane
+  ✔ Arabic letter initial is accepted (0.4182ms)
+  ✔ Hangul letter initial is accepted (0.2525ms)
+  ✔ supplementary plane letter initial is accepted (already covered above) (0.2134ms)
+  ✔ Latin extended (Vietnamese) is accepted (0.3175ms)
+✔ F-05 Unicode property escapes cover Arabic/Hangul/supplementary plane (1.4619ms)
+▶ F-05 code-point vs code-unit (SMP safety) re-CORRECT probe
+  ✔ U+10400 U+10401 single-space-separated tokens both redactions (0.232ms)
+✔ F-05 code-point vs code-unit (SMP safety) re-CORRECT probe (0.3412ms)
+▶ F-05 byte-bound at result-schema layer
+  ✔ 1536-byte UTF-8 string is rejected at schema refine level (rejection of oversize fullNameRedacted) (0.1876ms)
+✔ F-05 byte-bound at result-schema layer (0.3086ms)
+▶ redaction - MSG-028 vectors (22)
+  ✔ vector: vietnamese (39.7862ms)
+  ✔ vector: decomposed (0.569ms)
+  ✔ vector: one_han_token (0.2936ms)
+  ✔ vector: multi_han (0.6125ms)
+  ✔ vector: apostrophe_inside (0.2967ms)
+  ✔ vector: hyphen_inside (0.226ms)
+  ✔ vector: short (0.1531ms)
+  ✔ vector: missing (0.1373ms)
+  ✔ vector: whitespace (0.1973ms)
+  ✔ vector: digit (0.2864ms)
+  ✔ vector: bidi (0.1733ms)
+  ✔ vector: emoji (0.111ms)
+  ✔ vector: leading_apostrophe (0.1478ms)
+  ✔ vector: leading_hyphen (0.1119ms)
+  ✔ vector: leading_mark (0.127ms)
+  ✔ vector: trailing_punctuation (0.1148ms)
+  ✔ vector: one_letter_mark (0.1861ms)
+  ✔ vector: combining_initial (0.2329ms)
+  ✔ vector: consecutive_punctuation (0.0821ms)
+  ✔ vector: control_tab (0.0634ms)
+  ✔ vector: unicode_spaces (0.1917ms)
+  ✔ vector: unrequested (0.1906ms)
+✔ redaction - MSG-028 vectors (22) (47.9354ms)
+▶ redaction - EP-05 boundaries
+  ✔ over-limit input (>256 scalars) returns unsafe (0.2189ms)
+  ✔ over-limit tokens (>16) returns unsafe (0.1831ms)
+  ✔ non-string input returns unsafe (0.0953ms)
+  ✔ empty string returns unsafe (0.088ms)
+  ✔ non-letter first character returns unsafe (0.1018ms)
+  ✔ output never reveals raw input (0.4449ms)
+  ✔ output never leaks phone/CCCD/email (0.1456ms)
+✔ redaction - EP-05 boundaries (1.6189ms)
+ℹ tests 244
+ℹ suites 44
+ℹ pass 244
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 234.0201
+Generator manifest tests starting...
+T1: executable by Node
+  PASS
+T2: UTF-8/LF/no-BOM/no-null
+  PASS
+T3: --verify detects data tamper
+  PASS
+T4: --verify preserves manifest bytes
+  PASS
+T5: manifest covers assertion.ts and conformance.ts
+  PASS
+T6: manifest covers batch-2 test files
+  PASS
+T7: all entries are exactly 64 lowercase hex
+  PASS
+T8: manifest entries match committed raw SHA-256
+  PASS (23/23)
+
+=== ALL GENERATOR TESTS PASSED ===
+✔ tests\generator\generator-manifest.test.mjs (323.3283ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 332.3246
+
+STDERR:
+
+EXIT_CODE=0
+END=2026-09-23T06:29:25.973Z

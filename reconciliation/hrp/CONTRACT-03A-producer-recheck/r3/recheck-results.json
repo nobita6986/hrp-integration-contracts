@@ -1,0 +1,2371 @@
+{
+  "reviewedSha": "7c804c92ff8105596383b13ef9f9546617d69b6e",
+  "observedHead": "7c804c92ff8105596383b13ef9f9546617d69b6e",
+  "observedAt": "2026-09-23T06:43:48.700Z",
+  "node": "v24.19.0",
+  "integrity": [
+    {
+      "path": "packages/contracts/manifest.sha256",
+      "sha256": "b9c0505c4a7625fe66e68f18361159edaadfebfe98c237fef19a7961865cdc76",
+      "entries": [
+        {
+          "file": "packages/contracts/package-lock.json",
+          "expected": "ecda1d3c0ac846740fe1f44f79563313ec5909ccd8da52d4b4a6a4de0b86dd43",
+          "actual": "ecda1d3c0ac846740fe1f44f79563313ec5909ccd8da52d4b4a6a4de0b86dd43",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/package.json",
+          "expected": "724fd1405aefad7f969bca7edddae2daffc5c97cd750507e21c5b7ef8f665396",
+          "actual": "724fd1405aefad7f969bca7edddae2daffc5c97cd750507e21c5b7ef8f665396",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/scripts/generate-manifest.mjs",
+          "expected": "f394dd7e3c506a4b8b8bc80e2d3ffa00067f407db329fe9be22ecc7c65f0bb10",
+          "actual": "f394dd7e3c506a4b8b8bc80e2d3ffa00067f407db329fe9be22ecc7c65f0bb10",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/assertion.ts",
+          "expected": "58a2f8c184e9e53601ee6ff9ad7297caa7fecb701248cd3ca75e248dc2a5764b",
+          "actual": "58a2f8c184e9e53601ee6ff9ad7297caa7fecb701248cd3ca75e248dc2a5764b",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/conformance.ts",
+          "expected": "49c7ff1162a3f856febc144e08cc38358e0c16de84262a7f3a35927bd2fae3a8",
+          "actual": "49c7ff1162a3f856febc144e08cc38358e0c16de84262a7f3a35927bd2fae3a8",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/delegation.ts",
+          "expected": "b99416405253ba9daa0e50cb1112d5e5f6e954e2c0d330b24a22590bb23761de",
+          "actual": "b99416405253ba9daa0e50cb1112d5e5f6e954e2c0d330b24a22590bb23761de",
+          "match": true,
+          "utf8": true,
+          "bom": true,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/index.ts",
+          "expected": "7a2cbc82242cac2609594bebdcaee2ca04710f272c7ef218974168484f4e0a4b",
+          "actual": "7a2cbc82242cac2609594bebdcaee2ca04710f272c7ef218974168484f4e0a4b",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/package.json",
+          "expected": "05b7d717deb12201272469363567bf44a70a231d81f44b4ed5e15c9a3f283f46",
+          "actual": "05b7d717deb12201272469363567bf44a70a231d81f44b4ed5e15c9a3f283f46",
+          "match": true,
+          "utf8": true,
+          "bom": true,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/primitives.ts",
+          "expected": "2fad8ef8d042b2f7e29b1da61791e0c9948f534a081d5a54eea3aeb7ba085cd8",
+          "actual": "2fad8ef8d042b2f7e29b1da61791e0c9948f534a081d5a54eea3aeb7ba085cd8",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/query-errors.ts",
+          "expected": "d4268d55dd0deadcdee2e6b58400956c5370f118ace74e483dbe6169d3e7e697",
+          "actual": "d4268d55dd0deadcdee2e6b58400956c5370f118ace74e483dbe6169d3e7e697",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/query-parser.ts",
+          "expected": "bd695eb6d743ace4e26e656c52e29fbc776accac5936767fd2bfb11e4dea05d7",
+          "actual": "bd695eb6d743ace4e26e656c52e29fbc776accac5936767fd2bfb11e4dea05d7",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/query-types.ts",
+          "expected": "fc005908a366ed6fd6b94329fd358a8ae24ed7094b23fa7be97fbbccd8846e5d",
+          "actual": "fc005908a366ed6fd6b94329fd358a8ae24ed7094b23fa7be97fbbccd8846e5d",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/src/talent-context-read/redaction.ts",
+          "expected": "dcaabbc9eba44e359cdbad9da4f8848f0fc069c4cf8e47b0eb12e3184e4aa449",
+          "actual": "dcaabbc9eba44e359cdbad9da4f8848f0fc069c4cf8e47b0eb12e3184e4aa449",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/fixtures/redaction-vectors.fixtures.json",
+          "expected": "324e48d01ce8fbe5a41848f3563cf563ce64c8495eb04b6e34ebe68b7cedee0f",
+          "actual": "324e48d01ce8fbe5a41848f3563cf563ce64c8495eb04b6e34ebe68b7cedee0f",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/generator/generator-manifest.test.mjs",
+          "expected": "755aa70405777b6ff62f67a605951f094980e9eb960f9537717c2c52b350c8c1",
+          "actual": "755aa70405777b6ff62f67a605951f094980e9eb960f9537717c2c52b350c8c1",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/assertion-profile.test.mjs",
+          "expected": "b20ae50d63682cd445a6b00885c92f408802a57a9deb86d58038e5f534331f86",
+          "actual": "b20ae50d63682cd445a6b00885c92f408802a57a9deb86d58038e5f534331f86",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": true,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/assertion-validators.test.mjs",
+          "expected": "8d39b7ad55fcefc37f89fbe7aaac15adb1b26b62f6868df1f0bdc40f08650baa",
+          "actual": "8d39b7ad55fcefc37f89fbe7aaac15adb1b26b62f6868df1f0bdc40f08650baa",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/conformance-helper.test.mjs",
+          "expected": "ce0e6b0c52613753711af4b8cac05cb0283b120886d836208c59d63d59ddb5d2",
+          "actual": "ce0e6b0c52613753711af4b8cac05cb0283b120886d836208c59d63d59ddb5d2",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/delegation-conformance.test.mjs",
+          "expected": "cfd35bd4f9878d3d96ccb38eac7e7c66c9bc81366227c5be2241869b5de5f539",
+          "actual": "cfd35bd4f9878d3d96ccb38eac7e7c66c9bc81366227c5be2241869b5de5f539",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": true,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/query-conformance.test.mjs",
+          "expected": "b5da8348389b0ff77fe3036fb5671fdfd0b3504d0292b331625937e75a183fe8",
+          "actual": "b5da8348389b0ff77fe3036fb5671fdfd0b3504d0292b331625937e75a183fe8",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": true,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/redaction-probes.test.mjs",
+          "expected": "705c9c6b3fec8b6cbd35d745c3aa1fcd1a500aa6f8cde7e618c834f0820764df",
+          "actual": "705c9c6b3fec8b6cbd35d745c3aa1fcd1a500aa6f8cde7e618c834f0820764df",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tests/talent-context-read/redaction-vectors.test.mjs",
+          "expected": "770a5c3277e65aed0d1fd4773fdc8ac64a9bd2bfe558379052993b105eb0a77c",
+          "actual": "770a5c3277e65aed0d1fd4773fdc8ac64a9bd2bfe558379052993b105eb0a77c",
+          "match": true,
+          "utf8": true,
+          "bom": true,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "packages/contracts/tsconfig.json",
+          "expected": "c18b9065f718d026a0a01cc684dbf9144d07af9b40e1124f31096659892d90b3",
+          "actual": "c18b9065f718d026a0a01cc684dbf9144d07af9b40e1124f31096659892d90b3",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "reconciliation/crm/CONTRACT-03A/r2/manifest.txt",
+      "sha256": "41f23bcc74c76dae01d6d09ff2c08b89101b9b1316651ac7ad100530d7f6de95",
+      "entries": [
+        {
+          "file": "reconciliation/crm/CONTRACT-03A/r2/README.md",
+          "expected": "00822b4ef5938e0348202cc8e79bdff6614f899184a8b93377da76c1708c1625",
+          "actual": "00822b4ef5938e0348202cc8e79bdff6614f899184a8b93377da76c1708c1625",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "reconciliation/crm/CONTRACT-03A/r2/AC-EVIDENCE.md",
+          "expected": "c0f2e904b19792117103e15c7368f8db41f52a829caa3b208a6b8a479773538c",
+          "actual": "c0f2e904b19792117103e15c7368f8db41f52a829caa3b208a6b8a479773538c",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "reconciliation/crm/CONTRACT-03A/r2/NOTES.md",
+          "expected": "017c8bb3b5ccb5bb6879469834dea1c9e43c807ba480c4e64d13e1d0123ebb80",
+          "actual": "017c8bb3b5ccb5bb6879469834dea1c9e43c807ba480c4e64d13e1d0123ebb80",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        },
+        {
+          "file": "reconciliation/crm/CONTRACT-03A/r2/I-01-CLOSURE.md",
+          "expected": "42b099d3c8ff469ebb98365d93d5a8998592109c69eeb48b64d3744bbabf0f3d",
+          "actual": "42b099d3c8ff469ebb98365d93d5a8998592109c69eeb48b64d3744bbabf0f3d",
+          "match": true,
+          "utf8": true,
+          "bom": false,
+          "cr": false,
+          "nul": false,
+          "replacement": false
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "vectorHash": "a7e7ae0b32629a9dedd2a20031086460a606271c5cf305bbc76c14a76783e428",
+  "vectorBytes": 4118,
+  "vectorDeltas": [
+    {
+      "id": "vietnamese",
+      "expected": {
+        "id": "vietnamese",
+        "input": "Nguyễn Văn An",
+        "requested": true,
+        "expectedName": "N•• V•• A••",
+        "expectedUnavailableFields": []
+      },
+      "actual": {
+        "id": "vietnamese",
+        "input": "Nguyễn Văn An",
+        "requested": true,
+        "expectedName": "N•• V•• A••"
+      }
+    },
+    {
+      "id": "decomposed",
+      "expected": {
+        "id": "decomposed",
+        "input": "Élodie Durand",
+        "requested": true,
+        "expectedName": "É•• D••",
+        "expectedUnavailableFields": []
+      },
+      "actual": {
+        "id": "decomposed",
+        "input": "Élodie Durand",
+        "requested": true,
+        "expectedName": "É•• D••"
+      }
+    },
+    {
+      "id": "one_han_token",
+      "expected": {
+        "id": "one_han_token",
+        "input": "李 小龍",
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "one_han_token",
+        "input": "李 小龍",
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "multi_han",
+      "expected": {
+        "id": "multi_han",
+        "input": "小龍",
+        "requested": true,
+        "expectedName": "小••",
+        "expectedUnavailableFields": []
+      },
+      "actual": {
+        "id": "multi_han",
+        "input": "小龍",
+        "requested": true,
+        "expectedName": "小••"
+      }
+    },
+    {
+      "id": "apostrophe_inside",
+      "expected": {
+        "id": "apostrophe_inside",
+        "input": "O'Connor",
+        "requested": true,
+        "expectedName": "O••",
+        "expectedUnavailableFields": []
+      },
+      "actual": {
+        "id": "apostrophe_inside",
+        "input": "O'Connor",
+        "requested": true,
+        "expectedName": "O••"
+      }
+    },
+    {
+      "id": "hyphen_inside",
+      "expected": {
+        "id": "hyphen_inside",
+        "input": "Жан-Поль",
+        "requested": true,
+        "expectedName": "Ж••",
+        "expectedUnavailableFields": []
+      },
+      "actual": {
+        "id": "hyphen_inside",
+        "input": "Жан-Поль",
+        "requested": true,
+        "expectedName": "Ж••"
+      }
+    },
+    {
+      "id": "short",
+      "expected": {
+        "id": "short",
+        "input": "A",
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "short",
+        "input": "A",
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "missing",
+      "expected": {
+        "id": "missing",
+        "input": null,
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "missing",
+        "input": null,
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "whitespace",
+      "expected": {
+        "id": "whitespace",
+        "input": "   ",
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "whitespace",
+        "input": "   ",
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "digit",
+      "expected": {
+        "id": "digit",
+        "input": "A1pha Name",
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "digit",
+        "input": "A1pha Name",
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "bidi",
+      "expected": {
+        "id": "bidi",
+        "input": "User‮Name",
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "bidi",
+        "input": "User‮Name",
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "emoji",
+      "expected": {
+        "id": "emoji",
+        "input": "👩‍💻 Test",
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "emoji",
+        "input": "👩‍💻 Test",
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "leading_apostrophe",
+      "expected": {
+        "id": "leading_apostrophe",
+        "input": "'Alpha",
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "leading_apostrophe",
+        "input": "'Alpha",
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "leading_hyphen",
+      "expected": {
+        "id": "leading_hyphen",
+        "input": "-Alpha",
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "leading_hyphen",
+        "input": "-Alpha",
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "leading_mark",
+      "expected": {
+        "id": "leading_mark",
+        "input": "́Alpha",
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "leading_mark",
+        "input": "́Alpha",
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "trailing_punctuation",
+      "expected": {
+        "id": "trailing_punctuation",
+        "input": "Alpha-",
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "trailing_punctuation",
+        "input": "Alpha-",
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "one_letter_mark",
+      "expected": {
+        "id": "one_letter_mark",
+        "input": "É",
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "one_letter_mark",
+        "input": "É",
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "combining_initial",
+      "expected": {
+        "id": "combining_initial",
+        "input": "Q́uang",
+        "requested": true,
+        "expectedName": "Q́••",
+        "expectedUnavailableFields": []
+      },
+      "actual": {
+        "id": "combining_initial",
+        "input": "Q́uang",
+        "requested": true,
+        "expectedName": "Q́••"
+      }
+    },
+    {
+      "id": "consecutive_punctuation",
+      "expected": {
+        "id": "consecutive_punctuation",
+        "input": "O''Connor",
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "consecutive_punctuation",
+        "input": "O''Connor",
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "control_tab",
+      "expected": {
+        "id": "control_tab",
+        "input": "Alpha\tBeta",
+        "requested": true,
+        "expectedName": null,
+        "expectedUnavailableFields": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "id": "control_tab",
+        "input": "Alpha\tBeta",
+        "requested": true,
+        "expectedName": null
+      }
+    },
+    {
+      "id": "unicode_spaces",
+      "expected": {
+        "id": "unicode_spaces",
+        "input": " Alpha Beta ",
+        "requested": true,
+        "expectedName": "A•• B••",
+        "expectedUnavailableFields": []
+      },
+      "actual": {
+        "id": "unicode_spaces",
+        "input": " Alpha Beta ",
+        "requested": true,
+        "expectedName": "A•• B••"
+      }
+    },
+    {
+      "id": "unrequested",
+      "expected": {
+        "id": "unrequested",
+        "input": "Nguyễn Văn An",
+        "requested": false,
+        "expectedName": null,
+        "expectedUnavailableFields": []
+      },
+      "actual": {
+        "id": "unrequested",
+        "input": "Nguyễn Văn An",
+        "requested": false,
+        "expectedName": null
+      }
+    }
+  ],
+  "records": [
+    {
+      "id": "pin checkout source/config/test/docs bytes to reviewed commit",
+      "expected": [],
+      "actual": [],
+      "pass": true
+    },
+    {
+      "id": "I01 all manifest entries raw-blob SHA256 match",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "I01 coverage complete",
+      "expected": [],
+      "actual": [],
+      "pass": true
+    },
+    {
+      "id": "I01 covered files strict UTF8 no NUL or replacement",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "I01 generator LF no BOM",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "I01 generator verify exit zero",
+      "expected": 0,
+      "actual": 0,
+      "pass": true
+    },
+    {
+      "id": "I01 generator verify leaves all tracked file bytes unchanged",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F01 accepted EP01 claims must parse",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F01 accepted EP01 query profile must pass entrypoint",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F01 accepted EP01 create profile must pass entrypoint",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F01 implementation-shaped control (diagnostic, not wire approval)",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F01 reject HS256 through entrypoint",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 reject generic JWT typ through entrypoint",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 reject wrong registered issuer",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 reject arbitrary string scope",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 reject nbf",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 reject unapproved organizationIdDigest",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 reject negative epoch",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 reject unsafe integer epoch",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 exp+skew boundary rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 wrong body hash rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 crit rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 raw escaped duplicate rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 raw nested duplicate rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 query accepted actor cannot be stripped/rejected by claims schema",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F02 exchange excludes path id",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 exchange rejects body path id",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F02 code-only delegation error",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 exchange result effective user mandatory",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema canonical byte 0",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema canonical byte 128",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema canonical byte 251",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema canonical byte 255",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema pad bits reject",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 supported Buffer fallback canonical byte 0",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F03 supported Buffer fallback canonical byte 128",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F03 supported Buffer fallback canonical byte 255",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F04 create valid binding",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 create reject {\"callbackId\":\"bad id\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 create reject {\"crmSessionHandle\":\"bad\\nhandle\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 create reject {\"crmSessionHandle\":\"_session\"}",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 create reject {\"crmSessionHandle\":\"-session\"}",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 create reject {\"crmSessionDeadline\":\"2026-02-30T10:00:00Z\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 create reject {\"crmSessionDeadline\":\"2026-09-23T17:00:00+07:00\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange valid binding",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange reject {\"callbackId\":\"bad id\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange reject {\"crmSessionHandle\":\"bad\\nhandle\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange reject {\"crmSessionHandle\":\"_session\"}",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 exchange reject {\"crmSessionHandle\":\"-session\"}",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 exchange reject {\"crmSessionDeadline\":\"2026-02-30T10:00:00Z\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange reject {\"crmSessionDeadline\":\"2026-09-23T17:00:00+07:00\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel valid binding",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel reject {\"callbackId\":\"bad id\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel reject {\"crmSessionHandle\":\"bad\\nhandle\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel reject {\"crmSessionHandle\":\"_session\"}",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 cancel reject {\"crmSessionHandle\":\"-session\"}",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 cancel reject {\"crmSessionDeadline\":\"2026-02-30T10:00:00Z\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel reject {\"crmSessionDeadline\":\"2026-09-23T17:00:00+07:00\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke valid binding",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke reject {\"callbackId\":\"bad id\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke reject {\"crmSessionHandle\":\"bad\\nhandle\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke reject {\"crmSessionHandle\":\"_session\"}",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 revoke reject {\"crmSessionHandle\":\"-session\"}",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 revoke reject {\"crmSessionDeadline\":\"2026-02-30T10:00:00Z\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke reject {\"crmSessionDeadline\":\"2026-09-23T17:00:00+07:00\"}",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cleanup accepts syntactically valid past deadline",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 effectiveHrpUserId rejects whitespace grammar",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F05 Unicode Arabic",
+      "expected": "ع••",
+      "actual": "ع••",
+      "pass": true
+    },
+    {
+      "id": "F05 Unicode Hangul",
+      "expected": "홍••",
+      "actual": "홍••",
+      "pass": true
+    },
+    {
+      "id": "F05 Unicode Deseret",
+      "expected": "𐐀••",
+      "actual": "𐐀••",
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"﻿Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"A​B\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"Alpha\\tBeta\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"́Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"-Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"'Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"Alpha-\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"A\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"\\ud800Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"Q́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́́",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab Ab\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 result byte bound",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 missing segmenter omit",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 throwing segmenter omit",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F06 fixture authoritative hash correct",
+      "expected": "a7e7ae0b32629a9dedd2a20031086460a606271c5cf305bbc76c14a76783e428",
+      "actual": "a7e7ae0b32629a9dedd2a20031086460a606271c5cf305bbc76c14a76783e428",
+      "pass": true
+    },
+    {
+      "id": "F06 fixture authoritative byteCount correct",
+      "expected": 4118,
+      "actual": 4118,
+      "pass": true
+    },
+    {
+      "id": "F06 exact pinned vectors preserved",
+      "expected": [],
+      "actual": [
+        {
+          "id": "vietnamese",
+          "expected": {
+            "id": "vietnamese",
+            "input": "Nguyễn Văn An",
+            "requested": true,
+            "expectedName": "N•• V•• A••",
+            "expectedUnavailableFields": []
+          },
+          "actual": {
+            "id": "vietnamese",
+            "input": "Nguyễn Văn An",
+            "requested": true,
+            "expectedName": "N•• V•• A••"
+          }
+        },
+        {
+          "id": "decomposed",
+          "expected": {
+            "id": "decomposed",
+            "input": "Élodie Durand",
+            "requested": true,
+            "expectedName": "É•• D••",
+            "expectedUnavailableFields": []
+          },
+          "actual": {
+            "id": "decomposed",
+            "input": "Élodie Durand",
+            "requested": true,
+            "expectedName": "É•• D••"
+          }
+        },
+        {
+          "id": "one_han_token",
+          "expected": {
+            "id": "one_han_token",
+            "input": "李 小龍",
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "one_han_token",
+            "input": "李 小龍",
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "multi_han",
+          "expected": {
+            "id": "multi_han",
+            "input": "小龍",
+            "requested": true,
+            "expectedName": "小••",
+            "expectedUnavailableFields": []
+          },
+          "actual": {
+            "id": "multi_han",
+            "input": "小龍",
+            "requested": true,
+            "expectedName": "小••"
+          }
+        },
+        {
+          "id": "apostrophe_inside",
+          "expected": {
+            "id": "apostrophe_inside",
+            "input": "O'Connor",
+            "requested": true,
+            "expectedName": "O••",
+            "expectedUnavailableFields": []
+          },
+          "actual": {
+            "id": "apostrophe_inside",
+            "input": "O'Connor",
+            "requested": true,
+            "expectedName": "O••"
+          }
+        },
+        {
+          "id": "hyphen_inside",
+          "expected": {
+            "id": "hyphen_inside",
+            "input": "Жан-Поль",
+            "requested": true,
+            "expectedName": "Ж••",
+            "expectedUnavailableFields": []
+          },
+          "actual": {
+            "id": "hyphen_inside",
+            "input": "Жан-Поль",
+            "requested": true,
+            "expectedName": "Ж••"
+          }
+        },
+        {
+          "id": "short",
+          "expected": {
+            "id": "short",
+            "input": "A",
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "short",
+            "input": "A",
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "missing",
+          "expected": {
+            "id": "missing",
+            "input": null,
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "missing",
+            "input": null,
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "whitespace",
+          "expected": {
+            "id": "whitespace",
+            "input": "   ",
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "whitespace",
+            "input": "   ",
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "digit",
+          "expected": {
+            "id": "digit",
+            "input": "A1pha Name",
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "digit",
+            "input": "A1pha Name",
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "bidi",
+          "expected": {
+            "id": "bidi",
+            "input": "User‮Name",
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "bidi",
+            "input": "User‮Name",
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "emoji",
+          "expected": {
+            "id": "emoji",
+            "input": "👩‍💻 Test",
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "emoji",
+            "input": "👩‍💻 Test",
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "leading_apostrophe",
+          "expected": {
+            "id": "leading_apostrophe",
+            "input": "'Alpha",
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "leading_apostrophe",
+            "input": "'Alpha",
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "leading_hyphen",
+          "expected": {
+            "id": "leading_hyphen",
+            "input": "-Alpha",
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "leading_hyphen",
+            "input": "-Alpha",
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "leading_mark",
+          "expected": {
+            "id": "leading_mark",
+            "input": "́Alpha",
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "leading_mark",
+            "input": "́Alpha",
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "trailing_punctuation",
+          "expected": {
+            "id": "trailing_punctuation",
+            "input": "Alpha-",
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "trailing_punctuation",
+            "input": "Alpha-",
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "one_letter_mark",
+          "expected": {
+            "id": "one_letter_mark",
+            "input": "É",
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "one_letter_mark",
+            "input": "É",
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "combining_initial",
+          "expected": {
+            "id": "combining_initial",
+            "input": "Q́uang",
+            "requested": true,
+            "expectedName": "Q́••",
+            "expectedUnavailableFields": []
+          },
+          "actual": {
+            "id": "combining_initial",
+            "input": "Q́uang",
+            "requested": true,
+            "expectedName": "Q́••"
+          }
+        },
+        {
+          "id": "consecutive_punctuation",
+          "expected": {
+            "id": "consecutive_punctuation",
+            "input": "O''Connor",
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "consecutive_punctuation",
+            "input": "O''Connor",
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "control_tab",
+          "expected": {
+            "id": "control_tab",
+            "input": "Alpha\tBeta",
+            "requested": true,
+            "expectedName": null,
+            "expectedUnavailableFields": [
+              "identitySummary"
+            ]
+          },
+          "actual": {
+            "id": "control_tab",
+            "input": "Alpha\tBeta",
+            "requested": true,
+            "expectedName": null
+          }
+        },
+        {
+          "id": "unicode_spaces",
+          "expected": {
+            "id": "unicode_spaces",
+            "input": " Alpha Beta ",
+            "requested": true,
+            "expectedName": "A•• B••",
+            "expectedUnavailableFields": []
+          },
+          "actual": {
+            "id": "unicode_spaces",
+            "input": " Alpha Beta ",
+            "requested": true,
+            "expectedName": "A•• B••"
+          }
+        },
+        {
+          "id": "unrequested",
+          "expected": {
+            "id": "unrequested",
+            "input": "Nguyễn Văn An",
+            "requested": false,
+            "expectedName": null,
+            "expectedUnavailableFields": []
+          },
+          "actual": {
+            "id": "unrequested",
+            "input": "Nguyễn Văn An",
+            "requested": false,
+            "expectedName": null
+          }
+        }
+      ],
+      "pass": false
+    },
+    {
+      "id": "F06 pinned vietnamese",
+      "expected": {
+        "name": "N•• V•• A••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "N•• V•• A••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned decomposed",
+      "expected": {
+        "name": "É•• D••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "É•• D••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned one_han_token",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned multi_han",
+      "expected": {
+        "name": "小••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "小••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned apostrophe_inside",
+      "expected": {
+        "name": "O••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "O••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned hyphen_inside",
+      "expected": {
+        "name": "Ж••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "Ж••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned short",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned missing",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned whitespace",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned digit",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned bidi",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned emoji",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned leading_apostrophe",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned leading_hyphen",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned leading_mark",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned trailing_punctuation",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned one_letter_mark",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned combining_initial",
+      "expected": {
+        "name": "Q́••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "Q́••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned consecutive_punctuation",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned control_tab",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned unicode_spaces",
+      "expected": {
+        "name": "A•• B••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "A•• B••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned unrequested",
+      "expected": {
+        "name": null,
+        "unavailable": []
+      },
+      "actual": {
+        "name": null,
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported placementCase only when requested",
+      "expected": [
+        "placementCase"
+      ],
+      "actual": [
+        "placementCase"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported availability only when requested",
+      "expected": [
+        "availability"
+      ],
+      "actual": [
+        "availability"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported currentRelationship only when requested",
+      "expected": [
+        "currentRelationship"
+      ],
+      "actual": [
+        "currentRelationship"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported nextAction only when requested",
+      "expected": [
+        "nextAction"
+      ],
+      "actual": [
+        "nextAction"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported recentInteractions only when requested",
+      "expected": [
+        "recentInteractions"
+      ],
+      "actual": [
+        "recentInteractions"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported contactability only when requested",
+      "expected": [
+        "contactability"
+      ],
+      "actual": [
+        "contactability"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 unsupported suppressionSummary only when requested",
+      "expected": [
+        "suppressionSummary"
+      ],
+      "actual": [
+        "suppressionSummary"
+      ],
+      "pass": true
+    },
+    {
+      "id": "F06 multiple requested marker set",
+      "expected": [
+        "contactability",
+        "identitySummary",
+        "placementCase"
+      ],
+      "actual": [
+        "contactability",
+        "identitySummary",
+        "placementCase"
+      ],
+      "pass": true
+    },
+    {
+      "id": "query VALIDATION_ERROR exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query VALIDATION_ERROR wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query VALIDATION_ERROR wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query VALIDATION_ERROR command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query AUTHENTICATION_REQUIRED exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query AUTHENTICATION_REQUIRED wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query AUTHENTICATION_REQUIRED wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query AUTHENTICATION_REQUIRED command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query FORBIDDEN exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query FORBIDDEN wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query FORBIDDEN wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query FORBIDDEN command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query RATE_LIMITED exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query RATE_LIMITED wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query RATE_LIMITED wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query RATE_LIMITED command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query DEPENDENCY_UNAVAILABLE exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query DEPENDENCY_UNAVAILABLE wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query DEPENDENCY_UNAVAILABLE wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query DEPENDENCY_UNAVAILABLE command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query NOT_FOUND exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query NOT_FOUND wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query NOT_FOUND wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query NOT_FOUND command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query INTERNAL_ERROR exact triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query INTERNAL_ERROR wrong HTTP",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query INTERNAL_ERROR wrong messageKey",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query INTERNAL_ERROR command retry literal",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    }
+  ],
+  "summary": {
+    "total": 176,
+    "pass": 151,
+    "fail": 25
+  }
+}
