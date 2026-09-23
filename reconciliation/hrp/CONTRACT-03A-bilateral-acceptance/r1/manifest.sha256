@@ -1,0 +1,5 @@
+# Raw SHA-256 of committed data files; manifest does not hash itself.
+# Format: <64 lowercase hex><two spaces><repository-relative path>
+
+3b9d8ee255d2c721437a4e200ca2c3ffa6786b4d111f98b0d67a4736a6efbb06  reconciliation/hrp/CONTRACT-03A-bilateral-acceptance/r1/ACCEPTANCE-RECORD.md
+fdffbba92af9af45b33ab06141ea9b3cef019d7b3b0cfed249e4112796470565  reconciliation/hrp/CONTRACT-03A-bilateral-acceptance/r1/README.md
