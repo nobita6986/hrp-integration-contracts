@@ -187,3 +187,7 @@ Status: READY_FOR_PRODUCER_RECHECK_AND_INDEPENDENT_DELTA_AUDIT.
 
 - `packages/contracts/manifest.sha256` (committed blob `8c39e028a8bea57391e468df2ab8b753db2f464e`): 22 entries. Verified every entry matches the committed HEAD blob via `git ls-tree HEAD <path>`; ALL MATCH.
 - `reconciliation/crm/CONTRACT-03A/r2/manifest.txt` (no self-hash): 3 entries. Verified via the same `git ls-tree` parity check.
+
+## I-01 closure
+
+Producer recheck (MSG-032) verified 9/9 bundle entries. The final manifest at HEAD 34d2cfc covers 22 + 3 = 25 entries, all MATCH against git ls-tree HEAD <path>, with clean-checkout tests passing in C:/clean-test (244/244). See I-01-CLOSURE.md in this bundle for the full closure record.

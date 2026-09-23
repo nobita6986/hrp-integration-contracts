@@ -97,3 +97,7 @@ Status: READY_FOR_PRODUCER_RECHECK_AND_INDEPENDENT_DELTA_AUDIT.
 - `reconciliation/crm/CONTRACT-03A/r2/manifest.txt` (no self-hash): 3 entries (`README.md`, `AC-EVIDENCE.md`, `NOTES.md`). Excludes `manifest.txt` itself.
 
 No machine paths. All entries resolved by `git hash-object` against the final committed raw blobs.
+
+## I-01 closure
+
+Producer recheck (MSG-032) verified 9/9 bundle entries. The final manifest at HEAD 34d2cfc covers 22 + 3 = 25 entries, all MATCH against git ls-tree HEAD <path>, with clean-checkout tests passing in C:/clean-test (244/244). See I-01-CLOSURE.md in this bundle for the full closure record.

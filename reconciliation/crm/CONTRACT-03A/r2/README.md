@@ -4,6 +4,10 @@
 
 `READY_FOR_PRODUCER_RECHECK_AND_INDEPENDENT_DELTA_AUDIT`.
 
+## I-01 closure
+
+Producer recheck (MSG-032, commit `c8786c0f`, manifest hash `eb1cad2...d88a5`) verified 9/9 bundle entries. The full perimeter manifest at HEAD `34d2cfc` covers 22 + 4 = 26 entries, 100% MATCH against `git ls-tree HEAD <path>`, with clean-checkout tests passing in `C:/clean-test` (44 suites, 244 tests, 0 fail). See `I-01-CLOSURE.md` in this bundle.
+
 Target reviewed commit: `22fc50e3deca5e6c816aab44088afe1d443e4867`.
 `SPEC_DESIGN = BILATERALLY_ACCEPTED` remains untouched.
 `ACCEPTED_SHARED` remains `NONE`.

@@ -2,6 +2,7 @@
 # Format: <git-blob-sha256>  <path>
 # Excludes: manifest.txt itself (no self-hash).
 
-5e29174bc6fca67d951689d75e74532ae292a0c1  reconciliation/crm/CONTRACT-03A/r2/README.md
-9f18c439920c199ec11398153c5e1b39409dc2ae  reconciliation/crm/CONTRACT-03A/r2/AC-EVIDENCE.md
-309c00b122decb06f0bfa3b9b2b78df4b1dad86d  reconciliation/crm/CONTRACT-03A/r2/NOTES.md
+f80cde3f1bc3c718c4934139adda194eeafd36aa  reconciliation/crm/CONTRACT-03A/r2/README.md
+19b6a98b79e34e48352cef2a4575c880db0a6d84  reconciliation/crm/CONTRACT-03A/r2/AC-EVIDENCE.md
+36a1bec9e4233d9371e3922f7a0ddc9d92c9f461  reconciliation/crm/CONTRACT-03A/r2/NOTES.md
+064489e34981a853791af2b3c08277495e2fd416  reconciliation/crm/CONTRACT-03A/r2/I-01-CLOSURE.md
