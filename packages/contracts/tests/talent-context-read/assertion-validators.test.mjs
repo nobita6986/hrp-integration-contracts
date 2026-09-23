@@ -53,19 +53,22 @@ function buildValidClaims() {
     iss: 'issuer1',
     aud: OPERATION_AUDIENCE.exchange,
     sub: 'serviceId-1',
+    serviceId: 'serviceId-1',
     jti: JT,
     iat: 100,
     exp: 130,
-    scope: 'talent-context:read:identitySummary',
+    scope: ['talent-context:read:identitySummary'],
     binding: {
+      organizationId: ORG_ID,
+      crmSubject: SUBJECT,
+      crmSessionHandle: 'handle-1',
+      crmSessionDeadline: '2026-09-23T10:00:00Z',
+      callbackId: 'callback-1',
+    },
+    request: {
       method: 'POST',
       path: '/api/exchange',
       bodySha256: SAFE_BODY_SHA,
-    },
-    request: {
-      organizationId: ORG_ID,
-      crmSubject: SUBJECT,
-      delegationRef: DELEGATION_REF,
     },
   };
 }
@@ -221,8 +224,8 @@ describe('F-01 subject must equal serviceId', () => {
 describe('F-01 request binding (method/path/bodySha256 + organizationId/crmSubject)', () => {
   function claimsBinding() {
     return {
-      binding: { method: 'POST', path: '/api/exchange', bodySha256: SAFE_BODY_SHA },
-      request: { organizationId: ORG_ID, crmSubject: SUBJECT, delegationRef: DELEGATION_REF },
+      binding: { organizationId: ORG_ID, crmSubject: SUBJECT, crmSessionHandle: 'handle-1', crmSessionDeadline: '2026-09-23T10:00:00Z', callbackId: 'callback-1' },
+      request: { method: 'POST', path: '/api/exchange', bodySha256: SAFE_BODY_SHA },
     };
   }
   test('all matching passes', () => {
@@ -464,16 +467,15 @@ describe('F-01 single consumer-facing entrypoint validateAssertionProfile', () =
     const out = validateAssertionProfile({
       protectedHeader: buildValidHeader(),
       claims: buildValidClaims(),
-      operation: 'cleanup',
+      operation: 'query',
       serviceId: 'serviceId-1',
-      expectedAudience: OPERATION_AUDIENCE.cleanup,
+      expectedAudience: OPERATION_AUDIENCE.query,
       method: 'POST',
-      path: '/api/cleanup',
+      path: '/api/integrations/crm/talent-context/query',
       bodySha256: SAFE_BODY_SHA,
       organizationId: ORG_ID,
       crmSubject: SUBJECT,
       verifierNowSeconds: 110,
-      query: true,
     });
     assert.equal(out.ok, false);
   });
@@ -482,7 +484,7 @@ describe('F-01 single consumer-facing entrypoint validateAssertionProfile', () =
     c.actor = {
       kind: 'DELEGATED_USER',
       serviceId: 'serviceId-1',
-      userId: 'u1',
+      userId: 'hrp-user-1',
       delegationRef: DELEGATION_REF,
     };
     const out = validateAssertionProfile({
@@ -523,7 +525,7 @@ describe('F-01 strict typ: only "hrp-crm-service+jwt" accepted at public entrypo
       iat: 100,
       exp: 155,
       jti: JT,
-      scope: 'talent-context:read:identitySummary',
+      scope: ['talent-context:read:identitySummary'],
       binding: {
         organizationId: ORG_ID,
         crmSubject: SUBJECT,
@@ -613,7 +615,7 @@ describe('F-01 duplicate-key detection through public entrypoint (validateAssert
       iat: 100,
       exp: 155,
       jti: JT,
-      scope: 'talent-context:read:identitySummary',
+      scope: ['talent-context:read:identitySummary'],
       binding: {
         organizationId: ORG_ID,
         crmSubject: SUBJECT,
@@ -671,3 +673,368 @@ describe('F-01 duplicate-key detection through public entrypoint (validateAssert
     assert.equal(out.ok, false, 'raw entrypoint must catch duplicates that parsed-object layer misses');
   });
 });
+
+// ============================================================================
+// Batch 5 - F-01 A/B/C/D regression tests from r4 canonical probes.
+// Each failing probe in the r4 canonical suite is converted to a regression
+// assertion; each group also has a positive control.
+// ============================================================================
+
+describe('F-01 Batch 5 — strict EP-01 claims, binding, actor, limits', () => {
+  // Build canonical valid claims+opts once and let each test mutate it.
+  function buildCanonicalOpts(overrides = {}) {
+    const token = (p) => p + Buffer.alloc(32, 255).toString('base64url');
+    const scope = 'talent-context:read:identitySummary';
+    const header = { alg: 'RS256', typ: 'hrp-crm-service+jwt', kid: 'key-1' };
+    const binding = {
+      organizationId: 'org-test',
+      crmSubject: 'crm-test',
+      crmSessionHandle: 'session-test',
+      crmSessionDeadline: '2026-09-23T10:00:00Z',
+      callbackId: 'callback-test',
+    };
+    const claims = {
+      iss: 'urn:test:issuer',
+      sub: 'svc-test',
+      serviceId: 'svc-test',
+      aud: 'urn:test:query',
+      iat: 100,
+      exp: 130,
+      jti: token('jt_'),
+      scope: [scope],
+      binding: structuredClone(binding),
+      request: { method: 'POST', path: '/api/integrations/crm/talent-context/query', bodySha256: 'a'.repeat(64) },
+      actor: {
+        kind: 'DELEGATED_USER',
+        serviceId: 'svc-test',
+        userId: 'hrp-test',
+        delegationRef: token('dg_'),
+      },
+    };
+    const opts = {
+      operation: 'query',
+      serviceId: 'svc-test',
+      expectedIssuer: claims.iss,
+      expectedAudience: claims.aud,
+      method: claims.request.method,
+      path: claims.request.path,
+      bodySha256: claims.request.bodySha256,
+      organizationId: binding.organizationId,
+      crmSubject: binding.crmSubject,
+      verifierNowSeconds: 120,
+    };
+    // Apply overrides
+    if (overrides.header) Object.assign(header, overrides.header);
+    if (overrides.claims) Object.assign(claims, overrides.claims);
+    if (overrides.opts) Object.assign(opts, overrides.opts);
+    return {
+      rawHeader: JSON.stringify(header),
+      opts: { ...opts, protectedHeader: header, claims },
+    };
+  }
+
+  // ---- Group A: Claims mandatory + strict shape ----
+
+  test('A positive: canonical claims pass through entrypoint', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, true, JSON.stringify(out));
+    if (out.ok) assert.equal(out.layer, 'profile');
+  });
+
+  test('A negative: missing serviceId rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    delete opts.claims.serviceId;
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('A negative: numeric serviceId rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.serviceId = 7;
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('A negative: string scope rejected (only array accepted)', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.scope = 'talent-context:read:identitySummary';
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('A negative: unknown role claim rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.role = 'ADMIN';
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('A negative: unknown binding field rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.binding.extra = true;
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('A negative: unknown request field rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.request.extra = true;
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('A negative: unknown actor field rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.actor.extra = true;
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('A negative: legacy flipped binding/request rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.binding = { method: 'POST', path: '/api/x', bodySha256: 'a'.repeat(64) };
+    opts.claims.request = { organizationId: 'org-test', crmSubject: 'crm-test', delegationRef: 'dg_x' };
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  // ---- Group B: Binding and actor primitives ----
+
+  test('B negative: invalid callbackId grammar rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.binding.callbackId = 'bad id';
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('B negative: callbackId overlimit rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.binding.callbackId = 'a'.repeat(65);
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('B negative: empty crmSessionHandle rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.binding.crmSessionHandle = '';
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('B negative: invalid crmSessionHandle grammar rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.binding.crmSessionHandle = '_bad';
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('B negative: crmSessionHandle overlimit rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.binding.crmSessionHandle = 'a'.repeat(129);
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('B negative: impossible date rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.binding.crmSessionDeadline = '2026-02-30T10:00:00Z';
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('B negative: offset timestamp (+07:00) rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.binding.crmSessionDeadline = '2026-09-23T17:00:00+07:00';
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('B negative: invalid actor userId grammar rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.actor.userId = 'bad id';
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('B negative: actor userId overlimit rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.actor.userId = 'a'.repeat(129);
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('B negative: invalid actor delegationRef rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.actor.delegationRef = 'dg_bad';
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  // ---- Group C: Operation/actor consistency ----
+
+  test('C negative: actor serviceId mismatch rejected', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.actor.serviceId = 'other-service';
+    // Ensure audience matches so rejection is at the actor level.
+    opts.claims.aud = OPERATION_AUDIENCE.query;
+    opts.expectedAudience = OPERATION_AUDIENCE.query;
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'claims');
+  });
+
+  test('C negative: query operation without actor rejected (no flag to drop)', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    delete opts.claims.actor;
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'query_actor');
+  });
+
+  test('C negative: query operation without actor rejected (even when no opts.query)', () => {
+    // Same as above but opts has no query field at all - the entrypoint must derive
+    // from operation.
+    const { rawHeader, opts } = buildCanonicalOpts();
+    delete opts.claims.actor;
+    assert.equal(opts.query, undefined, 'opts.query must not exist');
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'query_actor');
+  });
+
+  test('C negative: create operation rejects query actor', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.operation = 'create';
+    opts.expectedAudience = OPERATION_AUDIENCE.create;
+    opts.claims.aud = OPERATION_AUDIENCE.create;
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'query_actor');
+  });
+
+  test('C negative: exchange operation rejects query actor', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.operation = 'exchange';
+    opts.expectedAudience = OPERATION_AUDIENCE.exchange;
+    opts.claims.aud = OPERATION_AUDIENCE.exchange;
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'query_actor');
+  });
+
+  test('C negative: cleanup operation rejects query actor', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.operation = 'cleanup';
+    opts.expectedAudience = OPERATION_AUDIENCE.cleanup;
+    opts.claims.aud = OPERATION_AUDIENCE.cleanup;
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'query_actor');
+  });
+
+  // ---- Group D: Profile limits ----
+
+  test('D negative: TTL > 60s rejected even with override flag (entrypoint clamps to 60)', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.exp = 161; // TTL = 61s
+    // Ensure audience matches so rejection is at the TTL layer.
+    opts.claims.aud = OPERATION_AUDIENCE.query;
+    opts.expectedAudience = OPERATION_AUDIENCE.query;
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'ttl');
+  });
+
+  test('D negative: skew > 30s rejected even with override flag (entrypoint clamps to 30)', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.verifierNowSeconds = 160; // exp + 30 = 160 (boundary)
+    // Ensure audience matches so rejection is at the TTL layer.
+    opts.claims.aud = OPERATION_AUDIENCE.query;
+    opts.expectedAudience = OPERATION_AUDIENCE.query;
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'ttl');
+  });
+
+  test('D negative: request.method GET rejected even with matching context', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    opts.claims.request.method = 'GET';
+    opts.method = 'GET'; // matching but invalid
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'binding');
+  });
+
+  test('D negative: request.bodySha256 uppercase rejected even with matching context', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    const upper = 'A'.repeat(64);
+    opts.claims.request.bodySha256 = upper;
+    opts.bodySha256 = upper; // matching but invalid (not lowercase hex)
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'binding');
+  });
+
+  // ---- Header layer (already covered by batch 4.1; control only) ----
+
+  test('Header positive: canonical typ passes', () => {
+    const { rawHeader, opts } = buildCanonicalOpts();
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, true);
+    if (out.ok) assert.equal(out.layer, 'profile');
+  });
+
+  test('Header negative: generic JWT rejected through entrypoint', () => {
+    const { opts } = buildCanonicalOpts();
+    const rawHeader = JSON.stringify({ alg: 'RS256', typ: 'JWT', kid: 'key-1' });
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'header');
+  });
+
+  // ---- Raw duplicate detection (already covered by batch 4.1; control only) ----
+
+  test('Raw negative: top-level duplicate rejected', () => {
+    const { opts } = buildCanonicalOpts();
+    const rawHeader = '{"alg":"RS256","alg":"HS256","typ":"hrp-crm-service+jwt","kid":"key-1"}';
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'raw');
+  });
+
+  test('Raw negative: escaped-equivalent duplicate rejected', () => {
+    const { opts } = buildCanonicalOpts();
+    const rawHeader = '{"alg":"RS256","typ":"hrp-crm-service+jwt","kid":"a","\\u006bid":"key-1"}';
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'raw');
+  });
+
+  test('Raw negative: nested duplicate rejected', () => {
+    const { opts } = buildCanonicalOpts();
+    const rawHeader = '{"alg":"RS256","typ":"hrp-crm-service+jwt","kid":"key-1","extra":{"x":1,"x":2}}';
+    const out = validateAssertionFromWire(rawHeader, opts);
+    assert.equal(out.ok, false);
+    if (!out.ok) assert.equal(out.layer, 'raw');
+  });
+});
+

@@ -5,6 +5,8 @@ import {
   OrganizationIdSchema,
   CanonicalIdSchema,
   OpaqueBindingLikeIdSchema,
+  BindingTimestampSchema,
+  SingleScopeArraySchema,
 } from './primitives.js';
 
 // ============================================================================
@@ -320,10 +322,21 @@ type NormalizedClaims = {
 };
 
 /**
- * Validate the raw claims value and return a NORMALIZED view that conforms
- * to the EP-01 strict shape. Accepts the impl-shape variants of scope,
- * binding, and request (single-literal string for scope; flipped
- * binding/request with method/path/bodySha256 in binding).
+ * Validate EP-01 strict claims and return a NORMALIZED view.
+ *
+ * All strict EP-01 rules enforced directly:
+ * - serviceId is a mandatory string field (not derived from sub).
+ * - scope must be exactly a single-element array of the canonical literal.
+ * - binding fields (organizationId, crmSubject, crmSessionHandle, crmSessionDeadline,
+ *   callbackId) are validated against canonical EP-05 grammars.
+ * - actor fields (serviceId, userId, delegationRef) are validated against
+ *   canonical EP-05 grammars / token schemas.
+ * - Unknown fields at the top level, inside binding, request, or actor cause rejection.
+ * - Impl-shape (flipped binding/request) is not accepted.
+ *
+ * This function is the consumer-facing claims validator for EP-01 strict compliance.
+ * Diagnostics that need to test legacy impl-shape inputs must use the separate
+ * `diagnosticValidateAssertion` helper (which is NOT a profile entrypoint).
  */
 export function validateClaimsObject(value: unknown):
   | { ok: false; layer: 'claims'; reason: string; issues?: unknown }
@@ -334,16 +347,18 @@ export function validateClaimsObject(value: unknown):
   }
   const v = value as Record<string, unknown>;
 
-  // Required fields: iss, sub, aud, iat, exp, jti, scope, binding, request.
-  // serviceId is derived from sub if absent (impl-shape legacy).
+  // Required top-level fields.
   if (typeof v['iss'] !== 'string') {
     return { ok: false, layer: 'claims', reason: 'iss required' };
   }
   if (typeof v['sub'] !== 'string') {
     return { ok: false, layer: 'claims', reason: 'sub required' };
   }
-  const serviceId = typeof v['serviceId'] === 'string' ? v['serviceId'] : v['sub'];
-  if (serviceId !== v['sub']) {
+  // serviceId must be present as a string (not derived from sub).
+  if (typeof v['serviceId'] !== 'string') {
+    return { ok: false, layer: 'claims', reason: 'serviceId required' };
+  }
+  if (v['serviceId'] !== v['sub']) {
     return {
       ok: false,
       layer: 'claims',
@@ -373,205 +388,171 @@ export function validateClaimsObject(value: unknown):
   if (!jtiParse.success) {
     return { ok: false, layer: 'claims', reason: 'jti invalid', issues: jtiParse.error.issues };
   }
-  // nbf / organizationIdDigest are NOT accepted.
+  // Forbidden claims.
   if (v['nbf'] !== undefined) {
     return { ok: false, layer: 'claims', reason: 'nbf not accepted' };
   }
   if (v['organizationIdDigest'] !== undefined) {
-    return {
-      ok: false,
-      layer: 'claims',
-      reason: 'organizationIdDigest not accepted',
-    };
+    return { ok: false, layer: 'claims', reason: 'organizationIdDigest not accepted' };
   }
-  // Scope: accept single-literal string or single-element array of the literal.
-  if (typeof v['scope'] === 'string') {
-    if (v['scope'] !== SCOPE_LITERAL) {
-      return { ok: false, layer: 'claims', reason: 'scope literal mismatch' };
-    }
-  } else if (Array.isArray(v['scope'])) {
-    if (v['scope'].length !== 1 || v['scope'][0] !== SCOPE_LITERAL) {
-      return { ok: false, layer: 'claims', reason: 'scope must be a single-literal array' };
-    }
-  } else {
-    return { ok: false, layer: 'claims', reason: 'scope required (string or single-element array)' };
+  if (v['role'] !== undefined) {
+    return { ok: false, layer: 'claims', reason: 'role not accepted' };
   }
-  // Binding: re-map impl-shape to spec-shape.
+
+  // Scope: must be exactly a single-element array of the canonical literal.
+  const scopeParse = SingleScopeArraySchema.safeParse(v['scope']);
+  if (!scopeParse.success) {
+    return { ok: false, layer: 'claims', reason: 'scope must be a single-element array of the canonical literal' };
+  }
+
+  // Binding: must be spec-shape with canonical grammar on each field.
   const b = v['binding'];
   if (typeof b !== 'object' || b === null) {
     return { ok: false, layer: 'claims', reason: 'binding required' };
   }
+  const bindingRec = b as Record<string, unknown>;
+
+  // Validate each B field against canonical EP-05 grammars.
+  const orgIdParse = OrganizationIdSchema.safeParse(bindingRec['organizationId']);
+  if (!orgIdParse.success) {
+    return { ok: false, layer: 'claims', reason: 'binding.organizationId invalid', issues: orgIdParse.error.issues };
+  }
+  const crmSubjParse = CanonicalIdSchema.safeParse(bindingRec['crmSubject']);
+  if (!crmSubjParse.success) {
+    return { ok: false, layer: 'claims', reason: 'binding.crmSubject invalid', issues: crmSubjParse.error.issues };
+  }
+  // crmSessionHandle: opaque non-bearer alias.
+  const sessionHandleParse = OpaqueBindingLikeIdSchema(128).safeParse(bindingRec['crmSessionHandle']);
+  if (!sessionHandleParse.success) {
+    return { ok: false, layer: 'claims', reason: 'binding.crmSessionHandle invalid', issues: sessionHandleParse.error.issues };
+  }
+  // crmSessionDeadline: RFC3339 UTC Z, valid calendar date.
+  const deadlineParse = BindingTimestampSchema.safeParse(bindingRec['crmSessionDeadline']);
+  if (!deadlineParse.success) {
+    return { ok: false, layer: 'claims', reason: 'binding.crmSessionDeadline invalid', issues: deadlineParse.error.issues };
+  }
+  // callbackId: opaque alias.
+  const callbackIdParse = OpaqueBindingLikeIdSchema(64).safeParse(bindingRec['callbackId']);
+  if (!callbackIdParse.success) {
+    return { ok: false, layer: 'claims', reason: 'binding.callbackId invalid', issues: callbackIdParse.error.issues };
+  }
+  // Unknown binding fields: .strict() equivalent.
+  const knownBindingKeys = new Set(['organizationId', 'crmSubject', 'crmSessionHandle', 'crmSessionDeadline', 'callbackId']);
+  for (const key of Object.keys(bindingRec)) {
+    if (!knownBindingKeys.has(key)) {
+      return { ok: false, layer: 'claims', reason: `binding.unknown field: ${key}` };
+    }
+  }
+
+  // Request: must be spec-shape.
   const r = v['request'];
   if (typeof r !== 'object' || r === null) {
     return { ok: false, layer: 'claims', reason: 'request required' };
   }
-
-  // Detect binding/request shape (impl vs spec).
-  const bindingRec = b as Record<string, unknown>;
   const requestRec = r as Record<string, unknown>;
-  const isImplShapeBinding =
-    typeof bindingRec['method'] === 'string' &&
-    typeof bindingRec['path'] === 'string' &&
-    typeof bindingRec['bodySha256'] === 'string';
-  const isSpecShapeBinding =
-    typeof bindingRec['organizationId'] === 'string' &&
-    typeof bindingRec['crmSubject'] === 'string' &&
-    typeof bindingRec['crmSessionHandle'] === 'string' &&
-    typeof bindingRec['crmSessionDeadline'] === 'string' &&
-    typeof bindingRec['callbackId'] === 'string';
-
-  let normalizedBinding: NormalizedClaims['binding'];
-  let normalizedRequest: NormalizedClaims['request'];
-
-  if (isImplShapeBinding && !isSpecShapeBinding) {
-    // impl-shape: binding carries method/path/bodySha256; request carries
-    // organizationId/crmSubject/delegationRef. Re-map to EP-01 spec view.
-    normalizedBinding = {
-      organizationId: '',
-      crmSubject: '',
-      crmSessionHandle: '',
-      crmSessionDeadline: '',
-      callbackId: '',
-    };
-    normalizedRequest = {
-      method: bindingRec['method'] as string,
-      path: bindingRec['path'] as string,
-      bodySha256: bindingRec['bodySha256'] as string,
-    };
-    // The B fields (organizationId/crmSubject/...) are NOT supplied here;
-    // they are matched against opts.organizationId/opts.crmSubject only when
-    // present. For backward-compat impl-shape inputs, opts carry org/sub.
-    // We still need to expose impl request fields so the B-side check can
-    // happen. Use a side channel.
-    // Implementation: we'll tag the normalized claims with a side-channel
-    // map for impl-shape compatibility.
-    const out: NormalizedClaims & Record<string, unknown> = {
-      iss: v['iss'] as string,
-      aud: v['aud'] as string,
-      sub: v['sub'] as string,
-      serviceId,
-      jti: v['jti'] as string,
-      iat: v['iat'] as number,
-      exp: v['exp'] as number,
-      scope: [SCOPE_LITERAL],
-      binding: normalizedBinding,
-      request: normalizedRequest,
-    };
-    const actorRaw = v['actor'];
-    if (actorRaw !== undefined) {
-      if (
-        typeof actorRaw !== 'object' || actorRaw === null ||
-        (actorRaw as Record<string, unknown>)['kind'] !== 'DELEGATED_USER'
-      ) {
-        return {
-          ok: false,
-          layer: 'claims',
-          reason: 'actor.kind must be DELEGATED_USER',
-        };
-      }
-      const ar = actorRaw as Record<string, unknown>;
-      if (
-        typeof ar['serviceId'] !== 'string' ||
-        typeof ar['userId'] !== 'string' ||
-        typeof ar['delegationRef'] !== 'string'
-      ) {
-        return {
-          ok: false,
-          layer: 'claims',
-          reason: 'DELEGATED_USER actor must include serviceId, userId, delegationRef',
-        };
-      }
-      out.actor = {
-        kind: 'DELEGATED_USER',
-        serviceId: ar['serviceId'] as string,
-        userId: ar['userId'] as string,
-        delegationRef: ar['delegationRef'] as string,
-      };
+  if (typeof requestRec['method'] !== 'string') {
+    return { ok: false, layer: 'claims', reason: 'request.method required' };
+  }
+  if (typeof requestRec['path'] !== 'string') {
+    return { ok: false, layer: 'claims', reason: 'request.path required' };
+  }
+  if (typeof requestRec['bodySha256'] !== 'string') {
+    return { ok: false, layer: 'claims', reason: 'request.bodySha256 required' };
+  }
+  // Unknown request fields.
+  const knownRequestKeys = new Set(['method', 'path', 'bodySha256']);
+  for (const key of Object.keys(requestRec)) {
+    if (!knownRequestKeys.has(key)) {
+      return { ok: false, layer: 'claims', reason: `request.unknown field: ${key}` };
     }
-    // Side channel for impl-shape org/sub comparison.
-    out._implShape = {
-      requestOrganizationId: requestRec['organizationId'],
-      requestCrmSubject: requestRec['crmSubject'],
-      requestDelegationRef: requestRec['delegationRef'],
-    };
-    return { ok: true, layer: 'claims', claims: out as unknown as NormalizedClaims };
   }
 
-  if (isSpecShapeBinding) {
-    normalizedBinding = {
-      organizationId: bindingRec['organizationId'] as string,
-      crmSubject: bindingRec['crmSubject'] as string,
-      crmSessionHandle: bindingRec['crmSessionHandle'] as string,
-      crmSessionDeadline: bindingRec['crmSessionDeadline'] as string,
-      callbackId: bindingRec['callbackId'] as string,
-    };
-    normalizedRequest = {
-      method: requestRec['method'] as string,
-      path: requestRec['path'] as string,
-      bodySha256: requestRec['bodySha256'] as string,
-    };
-    if (
-      typeof normalizedRequest.method !== 'string' ||
-      typeof normalizedRequest.path !== 'string' ||
-      typeof normalizedRequest.bodySha256 !== 'string'
-    ) {
-      return {
-        ok: false,
-        layer: 'claims',
-        reason: 'request shape invalid',
-        issues: [{ path: ['request'], message: 'must include method/path/bodySha256' }],
-      };
+  // Reject impl-shape binding (method/path/bodySha256 inside binding object).
+  if (
+    typeof bindingRec['method'] === 'string' ||
+    typeof bindingRec['path'] === 'string' ||
+    typeof bindingRec['bodySha256'] === 'string'
+  ) {
+    return { ok: false, layer: 'claims', reason: 'binding/request must be EP-01 spec shape only' };
+  }
+
+  // Unknown top-level fields.
+  const knownTopKeys = new Set([
+    'iss', 'sub', 'serviceId', 'aud', 'iat', 'exp', 'jti',
+    'scope', 'binding', 'request', 'actor',
+  ]);
+  for (const key of Object.keys(v)) {
+    if (!knownTopKeys.has(key)) {
+      return { ok: false, layer: 'claims', reason: `unknown top-level field: ${key}` };
     }
-    const out: NormalizedClaims & Record<string, unknown> = {
-      iss: v['iss'] as string,
-      aud: v['aud'] as string,
-      sub: v['sub'] as string,
-      serviceId,
-      jti: v['jti'] as string,
-      iat: v['iat'] as number,
-      exp: v['exp'] as number,
-      scope: [SCOPE_LITERAL],
-      binding: normalizedBinding,
-      request: normalizedRequest,
-    };
-    const actorRaw = v['actor'];
-    if (actorRaw !== undefined) {
-      if (
-        typeof actorRaw !== 'object' || actorRaw === null ||
-        (actorRaw as Record<string, unknown>)['kind'] !== 'DELEGATED_USER'
-      ) {
-        return {
-          ok: false,
-          layer: 'claims',
-          reason: 'actor.kind must be DELEGATED_USER',
-        };
-      }
-      const ar = actorRaw as Record<string, unknown>;
-      if (
-        typeof ar['serviceId'] !== 'string' ||
-        typeof ar['userId'] !== 'string' ||
-        typeof ar['delegationRef'] !== 'string'
-      ) {
-        return {
-          ok: false,
-          layer: 'claims',
-          reason: 'DELEGATED_USER actor must include serviceId, userId, delegationRef',
-        };
-      }
-      out.actor = {
-        kind: 'DELEGATED_USER',
-        serviceId: ar['serviceId'] as string,
-        userId: ar['userId'] as string,
-        delegationRef: ar['delegationRef'] as string,
-      };
+  }
+
+  // Actor (optional): must be DELEGATED_USER with grammatically valid fields.
+  const actorRaw = v['actor'];
+  let actor: NormalizedClaims['actor'] | undefined;
+  if (actorRaw !== undefined) {
+    if (typeof actorRaw !== 'object' || actorRaw === null) {
+      return { ok: false, layer: 'claims', reason: 'actor must be an object' };
     }
-    return { ok: true, layer: 'claims', claims: out as unknown as NormalizedClaims };
+    const ar = actorRaw as Record<string, unknown>;
+    if (ar['kind'] !== 'DELEGATED_USER') {
+      return { ok: false, layer: 'claims', reason: 'actor.kind must be DELEGATED_USER' };
+    }
+    if (typeof ar['serviceId'] !== 'string') {
+      return { ok: false, layer: 'claims', reason: 'actor.serviceId required' };
+    }
+    if (ar['serviceId'] !== v['serviceId']) {
+      return { ok: false, layer: 'claims', reason: 'actor.serviceId must match serviceId' };
+    }
+    const userIdParse = OpaqueBindingLikeIdSchema(128).safeParse(ar['userId']);
+    if (!userIdParse.success) {
+      return { ok: false, layer: 'claims', reason: 'actor.userId invalid', issues: userIdParse.error.issues };
+    }
+    const delegationRefParse = DelegationRefSchema.safeParse(ar['delegationRef']);
+    if (!delegationRefParse.success) {
+      return { ok: false, layer: 'claims', reason: 'actor.delegationRef invalid', issues: delegationRefParse.error.issues };
+    }
+    // Unknown actor fields.
+    const knownActorKeys = new Set(['kind', 'serviceId', 'userId', 'delegationRef']);
+    for (const key of Object.keys(ar)) {
+      if (!knownActorKeys.has(key)) {
+        return { ok: false, layer: 'claims', reason: `actor.unknown field: ${key}` };
+      }
+    }
+    actor = {
+      kind: 'DELEGATED_USER',
+      serviceId: ar['serviceId'] as string,
+      userId: ar['userId'] as string,
+      delegationRef: ar['delegationRef'] as string,
+    };
   }
 
   return {
-    ok: false,
+    ok: true,
     layer: 'claims',
-    reason: 'binding/request must be either EP-01 spec shape or impl-shape (with method/path/bodySha256)',
+    claims: {
+      iss: v['iss'] as string,
+      aud: v['aud'] as string,
+      sub: v['sub'] as string,
+      serviceId: v['serviceId'] as string,
+      jti: v['jti'] as string,
+      iat: v['iat'] as number,
+      exp: v['exp'] as number,
+      scope: [scopeParse.data[0]],
+      binding: {
+        organizationId: orgIdParse.data,
+        crmSubject: crmSubjParse.data,
+        crmSessionHandle: sessionHandleParse.data,
+        crmSessionDeadline: deadlineParse.data,
+        callbackId: callbackIdParse.data,
+      },
+      request: {
+        method: requestRec['method'] as string,
+        path: requestRec['path'] as string,
+        bodySha256: requestRec['bodySha256'] as string,
+      },
+      actor,
+    },
   };
 }
 
@@ -638,8 +619,8 @@ export function validateSubject(
 export function validateRequestBinding(
   // Re-exposed for probe F01 (rejects when context absent).
   claims: {
-    binding: { method: string; path: string; bodySha256: string };
-    request: { organizationId: string; crmSubject: string; delegationRef: string };
+    binding: { organizationId: string; crmSubject: string };
+    request: { method: string; path: string; bodySha256: string };
   },
   opts: {
     method: string;
@@ -657,20 +638,27 @@ export function validateRequestBinding(
   ) {
     return { ok: false as const, reason: 'binding context absent' };
   }
-  if (claims.binding.method !== opts.method) {
-    return { ok: false as const, reason: 'method binding mismatch' };
-  }
-  if (claims.binding.path !== opts.path) {
-    return { ok: false as const, reason: 'path binding mismatch' };
-  }
-  if (claims.binding.bodySha256 !== opts.bodySha256) {
-    return { ok: false as const, reason: 'bodySha256 binding mismatch' };
-  }
-  if (claims.request.organizationId !== opts.organizationId) {
+  if (claims.binding.organizationId !== opts.organizationId) {
     return { ok: false as const, reason: 'organizationId binding mismatch' };
   }
-  if (claims.request.crmSubject !== opts.crmSubject) {
+  if (claims.binding.crmSubject !== opts.crmSubject) {
     return { ok: false as const, reason: 'crmSubject binding mismatch' };
+  }
+  // Format validation: POST must be exact; bodySha256 must be lowercase hex.
+  if (claims.request.method !== 'POST') {
+    return { ok: false as const, reason: 'method must be POST' };
+  }
+  if (claims.request.method !== opts.method) {
+    return { ok: false as const, reason: 'method binding mismatch' };
+  }
+  if (claims.request.path !== opts.path) {
+    return { ok: false as const, reason: 'path binding mismatch' };
+  }
+  if (!/^[a-f0-9]{64}$/.test(claims.request.bodySha256)) {
+    return { ok: false as const, reason: 'bodySha256 must be 64 lowercase hex chars' };
+  }
+  if (claims.request.bodySha256 !== opts.bodySha256) {
+    return { ok: false as const, reason: 'bodySha256 binding mismatch' };
   }
   return { ok: true as const };
 }
@@ -734,11 +722,6 @@ export type ValidateAssertionProfileOpts = {
   organizationId: string;
   crmSubject: string;
   verifierNowSeconds?: number;
-  ttlSeconds?: number;
-  skewSeconds?: number;
-  // For query profile: caller passes query=true to validate that the actor
-  // is a DELEGATED_USER shape; issuance/exchange/cleanup do not accept it.
-  query?: boolean;
 };
 
 /**
@@ -796,18 +779,18 @@ export function validateAssertionProfile(
       issues: (claimsRes as { issues?: unknown }).issues,
     };
   }
-  const claims = claimsRes.claims as NormalizedClaims & Record<string, unknown>;
+  const claims = claimsRes.claims;
 
   // Layer 3: subject === serviceId (also enforced inside validateClaimsObject).
   const subjRes = validateSubject(claims, { serviceId: opts.serviceId });
   if (!subjRes.ok) return { ok: false, layer: 'subject', reason: subjRes.reason };
 
-  // Layer 4: TTL/skew with boundary.
+  // Layer 4: TTL/skew with EP-01 fixed caps (60s / 30s). Caller cannot relax.
   const ttlRes = validateTtlSkew(
     claims,
     {
-      ttlSeconds: opts.ttlSeconds ?? ASSERTION_LIMITS.DEFAULT_TTL_SECONDS,
-      skewSeconds: opts.skewSeconds ?? ASSERTION_LIMITS.DEFAULT_SKEW_SECONDS,
+      ttlSeconds: ASSERTION_LIMITS.DEFAULT_TTL_SECONDS,
+      skewSeconds: ASSERTION_LIMITS.DEFAULT_SKEW_SECONDS,
       nowSeconds: opts.verifierNowSeconds,
     },
   );
@@ -817,65 +800,46 @@ export function validateAssertionProfile(
   const audRes = validateAudience(claims, { audience: opts.expectedAudience });
   if (!audRes.ok) return { ok: false, layer: 'audience', reason: audRes.reason };
 
-  // Layer 6: issuer = expectedIssuer (F-01 batch 4: required at entrypoint).
+  // Layer 6: issuer = expectedIssuer.
   const issRes = validateIssuer(claims, { issuer: opts.expectedIssuer });
   if (!issRes.ok) return { ok: false, layer: 'issuer', reason: issRes.reason };
 
-  // Layer 7: request binding B (matches impl-shape OR spec-shape).
-  if (claims._implShape !== undefined) {
-    const impl = claims._implShape as {
-      requestOrganizationId?: string;
-      requestCrmSubject?: string;
-      requestDelegationRef?: string;
-    };
-    if (impl.requestOrganizationId !== opts.organizationId) {
-      return { ok: false, layer: 'binding', reason: 'organizationId binding mismatch' };
-    }
-    if (impl.requestCrmSubject !== opts.crmSubject) {
-      return { ok: false, layer: 'binding', reason: 'crmSubject binding mismatch' };
-    }
-    if (claims.request.method !== opts.method) {
-      return { ok: false, layer: 'binding', reason: 'method binding mismatch' };
-    }
-    if (claims.request.path !== opts.path) {
-      return { ok: false, layer: 'binding', reason: 'path binding mismatch' };
-    }
-    if (claims.request.bodySha256 !== opts.bodySha256) {
-      return { ok: false, layer: 'binding', reason: 'bodySha256 binding mismatch' };
-    }
-  } else {
-    // Spec shape.
-    if (claims.binding.organizationId !== opts.organizationId) {
-      return { ok: false, layer: 'binding', reason: 'organizationId binding mismatch' };
-    }
-    if (claims.binding.crmSubject !== opts.crmSubject) {
-      return { ok: false, layer: 'binding', reason: 'crmSubject binding mismatch' };
-    }
-    if (claims.request.method !== opts.method) {
-      return { ok: false, layer: 'binding', reason: 'method binding mismatch' };
-    }
-    if (claims.request.path !== opts.path) {
-      return { ok: false, layer: 'binding', reason: 'path binding mismatch' };
-    }
-    if (claims.request.bodySha256 !== opts.bodySha256) {
-      return { ok: false, layer: 'binding', reason: 'bodySha256 binding mismatch' };
-    }
+  // Layer 7: request binding B (EP-01 strict: POST + lowercase 64-hex).
+  if (claims.binding.organizationId !== opts.organizationId) {
+    return { ok: false, layer: 'binding', reason: 'organizationId binding mismatch' };
+  }
+  if (claims.binding.crmSubject !== opts.crmSubject) {
+    return { ok: false, layer: 'binding', reason: 'crmSubject binding mismatch' };
+  }
+  // Format validation: POST must be uppercase and exact; bodySha256 must be lowercase hex.
+  if (claims.request.method !== 'POST') {
+    return { ok: false, layer: 'binding', reason: 'request.method must be POST' };
+  }
+  if (claims.request.path !== opts.path) {
+    return { ok: false, layer: 'binding', reason: 'path binding mismatch' };
+  }
+  if (!/^[a-f0-9]{64}$/.test(claims.request.bodySha256)) {
+    return { ok: false, layer: 'binding', reason: 'request.bodySha256 must be 64 lowercase hex chars' };
+  }
+  if (claims.request.bodySha256 !== opts.bodySha256) {
+    return { ok: false, layer: 'binding', reason: 'bodySha256 binding mismatch' };
   }
 
   // Layer 8: per-operation required actor.
   const actorRes = actorForOperation(opts.operation);
   if (!actorRes.ok) return { ok: false, layer: 'actor', reason: actorRes.reason };
 
-  // Layer 9: query-only actor rule (F-01).
+  // Layer 9: query-only actor rule (F-01). Derive from operation, NOT from caller flag.
   const claimsHasQueryActor = claims.actor !== undefined;
-  if (opts.query && !claimsHasQueryActor) {
+  const isQueryOp = opts.operation === 'query';
+  if (isQueryOp && !claimsHasQueryActor) {
     return { ok: false, layer: 'query_actor', reason: 'query surface requires DELEGATED_USER actor' };
   }
-  if (!opts.query && claimsHasQueryActor) {
+  if (!isQueryOp && claimsHasQueryActor) {
     return {
       ok: false,
       layer: 'query_actor',
-      reason: 'issuance/exchange/cleanup do not accept a query actor',
+      reason: 'create/exchange/cleanup do not accept a query actor',
     };
   }
 
@@ -944,84 +908,27 @@ export function diagnosticValidateAssertion(
       issues: (claimsRes as { issues?: unknown }).issues,
     };
   }
-  const claims = claimsRes.claims as NormalizedClaims & Record<string, unknown>;
+  const claims = claimsRes.claims;
 
-  // Layer 3–9: same as public profile (re-use the public validator's
-  // remaining logic by invoking it with a header that will pass the schema).
-  // We do inline copies of layers 3–9 to keep diagnostics fully isolated.
-  const subjRes = validateSubject(claims, { serviceId: opts.serviceId });
-  if (!subjRes.ok) return { ok: false, layer: 'subject', reason: subjRes.reason };
-
-  const ttlRes = validateTtlSkew(
-    claims,
-    {
-      ttlSeconds: opts.ttlSeconds ?? ASSERTION_LIMITS.DEFAULT_TTL_SECONDS,
-      skewSeconds: opts.skewSeconds ?? ASSERTION_LIMITS.DEFAULT_SKEW_SECONDS,
-      nowSeconds: opts.verifierNowSeconds,
-    },
-  );
-  if (!ttlRes.ok) return { ok: false, layer: 'ttl', reason: ttlRes.reason };
-
-  const audRes = validateAudience(claims, { audience: opts.expectedAudience });
-  if (!audRes.ok) return { ok: false, layer: 'audience', reason: audRes.reason };
-
-  const issRes = validateIssuer(claims, { issuer: opts.expectedIssuer });
-  if (!issRes.ok) return { ok: false, layer: 'issuer', reason: issRes.reason };
-
-  // Binding check — inline to handle both impl-shape and spec-shape.
-  // Diagnostic helper accepts both binding forms.
-  const isImplShape = claims._implShape !== undefined;
-  if (isImplShape) {
-    const impl = claims._implShape as {
-      requestOrganizationId?: string;
-      requestCrmSubject?: string;
-    };
-    if (impl.requestOrganizationId !== opts.organizationId) {
-      return { ok: false, layer: 'binding', reason: 'organizationId binding mismatch' };
-    }
-    if (impl.requestCrmSubject !== opts.crmSubject) {
-      return { ok: false, layer: 'binding', reason: 'crmSubject binding mismatch' };
-    }
-    if (claims.request.method !== opts.method) {
-      return { ok: false, layer: 'binding', reason: 'method binding mismatch' };
-    }
-    if (claims.request.path !== opts.path) {
-      return { ok: false, layer: 'binding', reason: 'path binding mismatch' };
-    }
-    if (claims.request.bodySha256 !== opts.bodySha256) {
-      return { ok: false, layer: 'binding', reason: 'bodySha256 binding mismatch' };
-    }
-  } else {
-    if (claims.binding.organizationId !== opts.organizationId) {
-      return { ok: false, layer: 'binding', reason: 'organizationId binding mismatch' };
-    }
-    if (claims.binding.crmSubject !== opts.crmSubject) {
-      return { ok: false, layer: 'binding', reason: 'crmSubject binding mismatch' };
-    }
-    if (claims.request.method !== opts.method) {
-      return { ok: false, layer: 'binding', reason: 'method binding mismatch' };
-    }
-    if (claims.request.path !== opts.path) {
-      return { ok: false, layer: 'binding', reason: 'path binding mismatch' };
-    }
-    if (claims.request.bodySha256 !== opts.bodySha256) {
-      return { ok: false, layer: 'binding', reason: 'bodySha256 binding mismatch' };
-    }
-  }
-
-  const actorRes = actorForOperation(opts.operation);
-  if (!actorRes.ok) return { ok: false, layer: 'actor', reason: actorRes.reason };
-
-  const claimsHasQueryActor = claims.actor !== undefined;
-  if (opts.query && !claimsHasQueryActor) {
-    return { ok: false, layer: 'query_actor', reason: 'query surface requires DELEGATED_USER actor' };
-  }
-  if (!opts.query && claimsHasQueryActor) {
-    return {
-      ok: false,
-      layer: 'query_actor',
-      reason: 'issuance/exchange/cleanup do not accept a query actor',
-    };
+  // Diagnostic helper delegates to the public validator for layers 3-9, only
+  // substituting the header schema so legacy typ:'JWT' is accepted.
+  const publicOpts: ValidateAssertionProfileOpts = {
+    protectedHeader: { alg: 'RS256', typ: 'hrp-crm-service+jwt', kid: 'diagnostic-key' },
+    claims: opts.claims,
+    operation: opts.operation,
+    serviceId: opts.serviceId,
+    expectedIssuer: opts.expectedIssuer,
+    expectedAudience: opts.expectedAudience,
+    method: opts.method,
+    path: opts.path,
+    bodySha256: opts.bodySha256,
+    organizationId: opts.organizationId,
+    crmSubject: opts.crmSubject,
+    verifierNowSeconds: opts.verifierNowSeconds,
+  };
+  const pubResult = validateAssertionProfile(publicOpts);
+  if (pubResult.ok === false) {
+    return pubResult;
   }
 
   return {
@@ -1029,6 +936,6 @@ export function diagnosticValidateAssertion(
     layer: 'diagnostic' as const,
     header: headerParsed.data as unknown as { alg: string; typ: string; kid: string },
     claims,
-    requiredActor: actorRes.required,
+    requiredActor: pubResult.requiredActor,
   };
 }
