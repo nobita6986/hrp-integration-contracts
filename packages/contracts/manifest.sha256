@@ -1,0 +1,26 @@
+# packages/contracts manifest - final committed raw blobs.
+# SHA256 via git hash-object (matches final committed raw bytes).
+# Excludes: node_modules/, dist/, manifest.sha256.
+
+00ed922fcf1a0757a24e57d18efb37a8e2081a99  packages/contracts/src/talent-context-read/assertion.ts
+0df8938852345004b5723cae18dce7e0766b0a5b  packages/contracts/src/talent-context-read/delegation.ts
+15ee09ec434f1b1d4aa2ad23fe46c655aefeb302  packages/contracts/src/talent-context-read/query-types.ts
+1e7ab91f9c0a8e580d33b1752a6f60652ce212d7  packages/contracts/tests/talent-context-read/redaction-probes.test.mjs
+3fad73e2a504ade82f7ae5b18be114908caca574  packages/contracts/tests/talent-context-read/assertion-profile.test.mjs
+40f5feaad6aed3832bb5679e5745af60b0d076b0  packages/contracts/scripts/generate-manifest.mjs
+5858d9f87c72c2c0923c21d038890255c9db61bd  packages/contracts/src/talent-context-read/query-errors.ts
+6362d1445bd4c9dede726648df2e3b7103b494e6  packages/contracts/src/talent-context-read/index.ts
+744c19edadf9503c0bc8a1601b09a42e1b6ef1fc  packages/contracts/tests/talent-context-read/conformance-helper.test.mjs
+78b1a939d664d4e33a34e5fb9dc95a06961631f0  packages/contracts/src/talent-context-read/redaction.ts
+82af080e83a4d3b583f98ebb5b89d6e1365fdfa4  packages/contracts/src/talent-context-read/query-parser.ts
+8e5723f76b3c8b8edff8f96ef5c7a9125be2ef60  packages/contracts/tests/fixtures/redaction-vectors.fixtures.json
+9046a7aedf9b9fe74bca22b9282ce87f44c6f797  packages/contracts/tsconfig.json
+959bf385dd4cf8a6c331240ba10601f487bb3e88  packages/contracts/tests/talent-context-read/redaction-vectors.test.mjs
+95d36b116bfb01f89eb12b4517eea84490a051bb  packages/contracts/src/talent-context-read/primitives.ts
+af64d0c187cfed87ed728051e36d0502775bac80  packages/contracts/package.json
+b1a84348ffa082a96fae5002db36e7558d431d91  packages/contracts/tests/talent-context-read/assertion-validators.test.mjs
+c4ab7bfd063b640611bfaf59716a3235e453d9bb  packages/contracts/package-lock.json
+cb23d06b881a49b148b5c6183a659d1eb5fbec10  packages/contracts/tests/talent-context-read/query-conformance.test.mjs
+d0068a6ae92966a907933a66eefed4efcb8fee04  packages/contracts/tests/talent-context-read/delegation-conformance.test.mjs
+e50ed5b35ec1559b0dae646c845971fe30f8ef54  packages/contracts/src/talent-context-read/conformance.ts
+e8baa802584aaec596b1817d2cf6c47da6dd3a11  packages/contracts/src/talent-context-read/package.json

@@ -9,20 +9,17 @@ import {
 } from './query-types.js';
 
 // ============================================================================
-// F-06 - request/result conformance helper.
+// F-06 - Request/result conformance helper (pure).
 //
-// Pure function `checkResultConformance(requested, fullNameInput)` that
-// decides, for a given fieldAllowlist + the raw fullNameInput:
+// The full conformance helper for the production-intended projection logic.
+// Used by tests and any caller that needs to derive `identitySummary` +
+// `unavailableFields` from a (validated fieldAllowlist, redactOutcome)
+// pair. The unrequested case never invokes redaction, so the helper must
+// produce no data and no marker for identitySummary in that case.
 //
-//   - Requested but unsafe (rejected by redaction)  -> omit identitySummary,
-//                                                     single `identitySummary`
-//                                                     marker.
-//   - Known unsupported (field present in allowlist but not currently
-//     available)                                    -> marker ONLY IF requested.
-//   - Unrequested (not in allowlist)                -> neither data nor marker.
-//
-// This is a pure helper — no I/O, no logging. Caller provides the redaction
-// function and supplies the unsafe-flag.
+// Multi-field requested behaviour: when the caller requests identitySummary
+// AND one or more known-unsupported fields, the helper preserves
+// uniqueness + first-appearance order in unavailableFields.
 // ============================================================================
 
 const SUPPORTED_FIELDS = Object.freeze(['identitySummary']);
@@ -36,19 +33,31 @@ const KNOWN_UNSUPPORTED = Object.freeze([
   'suppressionSummary',
 ]);
 
+export type RedactOutcome =
+  | { success: true; redacted: string }
+  | { success: false; reason: string };
+
+export type ConformanceResult = {
+  identitySummary?: z.infer<typeof IdentitySummarySchema>;
+  unavailableFields: z.infer<typeof UnavailableFieldsSchema>;
+};
+
 /**
- * @param {string[]} requested - validated fieldAllowlist.
- * @param {{ success: true, redacted: string } | { success: false, reason: string }} redactOutcome
- * @returns {{ identitySummary?: object, unavailableFields: string[] }}
+ * Single consumer-facing helper for projection conformance. Tests must
+ * call this directly; it is NOT invoked indirectly through the parser.
  */
-export function checkResultConformance(requested, redactOutcome) {
-  const reqParsed = TalentContextReadFieldAllowlistSchema.parse(requested);
+export function checkResultConformance(
+  requested: readonly string[],
+  redactOutcome: RedactOutcome,
+): ConformanceResult {
+  const reqParsed = TalentContextReadFieldAllowlistSchema.parse([...requested]);
 
-  const unavailable = new Set<string>();
+  const unavailable: string[] = [];
 
-  // Decide data + marker for identitySummary specifically.
-  let identitySummary = undefined;
-  if (reqParsed.indexOf('identitySummary') !== -1) {
+  // identitySummary data + marker.
+  let identitySummary: z.infer<typeof IdentitySummarySchema> | undefined;
+  const requestedIdentity = reqParsed.indexOf('identitySummary') !== -1;
+  if (requestedIdentity) {
     if (redactOutcome && redactOutcome.success) {
       const ok = IdentitySummarySchema.safeParse({
         schemaVersion: '1',
@@ -58,32 +67,56 @@ export function checkResultConformance(requested, redactOutcome) {
       if (ok.success) {
         identitySummary = ok.data;
       } else {
-        unavailable.add('identitySummary');
+        // Redaction output violates the schema (e.g. oversize bytes).
+        // Treat as requested unsafe.
+        unavailable.push('identitySummary');
       }
     } else {
-      // Unsafe OR omitted: omit data and add marker exactly once.
-      unavailable.add('identitySummary');
+      // Requested unsafe: omit data; single marker, exactly once.
+      unavailable.push('identitySummary');
     }
   }
 
-  // Known unsupported: marker ONLY if requested.
+  // Known unsupported: marker ONLY if requested. Preserve first-appearance
+  // order so the array is unique AND in the order requested.
+  const reqAsTuple = reqParsed as readonly string[];
   for (const f of KNOWN_UNSUPPORTED) {
-    const reqAsStrings = reqParsed as unknown as string[];
-    if (reqAsStrings.indexOf(f) !== -1) unavailable.add(f as never);
+    if (reqAsTuple.indexOf(f) !== -1) unavailable.push(f);
   }
-  const unavailableFields = UnavailableFieldsSchema.parse(Array.from(unavailable) as never[]);
+
+  const unavailableFields = UnavailableFieldsSchema.parse(unavailable as readonly string[] as never);
   return { identitySummary, unavailableFields };
 }
 
 /**
- * `expectedUnavailableFields` should match the array, with stable ordering.
+ * Compare two unavailableFields arrays by sorted content (test helper).
  */
-export function compareUnavailableFields(actual, expected) {
+export function compareUnavailableFields(
+  actual: readonly string[],
+  expected: readonly string[],
+): boolean {
   if (!Array.isArray(actual) || !Array.isArray(expected)) return false;
   if (actual.length !== expected.length) return false;
   const a = [...actual].sort();
   const b = [...expected].sort();
   for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
+  return true;
+}
+
+/**
+ * Compare two unavailableFields arrays by exact content + first-appearance
+ * order (unique + ordered). Used by tests that must observe the spec's
+ * "multiple known requested fields keep unique/order" semantics.
+ */
+export function compareUnavailableFieldsInOrder(
+  actual: readonly string[],
+  expected: readonly string[],
+): boolean {
+  if (!Array.isArray(actual) || !Array.isArray(expected)) return false;
+  if (actual.length !== expected.length) return false;
+  for (let i = 0; i < actual.length; i++) {
+    if ((actual as unknown as string[])[i] !== (expected as unknown as string[])[i]) return false;
+  }
   return true;
 }
 

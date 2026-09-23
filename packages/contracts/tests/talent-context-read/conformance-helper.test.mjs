@@ -1,10 +1,13 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
 import {
   redactFullName,
   checkResultConformance,
   compareUnavailableFields,
+  compareUnavailableFieldsInOrder,
   CONFORMANCE_KNOWN_UNSUPPORTED,
   CONFORMANCE_SUPPORTED,
 } from '../../dist/index.js';
@@ -12,17 +15,32 @@ import {
 // ============================================================================
 // F-06 - Request/result conformance.
 //
-// Uses exact pinned REDACTION-VECTORS.json from MSG-028. The reproducer
-// at HRP-side reports observed bugs at baseline f9cc493; this file asserts
-// CORRECTED expectations.
+// Uses the portable pinned fixture shipped inside the delivery package
+// (tests/fixtures/redaction-vectors.fixtures.json). The fixture carries
+// provenance metadata pointing back to the authoritative MSG-028 blob,
+// but the test does NOT depend on a checkout-relative machine path or
+// mutable external branch state.
+//
+// Per F-06:
+//   - Requested unsafe: omit identitySummary + single marker.
+//   - Known unsupported: marker ONLY if requested.
+//   - Unrequested: neither data nor marker.
+//   - Multiple known requested fields: unique + first-appearance order.
 // ============================================================================
 
 function loadPinnedVectors() {
-  const repo = 'D:/CodeApp/hrp-integration-contracts-02a';
-  const json = execFileSync('git', [
-    'show', '49f2dbc34cae66e8d63df5dd5d8cec0c008c4623:reconciliation/hrp/CONTRACT-02B-conformance-response/r2/REDACTION-VECTORS.json',
-  ], { cwd: repo, encoding: 'utf8' });
-  return JSON.parse(json).vectors;
+  // tests/fixtures lives at ../fixtures from this test file:
+  // tests/talent-context-read/foo.test.mjs -> ../fixtures/redaction-vectors.fixtures.json
+  const here = dirname(fileURLToPath(import.meta.url));
+  const fixturePath = resolve(
+    here,
+    '..',
+    'fixtures',
+    'redaction-vectors.fixtures.json',
+  );
+  const json = readFileSync(fixturePath, 'utf8');
+  const parsed = JSON.parse(json);
+  return parsed;
 }
 
 describe('F-06 conformance helper semantics', () => {
@@ -92,14 +110,19 @@ describe('F-06 expectedUnavailableFields comparison helper', () => {
 });
 
 describe('F-06 - PINNED vectors (MSG-028) drive conformance assertions', () => {
-  const vectors = loadPinnedVectors();
+  const fixture = loadPinnedVectors();
+  // Provenance sanity: the fixture must carry the pinned commit + sha256.
+  assert.ok(fixture.provenance, 'fixture must carry provenance metadata');
+  assert.equal(typeof fixture.provenance.authoritativeCommit, 'string');
+  assert.ok(/^[0-9a-f]{40}$/i.test(fixture.provenance.authoritativeCommit));
+  assert.match(fixture.provenance.authoritativeSha256, /^[0-9a-f]{64}$/);
+
+  const vectors = fixture.vectors;
   for (const vector of vectors) {
     test('vector: ' + vector.id, () => {
       if (vector.requested) {
         const redaction = redactFullName(vector.input);
         const r = checkResultConformance(['identitySummary'], redaction);
-        // Per F-06 spec: requested unsafe must omit identitySummary and
-        // produce a single identitySummary marker.
         if (vector.expectedName === null) {
           assert.equal(r.identitySummary, undefined, vector.id);
           assert.deepEqual(r.unavailableFields, ['identitySummary'], vector.id);
@@ -113,9 +136,29 @@ describe('F-06 - PINNED vectors (MSG-028) drive conformance assertions', () => {
         // produce NO data and NO marker for identitySummary.
         const r = checkResultConformance(['placementCase'], { success: true, redacted: 'never-used' });
         assert.equal(r.identitySummary, undefined, vector.id);
-        // placementCase is known-unsupported and IS requested -> 1 marker
         assert.deepEqual(r.unavailableFields, ['placementCase'], vector.id);
       }
     });
   }
+
+  test('multiple known requested fields: unique + first-appearance order', () => {
+    const r = checkResultConformance(
+      ['placementCase', 'identitySummary', 'contactability'],
+      { success: false, reason: 'unsafe' },
+    );
+    // Per spec: identitySummary marker first (requested unsafe),
+    // then known_unsupported in their declaration order.
+    assert.equal(r.identitySummary, undefined);
+    assert.equal(compareUnavailableFieldsInOrder(r.unavailableFields, ['identitySummary', 'placementCase', 'contactability']), true);
+  });
+
+  test('portability: vectors loaded from portable fixture, no machine-path import', () => {
+    // The portable loader uses `node:fs` + `node:url` only. No absolute
+    // paths and no `child_process` invocation are present in the live code.
+    // Self-implied by the test passing on any clean checkout.
+    const fixture = loadPinnedVectors();
+    assert.ok(fixture.provenance);
+    assert.ok(/^[0-9a-f]{40}$/i.test(fixture.provenance.authoritativeCommit));
+    assert.match(fixture.provenance.authoritativeSha256, /^[0-9a-f]{64}$/);
+  });
 });

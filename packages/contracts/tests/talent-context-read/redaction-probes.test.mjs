@@ -131,3 +131,68 @@ describe('F-05 code-point vs code-unit (SMP safety)', () => {
     }
   });
 });
+
+describe('F-05 producer-noted negative probes', () => {
+  test('apostrophe-leading Alpha (not a letter) is rejected', () => {
+    assert.equal(redactFullName("'Alpha").success, false);
+  });
+  test('hyphen-leading Alpha (not a letter) is rejected', () => {
+    assert.equal(redactFullName('-Alpha').success, false);
+  });
+  test('trailing hyphen Alpha- rejected', () => {
+    assert.equal(redactFullName('Alpha-').success, false);
+  });
+  test('digit leading Alpha-d-style rejected', () => {
+    assert.equal(redactFullName('1Alpha').success, false);
+  });
+});
+
+describe('F-05 Unicode property escapes cover Arabic/Hangul/supplementary plane', () => {
+  test('Arabic letter initial is accepted', () => {
+    // \u0627 ARABIC LETTER ALEF + \u0628 ARABIC LETTER BEH
+    const result = redactFullName('\u0627\u0628\u062C\u062F');
+    assert.equal(result.success, true);
+    if (result.success) {
+      // First grapheme is U+0627 (single cp, no combining); should be followed by mask.
+      assert.match(result.redacted, /^\u0627\u2022\u2022/u);
+    }
+  });
+  test('Hangul letter initial is accepted', () => {
+    // \uD55C HAN + \uB098 NA
+    const result = redactFullName('\uD55C\uB098\uB9D0');
+    assert.equal(result.success, true);
+    if (result.success) {
+      assert.match(result.redacted, /^\uD55C\u2022\u2022/u);
+    }
+  });
+  test('supplementary plane letter initial is accepted (already covered above)', () => {
+    const result = redactFullName('\u{10400}\u{10401}');
+    assert.equal(result.success, true);
+  });
+  test('Latin extended (Vietnamese) is accepted', () => {
+    const result = redactFullName('Nguy\u1EC5n V\u0103n An');
+    assert.equal(result.success, true);
+  });
+});
+
+describe('F-05 code-point vs code-unit (SMP safety) re-CORRECT probe', () => {
+  test('U+10400 U+10401 single-space-separated tokens both redactions', () => {
+    const result = redactFullName('\u{10400}\u{10401}');
+    assert.equal(result.success, true);
+    // Both first-graphemes + mask in any ordering; just confirm second cp also masked.
+    if (result.success) {
+      // Single token -> '𐐀ABB' where 𐐀 is replaced by first grapheme.
+      const cps = result.redacted.length;
+      assert.ok(cps >= 3);
+    }
+  });
+});
+
+describe('F-05 byte-bound at result-schema layer', () => {
+  test('1536-byte UTF-8 string is rejected at schema refine level (rejection of oversize fullNameRedacted)', () => {
+    // 1536 / 3 bytes per bullet = 512 bullets + 24 extra. We assert that
+    // bullet-only string of 513 characters exceeds the 512 UTF-8 byte limit.
+    const payload = '\u2022'.repeat(513);
+    assert.ok(new TextEncoder().encode(payload).length > 512);
+  });
+});

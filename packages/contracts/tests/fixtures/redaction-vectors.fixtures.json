@@ -1,0 +1,35 @@
+{
+  "provenance": {
+    "name": "MSG-028 REDACTION-VECTORS",
+    "authoritativeCommit": "49f2dbc34cae66e8d63df5dd5d8cec0c008c4623",
+    "authoritativePath": "reconciliation/hrp/CONTRACT-02B-conformance-response/r2/REDACTION-VECTORS.json",
+    "authoritativeSha256": "a7e7ae0b32629a9dedd2a20031086460a606271c5cf305bbc76c14a76783e428",
+    "byteCount": 4118,
+    "copiedAsFixtureFromAuthoritativeBlob": true,
+    "fixtureNote": "This fixture is a copy of the authoritative MSG-028 blob for portable, machine-path-independent reuse inside the delivery package. The authoritative source-of-truth remains the pinned Git blob. Tests must call actual exports; this fixture is NOT a substitute for the schema definitions."
+  },
+  "vectors": [
+    { "id": "vietnamese",          "input": "Nguyễn Văn An",         "requested": true,  "expectedName": "N•• V•• A••" },
+    { "id": "decomposed",          "input": "Élodie Durand",         "requested": true,  "expectedName": "É•• D••" },
+    { "id": "one_han_token",       "input": "李 小龍",                "requested": true,  "expectedName": null },
+    { "id": "multi_han",           "input": "小龍",                   "requested": true,  "expectedName": "小••" },
+    { "id": "apostrophe_inside",   "input": "O'Connor",              "requested": true,  "expectedName": "O••" },
+    { "id": "hyphen_inside",       "input": "Жан-Поль",              "requested": true,  "expectedName": "Ж••" },
+    { "id": "short",               "input": "A",                     "requested": true,  "expectedName": null },
+    { "id": "missing",             "input": null,                    "requested": true,  "expectedName": null },
+    { "id": "whitespace",          "input": "   ",                   "requested": true,  "expectedName": null },
+    { "id": "digit",               "input": "A1pha Name",            "requested": true,  "expectedName": null },
+    { "id": "bidi",                "input": "User\u202EName",        "requested": true,  "expectedName": null },
+    { "id": "emoji",               "input": "\uD83D\uDC69\u200D\uD83D\uDCBB Test", "requested": true, "expectedName": null },
+    { "id": "leading_apostrophe",  "input": "'Alpha",                "requested": true,  "expectedName": null },
+    { "id": "leading_hyphen",      "input": "-Alpha",                "requested": true,  "expectedName": null },
+    { "id": "leading_mark",        "input": "\u0301Alpha",           "requested": true,  "expectedName": null },
+    { "id": "trailing_punctuation","input": "Alpha-",                "requested": true,  "expectedName": null },
+    { "id": "one_letter_mark",     "input": "É",                     "requested": true,  "expectedName": null },
+    { "id": "combining_initial",   "input": "Q\u0301uang",           "requested": true,  "expectedName": "Q\u0301••" },
+    { "id": "consecutive_punctuation", "input": "O''Connor",          "requested": true,  "expectedName": null },
+    { "id": "control_tab",         "input": "Alpha\tBeta",           "requested": true,  "expectedName": null },
+    { "id": "unicode_spaces",      "input": "\u00A0Alpha\u2003Beta\u00A0", "requested": true, "expectedName": "A•• B••" },
+    { "id": "unrequested",         "input": "Nguyễn Văn An",         "requested": false, "expectedName": null }
+  ]
+}
