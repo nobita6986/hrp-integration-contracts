@@ -1,0 +1,6 @@
+CORRECTION_VERIFY=PASS
+Probe delta: exactly one diagnostic assertion removed from scoring; no other source change.
+Other 175 records: same IDs, expectations, actual values and outcomes as MSG-035.
+Generic JWT expected=false preserved; legacy diagnostic has no acceptance expectation.
+Historical candidate only: 175 assertions, 150 pass, 25 fail; no Batch 4 review performed.
+EXIT_CODE=0

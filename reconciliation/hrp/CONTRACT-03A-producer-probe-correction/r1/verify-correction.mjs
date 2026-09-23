@@ -1,0 +1,31 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
+import assert from 'node:assert/strict';
+
+const here = path.dirname(fileURLToPath(import.meta.url));
+const root = execFileSync('git', ['rev-parse', '--show-toplevel'], {cwd:here, encoding:'utf8'}).trim();
+const prior = '6f5bc71ee2b5c8023c3c765131e6d4368166d8ed';
+const oldDir = 'reconciliation/hrp/CONTRACT-03A-producer-recheck/r3/';
+const blob = file => execFileSync('git', ['show', `${prior}:${oldDir}${file}`], {cwd:root});
+const old = "check('F01 implementation-shaped control (diagnostic, not wire approval)',true,()=>validate());";
+const replacement = "console.log('DIAGNOSTIC_ONLY legacy implementation-shaped input (excluded from conformance counts): ' + JSON.stringify(validate()));";
+const original = blob('recheck.mjs').toString('utf8');
+assert.equal(original.split(old).length, 2);
+assert.equal(fs.readFileSync(path.join(here, 'recheck.mjs'), 'utf8'), original.replace(old, replacement));
+assert.deepEqual(fs.readFileSync(path.join(here, 'capture-probes.mjs')), blob('capture-probes.mjs'));
+const before = JSON.parse(blob('recheck-results.json'));
+const after = JSON.parse(fs.readFileSync(path.join(here, 'recheck-results.json'), 'utf8'));
+const id = 'F01 implementation-shaped control (diagnostic, not wire approval)';
+assert.deepEqual(after.records, before.records.filter(r => r.id !== id));
+assert.deepEqual(after.summary, {total:175, pass:150, fail:25});
+const jwt = after.records.find(r => r.id === 'F01 reject generic JWT typ through entrypoint');
+assert.equal(jwt.expected, false);
+assert.equal(jwt.actual, true); // Historical candidate still accepts JWT; not a new-candidate verdict.
+assert.equal(jwt.pass, false);
+console.log('CORRECTION_VERIFY=PASS');
+console.log('Probe delta: exactly one diagnostic assertion removed from scoring; no other source change.');
+console.log('Other 175 records: same IDs, expectations, actual values and outcomes as MSG-035.');
+console.log('Generic JWT expected=false preserved; legacy diagnostic has no acceptance expectation.');
+console.log('Historical candidate only: 175 assertions, 150 pass, 25 fail; no Batch 4 review performed.');
