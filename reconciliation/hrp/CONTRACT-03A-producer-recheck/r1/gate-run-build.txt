@@ -1,0 +1,10 @@
+COMMAND=npm run build
+NODE=v24.19.0
+EXIT=0
+STDOUT:
+
+> @hrp-integration-contracts/talent-context-read-dev@0.0.0-dev.0 build
+> tsc -p tsconfig.json
+
+
+STDERR:

@@ -1,0 +1,329 @@
+COMMAND=npm test
+NODE=v24.19.0
+EXIT=1
+STDOUT:
+
+> @hrp-integration-contracts/talent-context-read-dev@0.0.0-dev.0 test
+> tsc -p tsconfig.json && node --test tests/talent-context-read/*.test.mjs
+
+▶ EP-01 strict claims shape
+  ✔ correlationId bounds (2.3155ms)
+  ✔ correlationId opaque grammar (0.3395ms)
+  ✔ organizationId bounds (0.3461ms)
+  ✔ canonical id bounds (0.2343ms)
+  ✔ IsoTimestampSchema bounds (0.9121ms)
+  ✔ ModuleSchemaVersionSchema = 1 (0.2805ms)
+✔ EP-01 strict claims shape (6.0933ms)
+▶ EP-01 query target shape
+  ✔ target kind=TALENT only (0.7989ms)
+  ✔ target extras rejected (0.3132ms)
+✔ EP-01 query target shape (1.4253ms)
+▶ EP-01 delegated user actor
+  ✔ valid DELEGATED_USER (1.0187ms)
+  ✔ missing field rejected (0.3687ms)
+  ✔ wrong kind rejected (0.4703ms)
+✔ EP-01 delegated user actor (2.1507ms)
+▶ EP-05 field allowlist bounds
+  ✔ 1..8 unique (0.7286ms)
+  ✔ duplicates rejected (0.2389ms)
+  ✔ unavailable fields 0..8 (0.1923ms)
+  ✔ unknown field rejected (0.1573ms)
+✔ EP-05 field allowlist bounds (1.5399ms)
+▶ IdentitySummary shape
+  ✔ valid (0.3359ms)
+  ✔ fullNameRedacted required (0.1537ms)
+  ✔ displayOnly must be true (0.1663ms)
+  ✔ extras rejected (0.1436ms)
+✔ IdentitySummary shape (1.0104ms)
+▶ Pure validators do not assert runtime invariants
+  ✔ these tests intentionally have no fake PASS (0.1129ms)
+✔ Pure validators do not assert runtime invariants (0.2034ms)
+▶ F-01 raw framing + duplicate-key detection
+  ✔ rejects empty string (1.0234ms)
+  ✔ rejects oversize string (0.1864ms)
+  ✔ rejects non-string (0.114ms)
+  ✔ rejects non-brace prefix (0.1656ms)
+  ✔ rejects raw control characters (0.1324ms)
+  ✔ rejects raw FEFF (0.134ms)
+  ✔ rejects raw bidi control in framing (0.1693ms)
+  ✔ rejects invalid JSON (0.2257ms)
+  ✔ detects duplicate top-level key even when JSON.parse would keep only the last (0.4455ms)
+  ✔ parses valid header (0.272ms)
+✔ F-01 raw framing + duplicate-key detection (4.3756ms)
+▶ F-01 parsed-claims validation is separate from framing
+  ✔ missing iat rejected (2.4739ms)
+  ✔ extra field rejected (.strict) (0.5242ms)
+  ✔ iat must be integer (no fractional) (0.4027ms)
+  ✔ exp must be integer (0.3198ms)
+  ✔ valid claims pass (0.1933ms)
+✔ F-01 parsed-claims validation is separate from framing (4.2147ms)
+▶ F-01 TTL/skew rules
+  ✔ exp must be > iat (0.3292ms)
+  ✔ TTL > cap (default 60s) rejected (0.1214ms)
+  ✔ within TTL/skew passes (0.116ms)
+  ✔ expired rejected (0.1177ms)
+  ✔ iat in the future rejected (0.1129ms)
+  ✔ nbf > iat+skew rejected (0.1084ms)
+✔ F-01 TTL/skew rules (1.1706ms)
+▶ F-01 audience/issuer
+  ✔ match passes (0.1991ms)
+  ✔ mismatch rejected (0.114ms)
+✔ F-01 audience/issuer (0.4516ms)
+▶ F-01 subject must equal serviceId
+  ✔ matching serviceId passes (0.2075ms)
+  ✔ non-matching serviceId rejected (0.1028ms)
+✔ F-01 subject must equal serviceId (0.4713ms)
+▶ F-01 request binding
+  ✔ all matching passes (0.2933ms)
+  ✔ method mismatch rejected (0.1018ms)
+  ✔ path mismatch rejected (0.1044ms)
+  ✔ bodyHash mismatch rejected (0.108ms)
+  ✔ org digest mismatch rejected (0.1097ms)
+✔ F-01 request binding (0.9632ms)
+▶ F-01 actor per operation
+  ✔ all 4 known operations recognized (0.8696ms)
+  ✔ unknown operation rejected without fallback (0.1566ms)
+  ✔ create does not require effective user but does require active CRM (0.0982ms)
+  ✔ exchange requires both (0.1002ms)
+  ✔ cancel accepts past CRM session deadline (cleanup uses immutable binding only) (0.0742ms)
+  ✔ revoke accepts past CRM session deadline (0.0771ms)
+✔ F-01 actor per operation (2.4284ms)
+▶ F-01 limits exported
+  ✔ ASSERTION_LIMITS includes MAX_HEADER_LEN/DEFAULT_TTL/DEFAULT_SKEW (0.104ms)
+✔ F-01 limits exported (0.175ms)
+▶ F-06 conformance helper semantics
+  ✔ SUPPORTED set == [identitySummary] (1.5364ms)
+  ✔ KNOWN_UNSUPPORTED has 7 entries (request-conformant, not projection-filled) (0.1938ms)
+  ✔ requested UNSAFE -> omit identitySummary + single marker (0.8771ms)
+  ✔ requested UNSAFE but with KNOWN_UNSUPPORTED also requested -> markers for both (0.2239ms)
+  ✔ known unsupported but NOT requested -> no marker (0.837ms)
+  ✔ known unsupported AND requested -> marker only (0.3413ms)
+  ✔ unrequested field -> neither data nor marker (0.2129ms)
+✔ F-06 conformance helper semantics (5.432ms)
+▶ F-06 expectedUnavailableFields comparison helper
+  ✔ compareUnavailableFields sorts before compare (0.1892ms)
+  ✔ compareUnavailableFields on different lengths returns false (0.1751ms)
+✔ F-06 expectedUnavailableFields comparison helper (0.6057ms)
+✖ F-06 - PINNED vectors (MSG-028) drive conformance assertions (0.0603ms)
+▶ F-03 canonical token encoder
+  ✔ PendingRequestId accepts canonical 32-byte token (1.7616ms)
+  ✔ PendingRequestId rejects wrong prefix (0.4269ms)
+  ✔ PendingRequestId rejects raw non-prefixed (0.4644ms)
+  ✔ PendingRequestId rejects too-short (0.2602ms)
+  ✔ PendingRequestId rejects too-long (0.2666ms)
+  ✔ PendingRequestId rejects padding (0.1779ms)
+  ✔ PendingRequestId rejects pad-bit mutated form (0.1651ms)
+  ✔ DelegationRef rejects arbitrary dr_1 (0.2182ms)
+  ✔ Receipt canonical decode/re-encode equality (0.2895ms)
+  ✔ JtiSchema accepts canonical (0.3939ms)
+  ✔ CsrfTokenSchema accepts canonical (0.2364ms)
+✔ F-03 canonical token encoder (6.1799ms)
+▶ F-02 Delegation create
+  ✔ valid create body parses (2.1071ms)
+  ✔ create success body parses (0.291ms)
+  ✔ extra scope literal rejected (0.3901ms)
+  ✔ extra fields rejected (.strict) (0.2419ms)
+✔ F-02 Delegation create (3.2629ms)
+▶ F-02 Exchange path/body split
+  ✔ exchange body WITHOUT pendingRequestId is accepted (id is in PATH) (0.26ms)
+  ✔ exchange body WITH pendingRequestId is REJECTED (id is in PATH, not body) (0.206ms)
+  ✔ exchange success body parses (0.2137ms)
+✔ F-02 Exchange path/body split (0.8532ms)
+▶ F-02 Cancel path/body split
+  ✔ cancel body WITHOUT pendingRequestId is accepted (id is in PATH) (0.4333ms)
+  ✔ cancel body WITH pendingRequestId is REJECTED (0.2406ms)
+  ✔ unknown reason rejected (0.2165ms)
+✔ F-02 Cancel path/body split (1.0708ms)
+▶ F-02 Revoke body contains delegationRef
+  ✔ revoke body WITH delegationRef accepted (0.2516ms)
+  ✔ revoke wrong reason rejected (0.204ms)
+✔ F-02 Revoke body contains delegationRef (1.7663ms)
+▶ F-02 Browser operation schemas
+  ✔ handoff body parses (0.4185ms)
+  ✔ approval decision APPROVE parses (0.4547ms)
+  ✔ approval decision DENY parses (0.32ms)
+  ✔ approval decision with unknown value rejected (0.2663ms)
+  ✔ APPROVED callback requires receipt (0.3596ms)
+  ✔ APPROVED callback WITH receipt parses (0.2212ms)
+  ✔ DENIED callback WITHOUT receipt parses (0.2069ms)
+  ✔ DENIED callback WITH receipt rejected (DENIED never carries receipt) (0.2381ms)
+✔ F-02 Browser operation schemas (2.9056ms)
+▶ F-02 Delegation error envelope is code-only
+  ✔ valid AUTHENTICATION_REQUIRED (0.2788ms)
+  ✔ valid FORBIDDEN (0.109ms)
+  ✔ valid VALIDATION_ERROR (0.0937ms)
+  ✔ valid RATE_LIMITED (0.1131ms)
+  ✔ valid DEPENDENCY_UNAVAILABLE (0.0977ms)
+  ✔ valid INTERNAL_ERROR (0.093ms)
+  ✔ messageKey field rejected (code-only by F-02) (0.2257ms)
+  ✔ extra fields rejected (strict) (0.1509ms)
+  ✔ status=OK rejected (0.2454ms)
+✔ F-02 Delegation error envelope is code-only (1.845ms)
+▶ F-04 immutable CRM binding grammar + UTC-Z
+  ✔ valid binding parses (0.378ms)
+  ✔ callbackId with space rejected (0.2639ms)
+  ✔ callbackId with newline rejected (0.2206ms)
+  ✔ crmSessionHandle with newline rejected (0.1662ms)
+  ✔ crmSessionDeadline +07:00 rejected (0.148ms)
+  ✔ crmSessionDeadline UTC-Z accepted (0.1575ms)
+  ✔ past deadline with correct syntax accepted (cleanup retains immutable binding) (0.1259ms)
+✔ F-04 immutable CRM binding grammar + UTC-Z (1.7829ms)
+▶ Internal aggregate DTO separated from wire
+  ✔ internal DTO accepted (0.4655ms)
+✔ Internal aggregate DTO separated from wire (0.6036ms)
+▶ Single scope literal array
+  ✔ empty rejected (0.2758ms)
+  ✔ two entries rejected (0.1441ms)
+  ✔ wrong literal rejected (0.13ms)
+  ✔ exact single literal accepted (0.124ms)
+✔ Single scope literal array (0.922ms)
+▶ ACK
+  ✔ ack parses (0.1567ms)
+  ✔ non-true rejected (0.1051ms)
+  ✔ extra field rejected (0.1031ms)
+✔ ACK (0.5009ms)
+▶ Q positive
+  ✔ valid base (2.4215ms)
+  ✔ 8 unique fields (0.3682ms)
+✔ Q positive (3.8148ms)
+▶ Q negative
+  ✔ wrong version rejected (0.7276ms)
+  ✔ extra laborProfileVersion rejected (0.284ms)
+  ✔ USER actor rejected (0.298ms)
+  ✔ short correlationId rejected (0.2538ms)
+  ✔ COMPANY target rejected (0.2899ms)
+  ✔ fieldAllowlist duplicate rejected (0.2971ms)
+  ✔ fieldAllowlist empty rejected (0.2837ms)
+✔ Q negative (2.9836ms)
+▶ R projection
+  ✔ valid parses (0.7422ms)
+  ✔ identitySummary in unavailableFields rejected (0.3007ms)
+  ✔ identitySummary omitted other unavailable valid (0.1278ms)
+  ✔ unavailableFields duplicate rejected (0.1139ms)
+  ✔ displayOnly=false rejected (0.1456ms)
+  ✔ snapshotVersion extra rejected (0.1283ms)
+✔ R projection (1.7916ms)
+▶ 7-code errors
+  ✔ valid VALIDATION_ERROR (0.396ms)
+  ✔ valid AUTHENTICATION_REQUIRED (0.0739ms)
+  ✔ valid FORBIDDEN (0.0612ms)
+  ✔ valid RATE_LIMITED (0.0537ms)
+  ✔ valid DEPENDENCY_UNAVAILABLE (0.0539ms)
+  ✔ valid NOT_FOUND (0.0593ms)
+  ✔ valid INTERNAL_ERROR (0.0615ms)
+  ✔ enum size 7 (0.094ms)
+  ✔ empty errors rejected (0.1209ms)
+  ✔ multiple errors rejected (0.1219ms)
+  ✔ VERSION_CONFLICT rejected (0.1471ms)
+  ✔ UNKNOWN_COMMAND_OUTCOME rejected (0.1142ms)
+  ✔ BOUNDED_SAME_KEY rejected (0.1486ms)
+  ✔ wrong messageKey rejected (1.0836ms)
+  ✔ wrong HTTP rejected (0.1752ms)
+  ✔ extra fields rejected (0.1251ms)
+  ✔ 404 null body not NOT_FOUND (0.0661ms)
+  ✔ 404 HTML not NOT_FOUND (0.086ms)
+  ✔ no raw body leak (0.1334ms)
+✔ 7-code errors (3.6802ms)
+▶ F-05 FEFF/Cf rejection before normalization
+  ✔ FEFF + Alpha is REJECTED (not silently trimmed) (0.7853ms)
+  ✔ plain ZWNBSP is rejected (Cf category) (0.1353ms)
+  ✔ FEFF mid-string rejected (0.1276ms)
+✔ F-05 FEFF/Cf rejection before normalization (2.0032ms)
+▶ F-05 Unicode outside BMP (code-point aware)
+  ✔ SMP letters (U+10400, U+10401) accepted (code-point, not UTF-16 code-unit) (16.1911ms)
+  ✔ two SMP tokens render as both initials (1.2352ms)
+✔ F-05 Unicode outside BMP (code-point aware) (17.6961ms)
+▶ F-05 output byte bound (UTF-8 <= 512)
+  ✔ 256 scalars with 254 combining marks + b yields output NOT exceeding 512 UTF-8 bytes (0.3789ms)
+  ✔ oversized input is OMITTED entirely (not truncated) (0.3364ms)
+  ✔ byte-bound at result-schema layer: 1536-byte UTF-8 payload rejected (0.2934ms)
+✔ F-05 output byte bound (UTF-8 <= 512) (1.2954ms)
+▶ F-05 segmentation failure => unsafe (not throw)
+  ✔ segmenter.throw is caught and reported as unsafe (1.2757ms)
+  ✔ missing Intl.Segmenter returns unsafe (no throw) (0.2668ms)
+✔ F-05 segmentation failure => unsafe (not throw) (1.794ms)
+▶ F-05 code-point vs code-unit (SMP safety)
+  ✔ SMP first letter cluster counts as one grapheme, allows token (0.347ms)
+✔ F-05 code-point vs code-unit (SMP safety) (0.4719ms)
+▶ redaction - MSG-028 vectors (22)
+  ✔ vector: vietnamese (26.1776ms)
+  ✔ vector: decomposed (0.4709ms)
+  ✔ vector: one_han_token (0.453ms)
+  ✔ vector: multi_han (0.2747ms)
+  ✔ vector: apostrophe_inside (0.3213ms)
+  ✔ vector: hyphen_inside (0.5939ms)
+  ✔ vector: short (0.1845ms)
+  ✔ vector: missing (0.1678ms)
+  ✔ vector: whitespace (0.1953ms)
+  ✔ vector: digit (0.2728ms)
+  ✔ vector: bidi (0.1732ms)
+  ✔ vector: emoji (1.7292ms)
+  ✔ vector: leading_apostrophe (0.16ms)
+  ✔ vector: leading_hyphen (0.0866ms)
+  ✔ vector: leading_mark (0.1553ms)
+  ✔ vector: trailing_punctuation (0.1062ms)
+  ✔ vector: one_letter_mark (0.1867ms)
+  ✔ vector: combining_initial (0.1765ms)
+  ✔ vector: consecutive_punctuation (0.0601ms)
+  ✔ vector: control_tab (0.0585ms)
+  ✔ vector: unicode_spaces (0.1401ms)
+  ✔ vector: unrequested (0.2463ms)
+✔ redaction - MSG-028 vectors (22) (35.0477ms)
+▶ redaction - EP-05 boundaries
+  ✔ over-limit input (>256 scalars) returns unsafe (0.1892ms)
+  ✔ over-limit tokens (>16) returns unsafe (0.2207ms)
+  ✔ non-string input returns unsafe (0.1085ms)
+  ✔ empty string returns unsafe (0.0847ms)
+  ✔ non-letter first character returns unsafe (0.0974ms)
+  ✔ output never reveals raw input (0.4449ms)
+  ✔ output never leaks phone/CCCD/email (0.1386ms)
+✔ redaction - EP-05 boundaries (1.6188ms)
+ℹ tests 195
+ℹ suites 39
+ℹ pass 195
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 202.0349
+
+✖ failing tests:
+
+test at tests\talent-context-read\conformance-helper.test.mjs:94:1
+✖ F-06 - PINNED vectors (MSG-028) drive conformance assertions (0.0603ms)
+  Error: spawnSync git ENOENT
+      at Object.spawnSync (node:internal/child_process:1160:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at loadPinnedVectors (file:///C:/CodeApp/hrp-integration-contracts-worktrees/hrp-producer-recheck-22fc50e/packages/contracts/tests/talent-context-read/conformance-helper.test.mjs:22:16)
+      at SuiteContext.<anonymous> (file:///C:/CodeApp/hrp-integration-contracts-worktrees/hrp-producer-recheck-22fc50e/packages/contracts/tests/talent-context-read/conformance-helper.test.mjs:95:19)
+      at Suite.runInAsyncScope (node:async_hooks:227:14)
+      at Suite.createBuild (node:internal/test_runner/test:1809:13)
+      at new Suite (node:internal/test_runner/test:1773:28)
+      at Test.createSubtest (node:internal/test_runner/test:1038:18)
+      at run (node:internal/test_runner/harness:393:28) {
+    errno: -4058,
+    code: 'ENOENT',
+    syscall: 'spawnSync git',
+    path: 'git',
+    spawnargs: [ 'show', '49f2dbc34cae66e8d63df5dd5d8cec0c008c4623:reconciliation/hrp/CONTRACT-02B-conformance-response/r2/REDACTION-VECTORS.json' ],
+    error: Error: spawnSync git ENOENT
+        at Object.spawnSync (node:internal/child_process:1160:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at loadPinnedVectors (file:///C:/CodeApp/hrp-integration-contracts-worktrees/hrp-producer-recheck-22fc50e/packages/contracts/tests/talent-context-read/conformance-helper.test.mjs:22:16)
+        at SuiteContext.<anonymous> (file:///C:/CodeApp/hrp-integration-contracts-worktrees/hrp-producer-recheck-22fc50e/packages/contracts/tests/talent-context-read/conformance-helper.test.mjs:95:19)
+        at Suite.runInAsyncScope (node:async_hooks:227:14)
+        at Suite.createBuild (node:internal/test_runner/test:1809:13)
+        at new Suite (node:internal/test_runner/test:1773:28)
+        at Test.createSubtest (node:internal/test_runner/test:1038:18)
+        at run (node:internal/test_runner/harness:393:28),
+    status: null,
+    signal: null,
+    output: null,
+    pid: 0,
+    stdout: undefined,
+    stderr: undefined
+  }
+
+STDERR:

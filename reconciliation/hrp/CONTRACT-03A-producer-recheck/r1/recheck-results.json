@@ -1,0 +1,1037 @@
+{
+  "reviewedSha": "22fc50e3deca5e6c816aab44088afe1d443e4867",
+  "priorSha": "f9cc493224792d15f99ba1debc27fc4d6a9cce7e",
+  "node": "v24.19.0",
+  "observedAt": "2026-09-23T01:24:31.559Z",
+  "integrity": {
+    "sha": "22fc50e3deca5e6c816aab44088afe1d443e4867",
+    "manifestPath": "reconciliation/crm/CONTRACT-03A/r1/manifest.sha256",
+    "manifestHash": "82be316582967c22d8ee899b1e37890bcb6aa95a55884919d01aee420b193466",
+    "deliveredManifestHash": "a666a9bdc3486491f459a9d809a4e0d679f8915d6b8bd9cb980e37fc4ddf08bf",
+    "entries": [
+      {
+        "file": "packages/contracts/src/talent-context-read/delegation.ts",
+        "expected": "5e45ffb46436f114163f38632e6e83fb503001bdea9b8c07e2e647f087f53a2f",
+        "actual": "1ca56f8dc32d969fcffee6ec8997c435cd75798e5e13d091b536b86b5fd080a4",
+        "match": false,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/src/talent-context-read/index.ts",
+        "expected": "06da150e6eeaed2a7e3d089727f3731c904462601f9ce996ac3aa3c9e9004b75",
+        "actual": "7a2cbc82242cac2609594bebdcaee2ca04710f272c7ef218974168484f4e0a4b",
+        "match": false,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/src/talent-context-read/package.json",
+        "expected": "05b7d717deb12201272469363567bf44a70a231d81f44b4ed5e15c9a3f283f46",
+        "actual": "05b7d717deb12201272469363567bf44a70a231d81f44b4ed5e15c9a3f283f46",
+        "match": true,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/src/talent-context-read/primitives.ts",
+        "expected": "cc2b803b48561894fe799244c8103811a055c319b58f2f94d3ce140cfb67b7b0",
+        "actual": "08caaf4652d26c3558b1e3dc596cec7eae858d4458f851a11c2badf45dc9d1f5",
+        "match": false,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/src/talent-context-read/query-errors.ts",
+        "expected": "23a6c34e17bc06018fef78ca4c49c8c643c2d270612d05abe81706a9d4ed26b5",
+        "actual": "d4268d55dd0deadcdee2e6b58400956c5370f118ace74e483dbe6169d3e7e697",
+        "match": false,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/src/talent-context-read/query-parser.ts",
+        "expected": "6c2ffd3c3f3790fdad4058d8873cf61e9cd7096dc6760d1423f4d012f6e34462",
+        "actual": "bd695eb6d743ace4e26e656c52e29fbc776accac5936767fd2bfb11e4dea05d7",
+        "match": false,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/src/talent-context-read/query-types.ts",
+        "expected": "7ec85547f74229c3f33c984116e457d45476ce08e18d2703e1092a82f6cb8baf",
+        "actual": "fc005908a366ed6fd6b94329fd358a8ae24ed7094b23fa7be97fbbccd8846e5d",
+        "match": false,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/src/talent-context-read/redaction.ts",
+        "expected": "20a0296efae073df4cbc160d3f720b981a9dcf373821bf22d6775ddfd9c0a785",
+        "actual": "a23fc3d95748384c06f13c321e97b039d5bac5be8b7a0281bd3982c3026d98fe",
+        "match": false,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/tests/talent-context-read/assertion-profile.test.mjs",
+        "expected": "9e27d9f1e7d5873016a05ad65b544f4bb38436bf86d4d39dba3f0c6f65bc8835",
+        "actual": "b20ae50d63682cd445a6b00885c92f408802a57a9deb86d58038e5f534331f86",
+        "match": false,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/tests/talent-context-read/delegation-conformance.test.mjs",
+        "expected": "9b878d0d949c05be678d9d55c2cd434eae0b9a15d7ebd8e16b09b112373bd71b",
+        "actual": "cfd35bd4f9878d3d96ccb38eac7e7c66c9bc81366227c5be2241869b5de5f539",
+        "match": false,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/tests/talent-context-read/query-conformance.test.mjs",
+        "expected": "f45a6db6f6fc1a687d790f07a2ce5e064742da95bf9700555b1c63b59a7986ff",
+        "actual": "b5da8348389b0ff77fe3036fb5671fdfd0b3504d0292b331625937e75a183fe8",
+        "match": false,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/tests/talent-context-read/redaction-vectors.test.mjs",
+        "expected": "770a5c3277e65aed0d1fd4773fdc8ac64a9bd2bfe558379052993b105eb0a77c",
+        "actual": "770a5c3277e65aed0d1fd4773fdc8ac64a9bd2bfe558379052993b105eb0a77c",
+        "match": true,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/package.json",
+        "expected": "b780e8ab083edac140e3cd6faf40318951cd1aa52380c8cf67e506695a4107cc",
+        "actual": "b780e8ab083edac140e3cd6faf40318951cd1aa52380c8cf67e506695a4107cc",
+        "match": true,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/package-lock.json",
+        "expected": "ecda1d3c0ac846740fe1f44f79563313ec5909ccd8da52d4b4a6a4de0b86dd43",
+        "actual": "ecda1d3c0ac846740fe1f44f79563313ec5909ccd8da52d4b4a6a4de0b86dd43",
+        "match": true,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "packages/contracts/tsconfig.json",
+        "expected": "c18b9065f718d026a0a01cc684dbf9144d07af9b40e1124f31096659892d90b3",
+        "actual": "c18b9065f718d026a0a01cc684dbf9144d07af9b40e1124f31096659892d90b3",
+        "match": true,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "reconciliation/crm/CONTRACT-03A/r1/AC-EVIDENCE.md",
+        "expected": "9cd3f8eb6847021bacb806c392c429fe6b5d71587767abe0c04b14687a3fead1",
+        "actual": "3a6984553eb667ebe25987277af7d9f490c4f74b8b8c11c86efb38c4626d8110",
+        "match": false,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "reconciliation/crm/CONTRACT-03A/r1/NOTES.md",
+        "expected": "47962d93a5e6458dd91b803683f96829178cdd8abba7503e5bb07b715ce28420",
+        "actual": "47d3cf69cb4528426d43174a05e7f93cad01d791801883c9940c8a2caeddc71c",
+        "match": false,
+        "crlfHashMatchesExpected": false
+      },
+      {
+        "file": "reconciliation/crm/CONTRACT-03A/r1/README.md",
+        "expected": "89b8cbbcebc9afaf2512e325a93b7e15aca5b2fb60005a9a94b6c84933a91afa",
+        "actual": "eaad351e4c999c31e9def55f2a98689b71a66a358020b2d77ca215a88cfa9836",
+        "match": false,
+        "crlfHashMatchesExpected": false
+      }
+    ],
+    "uncovered": [
+      "packages/contracts/src/talent-context-read/assertion.ts",
+      "packages/contracts/src/talent-context-read/conformance.ts",
+      "packages/contracts/tests/talent-context-read/assertion-validators.test.mjs",
+      "packages/contracts/tests/talent-context-read/conformance-helper.test.mjs",
+      "packages/contracts/tests/talent-context-read/redaction-probes.test.mjs"
+    ],
+    "diffNames": [
+      "packages/contracts/.gitignore",
+      "packages/contracts/src/talent-context-read/assertion.ts",
+      "packages/contracts/src/talent-context-read/conformance.ts",
+      "packages/contracts/src/talent-context-read/delegation.ts",
+      "packages/contracts/src/talent-context-read/index.ts",
+      "packages/contracts/src/talent-context-read/primitives.ts",
+      "packages/contracts/src/talent-context-read/query-errors.ts",
+      "packages/contracts/src/talent-context-read/query-parser.ts",
+      "packages/contracts/src/talent-context-read/query-types.ts",
+      "packages/contracts/src/talent-context-read/redaction.ts",
+      "packages/contracts/tests/talent-context-read/assertion-profile.test.mjs",
+      "packages/contracts/tests/talent-context-read/assertion-validators.test.mjs",
+      "packages/contracts/tests/talent-context-read/conformance-helper.test.mjs",
+      "packages/contracts/tests/talent-context-read/delegation-conformance.test.mjs",
+      "packages/contracts/tests/talent-context-read/query-conformance.test.mjs",
+      "packages/contracts/tests/talent-context-read/redaction-probes.test.mjs",
+      "reconciliation/crm/CONTRACT-03A/r1/AC-EVIDENCE.md",
+      "reconciliation/crm/CONTRACT-03A/r1/NOTES.md",
+      "reconciliation/crm/CONTRACT-03A/r1/README.md",
+      "reconciliation/crm/CONTRACT-03A/r1/manifest.sha256"
+    ]
+  },
+  "vectorsHash": "a7e7ae0b32629a9dedd2a20031086460a606271c5cf305bbc76c14a76783e428",
+  "records": [
+    {
+      "id": "F01 accepted EP01 query claims accepted",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F01 incomplete claims rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 nbf rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 negative epoch rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 unsafe integer rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 exp+skew equality rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 helper fails without trusted audience config",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 helper fails without request bindings",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 unapproved organizationIdDigest rejected by claims",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F01 raw duplicate escaped JSON key rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 raw duplicate nested JSON key rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F01 protected header rejects alg none through exported parser",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F02 exchange body excludes path pendingRequestId",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 exchange body rejects pendingRequestId",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F02 cancel body accepted without path id",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 code-only delegation error accepted",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 delegation error messageKey rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F02 browser handoff accepted",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 approval decision accepted",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 denied callback rejects receipt",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F02 effective user required at exchange result",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema canonical zero bytes accepted",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema canonical ff bytes accepted",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F03 PendingRequestIdSchema noncanonical pad bits rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema canonical zero bytes accepted",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema canonical ff bytes accepted",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F03 HandoffProofSchema noncanonical pad bits rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema canonical zero bytes accepted",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema canonical ff bytes accepted",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F03 ReceiptSchema noncanonical pad bits rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema canonical zero bytes accepted",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema canonical ff bytes accepted",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F03 DelegationRefSchema noncanonical pad bits rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema canonical zero bytes accepted",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema canonical ff bytes accepted",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F03 CallbackStateSchema noncanonical pad bits rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema canonical zero bytes accepted",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema canonical ff bytes accepted",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F03 JtiSchema noncanonical pad bits rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema canonical zero bytes accepted",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema canonical ff bytes accepted",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F03 CsrfTokenSchema noncanonical pad bits rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 actor rejects generic dr-1 token",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 query actor accepts canonical ff token",
+      "expected": true,
+      "actual": false,
+      "pass": false
+    },
+    {
+      "id": "F04 create callback whitespace rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 create session newline rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 create offset deadline rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 create nonexistent calendar date rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 exchange callback whitespace rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 exchange session newline rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 exchange offset deadline rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange nonexistent calendar date rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 cancel callback whitespace rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 cancel session newline rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 cancel offset deadline rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel nonexistent calendar date rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 revoke callback whitespace rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 revoke session newline rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 revoke offset deadline rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke nonexistent calendar date rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F04 binding opaque initial underscore rejected",
+      "expected": false,
+      "actual": true,
+      "pass": false
+    },
+    {
+      "id": "F05 FEFF rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 515-byte redaction omitted",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 oversized result rejected through result schema",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 Arabic Unicode-letter name redacted",
+      "expected": "ع••",
+      "actual": null,
+      "pass": false
+    },
+    {
+      "id": "F05 Hangul Unicode-letter name redacted",
+      "expected": "홍••",
+      "actual": null,
+      "pass": false
+    },
+    {
+      "id": "F05 Deseret Unicode-letter name redacted",
+      "expected": "𐐀••",
+      "actual": "𐐀••",
+      "pass": true
+    },
+    {
+      "id": "F05 segmenter throws -> omit",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector vietnamese",
+      "expected": {
+        "name": "N•• V•• A••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "N•• V•• A••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector decomposed",
+      "expected": {
+        "name": "É•• D••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "É•• D••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector one_han_token",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector multi_han",
+      "expected": {
+        "name": "小••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "小••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector apostrophe_inside",
+      "expected": {
+        "name": "O••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "O••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector hyphen_inside",
+      "expected": {
+        "name": "Ж••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "Ж••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector short",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector missing",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector whitespace",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector digit",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector bidi",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector emoji",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector leading_apostrophe",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector leading_hyphen",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector leading_mark",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector trailing_punctuation",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector one_letter_mark",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector combining_initial",
+      "expected": {
+        "name": "Q́••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "Q́••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector consecutive_punctuation",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector control_tab",
+      "expected": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "actual": {
+        "name": null,
+        "unavailable": [
+          "identitySummary"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector unicode_spaces",
+      "expected": {
+        "name": "A•• B••",
+        "unavailable": []
+      },
+      "actual": {
+        "name": "A•• B••",
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "F06 pinned vector unrequested identity omission",
+      "expected": {
+        "name": null,
+        "unavailable": []
+      },
+      "actual": {
+        "name": null,
+        "unavailable": []
+      },
+      "pass": true
+    },
+    {
+      "id": "query seven-code VALIDATION_ERROR",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong HTTP VALIDATION_ERROR",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong messageKey VALIDATION_ERROR",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query seven-code AUTHENTICATION_REQUIRED",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong HTTP AUTHENTICATION_REQUIRED",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong messageKey AUTHENTICATION_REQUIRED",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query seven-code FORBIDDEN",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong HTTP FORBIDDEN",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong messageKey FORBIDDEN",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query seven-code RATE_LIMITED",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong HTTP RATE_LIMITED",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong messageKey RATE_LIMITED",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query seven-code DEPENDENCY_UNAVAILABLE",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong HTTP DEPENDENCY_UNAVAILABLE",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong messageKey DEPENDENCY_UNAVAILABLE",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query seven-code NOT_FOUND",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong HTTP NOT_FOUND",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong messageKey NOT_FOUND",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query seven-code INTERNAL_ERROR",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong HTTP INTERNAL_ERROR",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query wrong messageKey INTERNAL_ERROR",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "query rejects delegation error envelope",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    }
+  ],
+  "summary": {
+    "total": 112,
+    "pass": 78,
+    "fail": 34
+  }
+}
