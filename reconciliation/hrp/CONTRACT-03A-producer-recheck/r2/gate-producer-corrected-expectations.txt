@@ -1,0 +1,108 @@
+COMMAND=C:\Program Files\nodejs\node.exe C:\CodeApp\hrp-integration-contracts-producer-r2\reconciliation\hrp\CONTRACT-03A-producer-recheck\r2\producer-recheck.mjs
+NODE=v24.19.0
+EXIT=1
+EXPECTED_EXIT=1
+STDOUT:
+FAIL F-01 accepted EP-01 query claims accepted: false
+FAIL F-01 request-binding helper fails closed when context absent: {"threw":"Cannot read properties of undefined (reading 'method')"}
+FAIL F-01 escaped-equivalent duplicate key rejected: true
+FAIL F-01 nested duplicate key rejected: true
+FAIL F-01 exported parser rejects alg none: true
+PASS F-03 PendingRequestIdSchema accepts canonical -/_ payload: true
+PASS F-03 PendingRequestIdSchema rejects noncanonical pad bits: false
+PASS F-03 HandoffProofSchema accepts canonical -/_ payload: true
+PASS F-03 HandoffProofSchema rejects noncanonical pad bits: false
+PASS F-03 ReceiptSchema accepts canonical -/_ payload: true
+PASS F-03 ReceiptSchema rejects noncanonical pad bits: false
+PASS F-03 DelegationRefSchema accepts canonical -/_ payload: true
+PASS F-03 DelegationRefSchema rejects noncanonical pad bits: false
+PASS F-03 CallbackStateSchema accepts canonical -/_ payload: true
+PASS F-03 CallbackStateSchema rejects noncanonical pad bits: false
+PASS F-03 JtiSchema accepts canonical -/_ payload: true
+PASS F-03 JtiSchema rejects noncanonical pad bits: false
+PASS F-03 CsrfTokenSchema accepts canonical -/_ payload: true
+PASS F-03 CsrfTokenSchema rejects noncanonical pad bits: false
+PASS F-03 query actor accepts canonical -/_ delegationRef: true
+PASS F-04 create rejects callback whitespace: false
+PASS F-04 create rejects session newline: false
+PASS F-04 create rejects timezone offset: false
+PASS F-04 create rejects nonexistent Gregorian date: false
+PASS F-04 exchange rejects callback whitespace: false
+PASS F-04 exchange rejects session newline: false
+PASS F-04 exchange rejects timezone offset: false
+PASS F-04 exchange rejects nonexistent Gregorian date: false
+PASS F-04 cancel rejects callback whitespace: false
+PASS F-04 cancel rejects session newline: false
+PASS F-04 cancel rejects timezone offset: false
+PASS F-04 cancel rejects nonexistent Gregorian date: false
+PASS F-04 revoke rejects callback whitespace: false
+PASS F-04 revoke rejects session newline: false
+PASS F-04 revoke rejects timezone offset: false
+PASS F-04 revoke rejects nonexistent Gregorian date: false
+FAIL F-04 binding rejects opaque identifier with underscore initial: true
+PASS F-05 FEFF rejected: false
+PASS F-05 oversized redaction omitted: false
+PASS F-05 oversized result rejected at schema layer: false
+PASS F-05 Arabic Unicode-letter name redacted: "ع••"
+PASS F-05 Hangul Unicode-letter name redacted: "홍••"
+PASS F-05 Deseret Unicode-letter name redacted: "𐐀••"
+PASS F-06 pinned vector vietnamese: {"name":"N•• V•• A••","unavailable":[]}
+PASS F-06 pinned vector decomposed: {"name":"É•• D••","unavailable":[]}
+PASS F-06 pinned vector one_han_token: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector multi_han: {"name":"小••","unavailable":[]}
+PASS F-06 pinned vector apostrophe_inside: {"name":"O••","unavailable":[]}
+PASS F-06 pinned vector hyphen_inside: {"name":"Ж••","unavailable":[]}
+PASS F-06 pinned vector short: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector missing: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector whitespace: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector digit: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector bidi: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector emoji: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector leading_apostrophe: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector leading_hyphen: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector leading_mark: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector trailing_punctuation: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector one_letter_mark: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector combining_initial: {"name":"Q́••","unavailable":[]}
+PASS F-06 pinned vector consecutive_punctuation: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector control_tab: {"name":null,"unavailable":["identitySummary"]}
+PASS F-06 pinned vector unicode_spaces: {"name":"A•• B••","unavailable":[]}
+PASS F-06 pinned vector unrequested identity omitted when unrequested: {"name":null,"unavailable":[]}
+{
+  "verdict": "CHANGES_REQUIRED",
+  "manifestPass": true,
+  "correctedExpectationProbes": {
+    "total": 65,
+    "pass": 59,
+    "fail": 6,
+    "byFinding": {
+      "F-01": {
+        "total": 5,
+        "pass": 0,
+        "fail": 5
+      },
+      "F-03": {
+        "total": 15,
+        "pass": 15,
+        "fail": 0
+      },
+      "F-04": {
+        "total": 17,
+        "pass": 16,
+        "fail": 1
+      },
+      "F-05": {
+        "total": 6,
+        "pass": 6,
+        "fail": 0
+      },
+      "F-06": {
+        "total": 22,
+        "pass": 22,
+        "fail": 0
+      }
+    }
+  }
+}
+
+STDERR:

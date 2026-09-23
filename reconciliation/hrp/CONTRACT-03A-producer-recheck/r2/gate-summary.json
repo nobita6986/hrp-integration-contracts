@@ -1,0 +1,38 @@
+{
+  "observedAt": "2026-09-23T05:46:01.692Z",
+  "node": "v24.19.0",
+  "results": [
+    {
+      "name": "npm-ci",
+      "command": "npm.cmd ci",
+      "exit": 0,
+      "expectedExit": 0,
+      "captured": "gate-npm-ci.txt",
+      "expectationMet": true
+    },
+    {
+      "name": "npm-run-build",
+      "command": "npm.cmd run build",
+      "exit": 0,
+      "expectedExit": 0,
+      "captured": "gate-npm-run-build.txt",
+      "expectationMet": true
+    },
+    {
+      "name": "npm-test",
+      "command": "npm.cmd test",
+      "exit": 0,
+      "expectedExit": 0,
+      "captured": "gate-npm-test.txt",
+      "expectationMet": true
+    },
+    {
+      "name": "producer-corrected-expectations",
+      "command": "C:\\Program Files\\nodejs\\node.exe C:\\CodeApp\\hrp-integration-contracts-producer-r2\\reconciliation\\hrp\\CONTRACT-03A-producer-recheck\\r2\\producer-recheck.mjs",
+      "exit": 1,
+      "expectedExit": 1,
+      "captured": "gate-producer-corrected-expectations.txt",
+      "expectationMet": true
+    }
+  ]
+}
