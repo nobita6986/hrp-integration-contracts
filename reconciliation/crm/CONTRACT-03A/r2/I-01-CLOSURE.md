@@ -113,3 +113,35 @@ documentation describing it. No source/schema delta under F-01..F-06
 in this batch.
 
 Status: READY_FOR_PRODUCER_RECHECK_AND_INDEPENDENT_DELTA_AUDIT.
+
+---
+
+## Batch 4 closure confirmation
+
+- Final correction commit: 39885326a7957414e546e5245ae58faaeb993f69 (source/schema) + 2b794232b76ddcdde6f1862f8cae8ae7c59b50e4 (docs/manifest)
+- Branch: codex/contract03a-schema-conformance
+
+### Generator integrity
+
+- UTF-8 no BOM, LF, executable by Node.
+- Node crypto.createHash(sha256) on raw file bytes.
+- 64 lowercase hex + 2 spaces + repo-relative path per entry.
+- --verify mode reads committed blobs at HEAD; exit non-zero on missing/mismatch/malformed/non-64-hex.
+
+### Manifests at HEAD
+
+packages/contracts/manifest.sha256: 23 entries, raw SHA-256 f095c8f7e1f49eedd108b9a13cb2398a594f1f540fab024d8ee14512d0ba7fb5 (regenerate after commit for current).
+reconciliation/crm/CONTRACT-03A/r2/manifest.txt: 4 entries, raw SHA-256 d0b72a5aacf8f58fbc9d2ec3bd48450be26cbce425bc0a01126839ee1e70d15b (regenerate after commit for current).
+
+### N/N match
+
+- packages/contracts/manifest.sha256: 23/23 MATCH
+- reconciliation/crm/CONTRACT-03A/r2/manifest.txt: 4/4 MATCH
+
+### No self-hash, no machine path, no dist/node_modules
+
+Confirmed: generator excludes its own manifest file path, git ls-files handles relative paths portably, and the filters exclude node_modules/ and dist/.
+
+### I-01 status
+
+I-01 PASS. No regression introduced by batch 4 source fixes (F-01/F-03/F-04/F-06). Generator and manifests remain valid against committed blobs at the final correction commit.

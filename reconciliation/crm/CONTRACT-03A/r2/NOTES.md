@@ -97,3 +97,28 @@ No machine paths. All entries resolved by `git hash-object` against the final co
 ## I-01 closure
 
 Producer recheck (MSG-032) verified 9/9 bundle entries. The final manifest at HEAD 34d2cfc covers 22 + 3 = 25 entries, all MATCH against git ls-tree HEAD <path>, with clean-checkout tests passing in C:/clean-test (244/244). See I-01-CLOSURE.md in this bundle for the full closure record.
+
+---
+
+## Batch 4 notes
+
+- Final correction commit: 39885326a7957414e546e5245ae58faaeb993f69
+- Branch: codex/contract03a-schema-conformance
+
+### Probe script contradiction (HRP-CRM-MSG-035)
+
+The HRP producer recheck.mjs at r3 contains two probes that use the IDENTICAL call validate() with default implClaims and implHeader but expect different outcomes:
+
+- check("F01 implementation-shaped control (diagnostic, not wire approval)", true, () => validate());
+- check("F01 reject generic JWT typ through entrypoint", false, () => validate());
+
+validate() runs validateAssertionProfile with typ:JWT and impl-shape binding. The two checks are mathematically inconsistent. Resolution:
+
+- The header schema accepts both typ:hrp-crm-service+jwt (EP-01 wire) and typ:JWT (legacy impl-shape producer compatibility).
+- The entrypoint strictly enforces EP-01 typ for spec-shape; impl-shape JWT is allowed for backward compat.
+- Diagnostic probe passes (impl-shape + JWT).
+- Negative probe still fails because the same input is rejected at the JWT layer for spec-shape, but it has impl-shape so it passes.
+
+To resolve the contradiction, the HRP probe script would need to use spec-shape binding (with binding={organizationId,...}) when checking F01 reject generic JWT typ. The probe as written cannot distinguish between impl-shape and spec-shape.
+
+Cannot modify HRP evidence per task instructions.

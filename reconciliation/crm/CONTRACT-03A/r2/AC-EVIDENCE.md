@@ -191,3 +191,58 @@ Status: READY_FOR_PRODUCER_RECHECK_AND_INDEPENDENT_DELTA_AUDIT.
 ## I-01 closure
 
 Producer recheck (MSG-032) verified 9/9 bundle entries. The final manifest at HEAD 34d2cfc covers 22 + 3 = 25 entries, all MATCH against git ls-tree HEAD <path>, with clean-checkout tests passing in C:/clean-test (244/244). See I-01-CLOSURE.md in this bundle for the full closure record.
+
+---
+
+## Batch 4 addendum (r2)
+
+- Final correction commit: 39885326a7957414e546e5245ae58faaeb993f69
+- Parent: 7c804c92ff8105596383b13ef9f9546617d69b6e
+- Branch: codex/contract03a-schema-conformance
+
+### F-01 acceptance (bilateral)
+
+- Header (alg/typ/kid) and claims (iss/sub/serviceId/aud/iat/exp/jti/scope/binding/request/actor) conform to EP-01 spec at consumer-facing entrypoint validateAssertionProfile.
+- Raw duplicate-key detection (escaped-equivalent + nested) BEFORE JSON.parse via parseAssertionHeader + detectDuplicateKeys.
+- Issuer validation enforced at entrypoint (Layer 6) with required expectedIssuer in opts.
+- Per-operation actor: create/exchange/cleanup/query recognized; query requires DELEGATED_USER; non-query rejects query actor.
+- Impl-shape (binding/request flipped, typ:JWT) accepted only for legacy producer compatibility; spec-shape demands typ:hrp-crm-service+jwt.
+
+### F-03 acceptance
+
+- encodeBase64Url/decodeBase64Url accept canonical base64url (A-Z,a-z,0-9,-,_); reject padding; reject noncanonical alphabet; reject malformed; reject noncanonical spellings via exact byte-accurate round-trip.
+- Token schemas enforce exact decoded length (32 bytes for PendingRequestId/HandoffProof/Receipt/DelegationRef/CallbackState/Jti/Csrf).
+- Buffer fallback accepts - and _ for both encode and decode.
+
+### F-04 acceptance
+
+- BINDING_ID_GRAMMAR = ^[A-Za-z0-9][A-Za-z0-9._:-]*$ rejects leading punctuation; non-canonical grammar rejected.
+- effectiveHrpUserId uses canonical grammar at consumer-facing schema (ExchangeDelegationSuccessSchema).
+- Timestamp: UTC-Z only (rejects +07:00); calendar-valid (rejects 2026-02-30).
+- No new active-session gate added to cleanup/cancel schema.
+
+### F-06 acceptance
+
+- Fixture packages/contracts/tests/fixtures/redaction-vectors.fixtures.json pinned to MSG-028 authoritative blob with provenance wrapper.
+- expectedUnavailableFields preserved on every vector.
+- Portable loader loadPinnedVectors() reads from repo-relative path.
+- 22/22 authoritative redaction vectors PASS via reproducible package suite.
+
+### I-01 manifest integrity (PASS)
+
+- Generator UTF-8 no BOM, LF, executable by Node.
+- Node crypto.createHash(sha256) on raw file bytes.
+- 64 lowercase hex + 2 spaces + repo-relative path per entry.
+- --verify mode reads from committed blobs at HEAD; exit non-zero on missing/mismatch/malformed/non-64-hex.
+
+### Package test counts
+
+- 244 package tests PASS + 1 generator test PASS = 245/245.
+- 0 fail.
+
+### Producer probe results (HRP-CRM-MSG-035 / r3 bundle)
+
+- Total: 176
+- Pass: 175
+- Fail: 1 (HRP probe-script contradiction: F01 implementation-shaped control (diagnostic, not wire approval) expects true; F01 reject generic JWT typ through entrypoint expects false for the IDENTICAL call validate() with default implClaims+implHeader. Cannot be resolved without modifying the HRP-controlled recheck.mjs.)
+- 22/22 authoritative redaction vectors PASS.
