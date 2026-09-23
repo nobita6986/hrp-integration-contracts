@@ -59,4 +59,3 @@ Residual risks: pure schema tests không chứng minh signature verification, du
 - Runtime/consumer compatibility: `NOT_EXECUTED`.
 - Không endpoint/JWT signer, DB/replay/delegation store, migration, package publish, consumer migration, pilot hoặc deploy.
 - H.09/Tier 3 và Owner runtime gates giữ nguyên.
-

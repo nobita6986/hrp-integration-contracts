@@ -14,7 +14,7 @@
 - Evidence branch: `codex/hrp-contract03a-producer-recheck-r5`.
 - Bundle: `reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/`.
 - Evidence commit: commit chứa bundle này; pin bằng full SHA trong handoff message.
-- Manifest: `manifest.sha256`; không tự hash chính nó.
+- Manifest: `manifest.sha256`; 17 data files, 18 files gồm manifest; manifest không tự hash chính nó.
 
 ## Result summary
 
@@ -48,4 +48,3 @@ node reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/regression-probes.mjs
 ## Governance
 
 `SPEC_DESIGN = BILATERALLY_ACCEPTED`; `ACCEPTED_SHARED = NONE`; runtime/consumer compatibility `NOT_EXECUTED`. Bundle không sửa module CRM, không publish, merge, mở runtime, consumer migration, pilot hoặc deploy.
-

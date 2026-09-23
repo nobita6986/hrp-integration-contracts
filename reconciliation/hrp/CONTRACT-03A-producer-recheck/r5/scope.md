@@ -7,4 +7,3 @@
 - Network: npm registry cho clean install và Git remote cho source provenance; không gọi HRP/CRM runtime.
 - Exclusions: signature verification, signer/key provisioning, endpoint, DB/replay/delegation store, RLS, browser/session integration, package publication, consumer migration, pilot và deploy.
 - Flavor: null; đây là producer conformance review, không phải pentest hoặc security audit của runtime.
-
