@@ -1,8 +1,9 @@
-# reconciliation/crm/CONTRACT-03A/r2 manifest - final committed raw blobs.
-# Format: <git-blob-sha256>  <path>
-# Excludes: manifest.txt itself (no self-hash).
+# Raw-File-SHA256: 64-hex SHA-256 of the file raw bytes.
+# Git-Blob-OID-SHA1: NOT stored in this manifest.
+# Format: <Raw-File-SHA256>\t<path>
+# Excludes: manifest.txt itself.
 
-f80cde3f1bc3c718c4934139adda194eeafd36aa  reconciliation/crm/CONTRACT-03A/r2/README.md
-19b6a98b79e34e48352cef2a4575c880db0a6d84  reconciliation/crm/CONTRACT-03A/r2/AC-EVIDENCE.md
-36a1bec9e4233d9371e3922f7a0ddc9d92c9f461  reconciliation/crm/CONTRACT-03A/r2/NOTES.md
-064489e34981a853791af2b3c08277495e2fd416  reconciliation/crm/CONTRACT-03A/r2/I-01-CLOSURE.md
+332a8986049a53d2fe1e0a6bbff6c187b24d588441430c8e5f53918717221597  reconciliation/crm/CONTRACT-03A/r2/README.md
+c0f2e904b19792117103e15c7368f8db41f52a829caa3b208a6b8a479773538c  reconciliation/crm/CONTRACT-03A/r2/AC-EVIDENCE.md
+017c8bb3b5ccb5bb6879469834dea1c9e43c807ba480c4e64d13e1d0123ebb80  reconciliation/crm/CONTRACT-03A/r2/NOTES.md
+42b099d3c8ff469ebb98365d93d5a8998592109c69eeb48b64d3744bbabf0f3d  reconciliation/crm/CONTRACT-03A/r2/I-01-CLOSURE.md

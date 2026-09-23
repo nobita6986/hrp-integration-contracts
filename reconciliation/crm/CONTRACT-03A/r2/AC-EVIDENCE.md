@@ -167,7 +167,7 @@
 npm ci
 npm run build
 npm test
-# 44 suites discovered, 244 tests, 0 fail.
+# 45 suites discovered, 245 tests, 0 fail.
 ```
 
 (Node 24.19.0, npm 11.17.0, TypeScript 5.7.3, Zod 3.24.2.)
@@ -185,8 +185,8 @@ Status: READY_FOR_PRODUCER_RECHECK_AND_INDEPENDENT_DELTA_AUDIT.
 
 ## Manifest
 
-- `packages/contracts/manifest.sha256` (committed blob `8c39e028a8bea57391e468df2ab8b753db2f464e`): 22 entries. Verified every entry matches the committed HEAD blob via `git ls-tree HEAD <path>`; ALL MATCH.
-- `reconciliation/crm/CONTRACT-03A/r2/manifest.txt` (no self-hash): 3 entries. Verified via the same `git ls-tree` parity check.
+- `packages/contracts/manifest.sha256` (committed blob, Raw-File-SHA256: `b9c0505c4a7625fe66e68f18361159edaadfebfe98c237fef19a7961865cdc76`): 23 entries. Verified every entry matches the committed HEAD blob via `git ls-tree HEAD <path>`; ALL MATCH.
+- `reconciliation/crm/CONTRACT-03A/r2/manifest.txt` (no self-hash): 4 entries. Verified via the same `git ls-tree` parity check.
 
 ## I-01 closure
 

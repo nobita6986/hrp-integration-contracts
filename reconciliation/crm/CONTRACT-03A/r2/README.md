@@ -6,7 +6,7 @@
 
 ## I-01 closure
 
-Producer recheck (MSG-032, commit `c8786c0f`, manifest hash `eb1cad2...d88a5`) verified 9/9 bundle entries. The full perimeter manifest at HEAD `34d2cfc` covers 22 + 4 = 26 entries, 100% MATCH against `git ls-tree HEAD <path>`, with clean-checkout tests passing in `C:/clean-test` (44 suites, 244 tests, 0 fail). See `I-01-CLOSURE.md` in this bundle.
+Producer recheck (MSG-032, commit `c8786c0f`, manifest hash `eb1cad2...d88a5`) verified 9/9 bundle entries. The full perimeter manifests at HEAD `34d2cfc` covered 23 + 4 = 27 entries, but used Git-blob-OID SHA-1 (40 hex) instead of raw-file SHA-256. Batch 3 (this commit) regenerates both manifests with Node crypto SHA-256 on raw bytes; coverage is 23 + 4 = 27 entries, 100% MATCH. See `I-01-CLOSURE.md` in this bundle.
 
 Target reviewed commit: `22fc50e3deca5e6c816aab44088afe1d443e4867`.
 `SPEC_DESIGN = BILATERALLY_ACCEPTED` remains untouched.
@@ -64,7 +64,7 @@ corrections below are against the producer disposition.
 And `packages/contracts/tests/fixtures/redaction-vectors.fixtures.json`
 is the portable in-delivery fixture that carries the authoritative
 provenance (`49f2dbc34cae66e8d63df5dd5d8cec0c008c4623`,
-`a7e7ae0b32629a9dedd2a20031086460a606271c5cf305bbc76c14a76783e428`,
+`043c86b886c0ce980f75f8f064e8dcd3fc240fead21c7e60a8b28204aaa05e76`,
 4118 bytes, 22 vectors).
 
 ## Test execution (clean checkout, after this commit)
@@ -134,7 +134,7 @@ checks but does NOT itself assert them.
 
 ## Manifest
 
-`packages/contracts/manifest.sha256` (committed blob `8c39e028a8bea57391e468df2ab8b753db2f464e`) covers 22 entries: source under `packages/contracts/src/talent-context-read/`, the portable fixture under `packages/contracts/tests/fixtures/`, every test under `packages/contracts/tests/talent-context-read/`, the `scripts/generate-manifest.mjs` tool, plus `package.json`, `package-lock.json`, and `tsconfig.json`. Excluded: `node_modules/`, `dist/`, and the manifest itself (no self-hash). Reproduced via `node packages/contracts/scripts/generate-manifest.mjs` (cwd = repo root).
+`packages/contracts/manifest.sha256` (Raw-File-SHA256: `b9c0505c4a7625fe66e68f18361159edaadfebfe98c237fef19a7961865cdc76`) covers 23 entries: source under `packages/contracts/src/talent-context-read/`, the portable fixture under `packages/contracts/tests/fixtures/`, every test under `packages/contracts/tests/talent-context-read/`, the generator test under `packages/contracts/tests/generator/`, the `scripts/generate-manifest.mjs` tool, plus `package.json`, `package-lock.json`, and `tsconfig.json`. Excluded: `node_modules/`, `dist/`, and the manifest itself (no self-hash). Generator: `node packages/contracts/scripts/generate-manifest.mjs` (cwd = repo root). Verification: `node packages/contracts/scripts/generate-manifest.mjs --verify`.
 
-`reconciliation/crm/CONTRACT-03A/r2/manifest.txt` (no self-hash) covers 3 entries: `README.md`, `AC-EVIDENCE.md`, `NOTES.md`. Excluded: `manifest.txt` itself (no self-hash).
+`reconciliation/crm/CONTRACT-03A/r2/manifest.txt` (no self-hash) covers 4 entries: `README.md`, `AC-EVIDENCE.md`, `NOTES.md`. Excluded: `manifest.txt` itself (no self-hash).
 

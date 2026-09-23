@@ -36,19 +36,15 @@ disposition.
 - Clean checkout: `npm ci` added the lockfile-delimited deps exactly
   without touching any tracked `node_modules/`.
 - `npm run build` (tsc) compiles with zero errors.
-- `npm test` discovers 44 suites and runs 244 tests, 0 failures.
-- No tracked generated artifacts: `dist/` is gitignored inside
-  `packages/contracts/`; the manifest's `git hash-object` list
-  excludes `dist/`, `node_modules/`, and `manifest.sha256` itself.
-- Manifest is regenerated AFTER all source/test/build-config changes
-  and committed with the source. The manifest's own hash is excluded
-  from its contents (no self-hash).
+- `npm test` discovers 45 suites and runs 245 tests, 0 failures (batch 3 adds 1 suite / 1 test for the generator).
+- No tracked generated artifacts: `dist/` is gitignored inside `packages/contracts/`; the manifest generator (`packages/contracts/scripts/generate-manifest.mjs`) excludes `dist/`, `node_modules/`, and `manifest.sha256` itself.
+- Manifest is regenerated AFTER all source/test/build-config changes and committed with the source. The manifest uses Node crypto SHA-256 on raw file bytes (not `git hash-object`); the manifest's own hash is excluded from its contents (no self-hash). The generator also provides a read-only `--verify` mode that exits non-zero on missing/mismatch/malformed/non-64-hex entries.
 - Vectors are loaded from a portable in-delivery fixture under
   `tests/fixtures/` with provenance metadata; the loader uses
   `node:fs` + `node:url` only (no `child_process`, no absolute
   machine path).
 - The fixture itself carries the authoritative SHA256
-  (`a7e7ae0b32629a9dedd2a20031086460a606271c5cf305bbc76c14a76783e428`)
+  (`043c86b886c0ce980f75f8f064e8dcd3fc240fead21c7e60a8b28204aaa05e76`)
   of the MSG-028 blob (`49f2dbc34cae66e8d63df5dd5d8cec0c008c4623`),
   so the fixture's content can be verified against the authoritative
   source at any time.
@@ -93,8 +89,8 @@ Status: READY_FOR_PRODUCER_RECHECK_AND_INDEPENDENT_DELTA_AUDIT.
 
 ## Manifest summary
 
-- `packages/contracts/manifest.sha256` (committed blob `8c39e028a8bea57391e468df2ab8b753db2f464e`): 22 entries (source under `packages/contracts/src/talent-context-read/`, the portable fixture under `packages/contracts/tests/fixtures/`, every test under `packages/contracts/tests/talent-context-read/`, `scripts/generate-manifest.mjs`, plus `package.json`, `package-lock.json`, and `tsconfig.json`). Excludes `node_modules/`, `dist/`, and the manifest itself.
-- `reconciliation/crm/CONTRACT-03A/r2/manifest.txt` (no self-hash): 3 entries (`README.md`, `AC-EVIDENCE.md`, `NOTES.md`). Excludes `manifest.txt` itself.
+- `packages/contracts/manifest.sha256` (committed blob, Raw-File-SHA256: `b9c0505c4a7625fe66e68f18361159edaadfebfe98c237fef19a7961865cdc76`): 23 entries (source under `packages/contracts/src/talent-context-read/`, the portable fixture under `packages/contracts/tests/fixtures/`, every test under `packages/contracts/tests/talent-context-read/`, `scripts/generate-manifest.mjs`, plus `package.json`, `package-lock.json`, and `tsconfig.json`). Excludes `node_modules/`, `dist/`, and the manifest itself.
+- `reconciliation/crm/CONTRACT-03A/r2/manifest.txt` (no self-hash): 4 entries (`README.md`, `AC-EVIDENCE.md`, `NOTES.md`). Excludes `manifest.txt` itself.
 
 No machine paths. All entries resolved by `git hash-object` against the final committed raw blobs.
 

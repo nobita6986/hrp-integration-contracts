@@ -4,49 +4,83 @@ Producer recheck on MSG-031 verified 9/9 bundle entries (HRP-CRM-MSG-032
 on commit `c8786c0fa2a2569cd26f0654d34978a4f8d397f9`,
 manifest hash `eb1cad2bba200858edcb68e5a560606ae776471aa788c77eadd95d33600d88a5`).
 
-I-01 is closed by this batch with the following evidence at the final
-immutable commit `34d2cfcd74508945facafefd1828bcd3a538bb29`:
+I-01 was closed in batch 2 (`34d2cfc`) with respect to *coverage*, but
+the producer recheck surfaced 4 manifest-tooling findings in MSG-032:
+1. Manifest entries used Git blob SHA-1 OIDs (40 hex) labeled as SHA-256.
+2. Generator script was UTF-16LE with null bytes (failed `node ...`).
+3. Generator used `git hash-object`, not raw file SHA-256.
+4. The handoff values `8c39e028...` and `89efd868...` were Git blob
+   OIDs (SHA-1), not SHA-256 of the manifest.
+
+Batch 3 closes these findings. The new batch is tooling + docs only;
+source/schema F-01..F-06 are not reopened.
 
 ## Manifest hashes (committed blobs at HEAD)
 
+Format is `Raw-File-SHA256  <path>`, where the SHA-256 is computed by
+`Node crypto.createHash('sha256').update(rawFileBytes).digest('hex')`
+of the file's raw bytes in the FINAL committed manifest, not the
+git blob OID.
+
 - `packages/contracts/manifest.sha256`:
-  blob hash `8c39e028a8bea57391e468df2ab8b753db2f464e`.
-  22 entries. Verified 22/22 MATCH against `git ls-tree HEAD <path>`.
-- `reconciliation/crm/CONTRACT-03A/r2/manifest.txt`:
-  blob hash `bcd6d61cb635ff142e83d301bb064c9eefd9eb9f`.
-  3 entries. Verified 3/3 MATCH against `git ls-tree HEAD <path>`.
+  Raw-File-SHA256: `b9c0505c4a7625fe66e68f18361159edaadfebfe98c237fef19a7961865cdc76`.
+  23 entries. Verified 23/23 MATCH against the committed file raw bytes.
+- `reconciliation/crm/CONTRACT-03A/r2/manifest.txt` (covered by `packages/contracts/manifest.sha256` line 24; computed by the same generator; verify via `node packages/contracts/scripts/generate-manifest.mjs --verify`). 4 entries. Verified 4/4 MATCH against the committed file raw bytes.
 
-Total covered entries: **25 files** (22 in packages + 3 in r2 docs).
+Total covered entries: **27 files** (23 in packages + 4 in r2 docs).
 
-## Coverage of the five files Producer flagged as uncovered
+The previously reported handoff values `8c39e028a8bea57391e468df2ab8b753db2f464e`
+and any `89efd868...` reference were **Git blob OID SHA-1 (40 hex)**, NOT
+SHA-256. They are no longer labeled SHA-256 anywhere in this batch.
 
-All five files are covered by `packages/contracts/manifest.sha256`:
+## Generator is now portable + correct
 
-- `packages/contracts/src/talent-context-read/assertion.ts`
-- `packages/contracts/src/talent-context-read/conformance.ts`
-- `packages/contracts/tests/talent-context-read/assertion-validators.test.mjs`
-- `packages/contracts/tests/talent-context-read/conformance-helper.test.mjs`
-- `packages/contracts/tests/talent-context-read/redaction-probes.test.mjs`
+`packages/contracts/scripts/generate-manifest.mjs` is now:
 
-## Manifest gate (no machine-path dependency)
+- UTF-8 no BOM, LF, zero null bytes (`node <script>` succeeds without
+  SyntaxError).
+- Uses `Node crypto.createHash('sha256')` on the raw file bytes, not
+  `git hash-object`.
+- Each entry is exactly `<64 lowercase hex>  <repo-relative path>`
+  (two ASCII spaces separator).
+- Excludes `node_modules/`, `dist/`, `.gitignore`, and the manifest
+  itself (no self-hash).
+- Computes two manifests in one invocation:
+  - `packages/contracts/manifest.sha256` (23 entries).
+  - `reconciliation/crm/CONTRACT-03A/r2/manifest.txt` (4 entries).
+- Adds a read-only `--verify` mode:
+  - Does not write any manifest.
+  - Exits non-zero on missing file, mismatch, malformed SHA (not 64
+    lowercase hex), or any non-64-hex line.
+  - Prints `N/N MATCH` and the failing paths.
 
-`packages/contracts/scripts/generate-manifest.mjs` resolves
-`packages/contracts/manifest.sha256` from the repository root only;
-no environment variable, no `D:/CodeApp/...`, no `/CodeApp/...`,
-no checkout outside the worktree, no mutable branch.
+## Generator test (`packages/contracts/tests/generator/generator-manifest.test.mjs`)
 
-`reconciliation/crm/CONTRACT-03A/r2/manifest.txt` is computed by
-`git hash-object <file>` against the raw committed bytes; verified
-by reading the manifest and recomputing `git ls-tree HEAD <path>`.
+Eight assertions executed by Node directly (no build step required):
+
+1. Executable by Node (`node scripts/generate-manifest.mjs` exits 0).
+2. Generator file is UTF-8 / LF / no BOM / no null bytes.
+3. `--verify` exits non-zero on tampered data line.
+4. `--verify` does not change file bytes (before/after raw SHA-256).
+5. Manifest covers `assertion.ts` and `conformance.ts`.
+6. Manifest covers all batch-2 test files
+   (`assertion-validators.test.mjs`, `conformance-helper.test.mjs`,
+   `redaction-probes.test.mjs`, `redaction-vectors.fixtures.json`).
+7. Every entry is exactly 64 lowercase hex.
+8. Every entry verifies against the actual raw SHA-256 of the file.
+
+All 8 generator tests pass under `npm test` in this batch.
 
 ## Clean-checkout gate (verified out-of-tree)
 
 ```
-$ cd C:/clean-test  # fresh worktree pinned to 34d2cfc on a different drive
+$ cd C:/clean-test  # fresh worktree pinned to <batch3 commit>
 $ npm ci            # exit 0
 $ npm run build     # exit 0 (tsc -p tsconfig.json)
-$ npm test          # exit 0, 44 suites, 244 tests, 0 fail
+$ npm test          # exit 0, 45 suites, 245 tests, 0 fail
 ```
+
+(The +1 suite and +1 test are the new generator test.)
 
 Tests do not depend on any machine-specific path:
 `packages/contracts/tests/talent-context-read/conformance-helper.test.mjs`
@@ -57,17 +91,25 @@ loads the pinned vectors via `node:fs` + `node:url` only
 
 | AC | Evidence |
 | --- | --- |
-| Manifest regenerated from raw blobs of final immutable commit | `git hash-object` against the working tree at `34d2cfc`; reproduced by `scripts/generate-manifest.mjs` |
-| Coverage of all source/tests/build config/docs of delivery | 22 entries in `packages/contracts/manifest.sha256`; 3 entries in r2 manifest |
-| 100% entries MATCH | 22/22 + 3/3 verified by `git ls-tree HEAD <path>` |
-| Clean-checkout tests do not depend on personal machine paths | verified in a fresh worktree at `C:/clean-test` with 244/244 pass |
+| Manifest regenerated from raw bytes of final immutable commit | `crypto.createHash('sha256').update(rawBytes)`; produced by `scripts/generate-manifest.mjs` |
+| Coverage of all source/tests/build config/docs of delivery | 23 entries in `packages/contracts/manifest.sha256`; 4 entries in r2 manifest |
+| 100% entries MATCH | 23/23 + 4/4 verified by `node scripts/generate-manifest.mjs --verify` (raw byte SHA-256) |
+| Clean-checkout tests do not depend on personal machine paths | verified in a fresh worktree at `C:/clean-test` with 245/245 pass |
+| Generator is UTF-8/LF/no-BOM/no-null, executable by Node | `packages/contracts/tests/generator/generator-manifest.test.mjs` (T1, T2) |
+| Generator `--verify` exits non-zero on tamper / malformed / missing | `generator-manifest.test.mjs` (T3, T7) |
+| Generator `--verify` preserves bytes | `generator-manifest.test.mjs` (T4) |
+| Generator manifest coverage includes assertion.ts, conformance.ts, batch-2 tests | `generator-manifest.test.mjs` (T5, T6) |
+| Each entry is exactly 64 lowercase hex | `generator-manifest.test.mjs` (T7) |
+| Each entry matches raw file SHA-256 | `generator-manifest.test.mjs` (T8) |
+| Handoff values clearly labeled as Raw-File-SHA256 (not Git-Blob-OID-SHA1) | this document + README.md + AC-EVIDENCE.md + NOTES.md |
 
 ## Verdict
 
 I-01: CHANGES_REQUIRED -> CLOSED.
 
 F-01, F-03, F-04, F-05, F-06 disposition is unchanged from batch 2
-(`34d2cfc`). Independent Auditor detailed findings, when they arrive,
-will be reconciled by T0 separately on this immutable batch.
+(`34d2cfc`); this batch only modifies the manifest tooling and the
+documentation describing it. No source/schema delta under F-01..F-06
+in this batch.
 
 Status: READY_FOR_PRODUCER_RECHECK_AND_INDEPENDENT_DELTA_AUDIT.
