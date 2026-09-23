@@ -2,7 +2,6 @@ import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   parseAssertionHeader,
-  AssertionClaimsSchema,
   validateClaimsObject,
   validateTtlSkew,
   validateAudience,
@@ -44,7 +43,7 @@ const SUBJECT = 'Subject_One';
 const DELEGATION_REF = 'dg_' + canonicalTokenB;
 
 function buildValidHeader() {
-  return { alg: 'HS256', typ: 'JWT', kid: 'kidsafe' };
+  return { alg: 'RS256', typ: 'hrp-crm-service+jwt', kid: 'kidsafe' };
 }
 
 function buildValidClaims() {
@@ -299,8 +298,8 @@ describe('F-01 request binding (method/path/bodySha256 + organizationId/crmSubje
 });
 
 describe('F-01 actor per operation profile', () => {
-  test('all 3 ops recognized', () => {
-    assert.equal(BACKEND_OPERATIONS.length, 3);
+  test('all backend ops recognized (create, exchange, cleanup, query)', () => {
+    assert.equal(BACKEND_OPERATIONS.length, 4);
     for (const op of BACKEND_OPERATIONS) {
       const r = actorForOperation(op);
       assert.equal(r.ok, true);
@@ -341,6 +340,7 @@ describe('F-01 single consumer-facing entrypoint validateAssertionProfile', () =
       claims: buildValidClaims(),
       operation: 'exchange',
       serviceId: 'serviceId-1',
+      expectedIssuer: 'issuer1',
       expectedAudience: OPERATION_AUDIENCE.exchange,
       method: 'POST',
       path: '/api/exchange',
@@ -362,6 +362,7 @@ describe('F-01 single consumer-facing entrypoint validateAssertionProfile', () =
       claims: buildValidClaims(),
       operation: 'exchange',
       serviceId: 'serviceId-1',
+      expectedIssuer: 'issuer1',
       expectedAudience: OPERATION_AUDIENCE.exchange,
       method: 'POST',
       path: '/api/exchange',

@@ -9,6 +9,7 @@ import {
   CallbackStateSchema,
   CsrfTokenSchema,
   SingleScopeArraySchema,
+  OpaqueBindingLikeIdSchema,
 } from './primitives.js';
 
 // ============================================================================
@@ -155,7 +156,7 @@ export const ExchangeDelegationRequestSchema = CrmBindingBaseSchema.extend({
 export const ExchangeDelegationSuccessSchema = z
   .object({
     delegationRef: DelegationRefSchema,
-    effectiveHrpUserId: z.string().min(1).max(128),
+    effectiveHrpUserId: OpaqueBindingLikeIdSchema(128),
     expiresAt: z.string().datetime({ offset: true }),
   })
   .strict();

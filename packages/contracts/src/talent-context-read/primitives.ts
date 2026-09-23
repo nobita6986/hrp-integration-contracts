@@ -49,14 +49,19 @@ export function encodeBase64Url(bytes: Uint8Array): string {
   for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i] & 0xff);
   const g = globalThis as {
     btoa?: (s: string) => string;
-    Buffer?: { from(input: string, encoding: string): Uint8Array };
+    Buffer?: {
+      from(input: Uint8Array | string, encoding?: string): Uint8Array;
+      from(input: Uint8Array | string): Uint8Array;
+    };
   };
   let std: string;
   if (typeof g.btoa === 'function') {
     std = g.btoa(s);
   } else if (g.Buffer && typeof g.Buffer.from === 'function') {
-    // Node fallback. Re-decode latin1 to a string.
-    std = new TextDecoder('latin1').decode(g.Buffer.from(s, 'binary'));
+    // Node Buffer fallback. `Buffer.from(uint8).toString('base64')` produces
+    // standard base64 (with possible +/ and trailing =), which we then
+    // normalize to base64url (no padding, - and _ instead of + and /).
+    std = (g.Buffer.from(bytes) as unknown as { toString(enc: string): string }).toString('base64');
   } else {
     // Last-resort: manual base64 (only safe for small arrays).
     std = manualEncode(s);
@@ -76,13 +81,20 @@ export function decodeBase64Url(str: string): Uint8Array {
   const padded = normalizeToStd(str) + '='.repeat(padLen);
   const g = globalThis as {
     atob?: (s: string) => string;
-    Buffer?: { from(input: string, encoding: string): Uint8Array };
+    Buffer?: {
+      from(input: string, encoding: string): Uint8Array;
+      from(input: string): Uint8Array;
+    };
   };
   let raw: string;
   if (typeof g.atob === 'function') {
     raw = g.atob(padded);
   } else if (g.Buffer && typeof g.Buffer.from === 'function') {
-    raw = new TextDecoder('latin1').decode(g.Buffer.from(padded, 'base64'));
+    // Node Buffer fallback. `Buffer.from(base64str, 'base64')` returns the
+    // raw decoded bytes; re-encode to a binary string (latin1 preserves
+    // every byte 0..0xFF without replacement).
+    const buf = (g.Buffer.from(padded, 'base64') as unknown as { toString(enc: string): string });
+    raw = buf.toString('binary');
   } else {
     raw = manualDecode(padded);
   }
@@ -265,7 +277,7 @@ export const ModuleSchemaVersionSchema = z.literal(MODULE_SCHEMA_VERSION);
 // F-04 - Strict CRM binding B. Used by every consumer-facing delegation schema.
 // ============================================================================
 
-const BINDING_ID_GRAMMAR = /^[A-Za-z0-9._:-]+$/u;
+const BINDING_ID_GRAMMAR = /^[A-Za-z0-9][A-Za-z0-9._:-]*$/u;
 
 /** Reusable strict base binding object (used by delegation schemas that extend it). */
 export const CrmBindingBaseSchema = z.object({

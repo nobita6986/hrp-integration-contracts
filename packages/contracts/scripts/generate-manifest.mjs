@@ -49,9 +49,32 @@ function gitLsFiles(subdir) {
   return out.split('\0').filter(Boolean);
 }
 
-// ─── Verify one manifest ───────────────────────────────────────────────────────
+// ─── Raw SHA-256 of a file ────────────────────────────────────────────────────
+// In normal (generate) mode: read from working tree.
+// In verify mode: read from committed blobs at HEAD (or pinned SHA).
 
-function verifyManifest(manifestPath) {
+function readWorking(filePath) {
+  return readFileSync(resolve(REPO, filePath));
+}
+
+function readBlob(sha, filePath) {
+  return execFileSync('git', ['show', `${sha}:${filePath}`], { cwd: REPO });
+}
+
+function getReviewSha() {
+  try {
+    const out = execFileSync('git', ['rev-parse', 'HEAD'], { cwd: REPO, encoding: 'utf8' });
+    return out.trim();
+  } catch {
+    return null;
+  }
+}
+
+// ─── Verify one manifest (against committed blobs by default) ──────────────────
+
+function verifyManifest(manifestPath, opts = {}) {
+  const { fromFilesystem = false, pinnedSha = null } = opts;
+  const blobSource = pinnedSha ?? getReviewSha();
   const lines = fsReadFileSync(manifestPath, 'utf8').split('\n');
   const dataLines = lines.filter(
     (l) => l.trim() && !l.startsWith('#') && !l.startsWith('Raw-File-SHA256') && !l.startsWith('Git-Blob-OID')
@@ -69,7 +92,6 @@ function verifyManifest(manifestPath) {
     const shaPart = line.slice(0, tabIdx).trim();
     const pathPart = line.slice(tabIdx + 2).trim();
 
-    // Check SHA-256 format: exactly 64 lowercase hex
     if (!/^[0-9a-f]{64}$/.test(shaPart)) {
       errors.push(`MALFORMED-SHA256: "${shaPart}" in "${pathPart}"`);
       bad++;
@@ -77,7 +99,10 @@ function verifyManifest(manifestPath) {
     }
 
     try {
-      const actual = rawSha256(pathPart);
+      const raw = fromFilesystem
+        ? readWorking(pathPart)
+        : readBlob(blobSource, pathPart);
+      const actual = createHash('sha256').update(raw).digest('hex');
       if (actual === shaPart) {
         ok++;
       } else {
@@ -161,7 +186,8 @@ function generateR2Manifest() {
 const verifyOnly = process.argv.includes('--verify');
 
 if (verifyOnly) {
-  console.log('=== --verify mode ===\n');
+  console.log('=== --verify mode ===');
+  console.log('Verifying manifest entries against committed blobs at HEAD.\n');
 
   const { ok: cOk, bad: cBad, errors: cErrors, total: cTotal } = verifyManifest(
     resolve(REPO, 'packages', 'contracts', 'manifest.sha256')
