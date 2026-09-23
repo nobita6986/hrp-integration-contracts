@@ -74,7 +74,9 @@ $ npm ci
 $ npm run build
 $ npm test
 
-# 44 suites discovered, 244 tests, 0 fail.
+# 45 suites discovered, 245 tests, 0 fail.
+#   - talent-context-read: 244 tests / 44 suites
+#   - generator: 1 test (8 sub-tests)
 ```
 
 (Node 24.19.0, npm 11.17.0, TypeScript 5.7.3, Zod 3.24.2.)
