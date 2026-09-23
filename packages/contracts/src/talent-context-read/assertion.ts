@@ -59,11 +59,11 @@ import {
 // --- Raw header profile -----------------------------------------------------
 
 const ALG_PROFILE_STRICT = z.enum(['RS256']);
-// EP-01 wire typ is 'hrp-crm-service+jwt'. We accept 'JWT' in the parser
-// because the producer diagnostic control uses 'JWT' for impl-shape inputs.
-// The strict EP-01 typ check is enforced at validateAssertionProfile so
-// that spec-shape bindings reject 'JWT' (per the F-01 prompt).
-const TYP_PROFILE_STRICT = z.enum(['hrp-crm-service+jwt', 'JWT']);
+// EP-01 wire typ is 'hrp-crm-service+jwt'. No legacy 'JWT' variant is
+// accepted at the consumer-facing profile. Diagnostics that need to test
+// impl-shape binding must use the separate `diagnosticValidateAssertion`
+// helper (which is explicitly NOT a profile entrypoint).
+const TYP_PROFILE_STRICT = z.enum(['hrp-crm-service+jwt']);
 const KID_PROFILE = z.string().min(1).max(64).regex(/^[A-Za-z0-9._-]+$/u);
 
 const PROTECTED_HEADER_SCHEMA = z
@@ -125,6 +125,46 @@ export function parseAssertionHeader(raw: unknown) {
     return { ok: false as const, layer: 'raw' as const, reason: 'not valid JSON' };
   }
   return { ok: true as const, layer: 'raw' as const, value: parsed };
+}
+
+/**
+ * Consumer-facing WIRE entrypoint for JWT assertion profile validation.
+ *
+ * Accepts raw header bytes (as would arrive on the wire before base64url
+ * decoding).  All security checks run before any parsed-object is produced:
+ *   1. Raw framing check  — length, control chars, BOM, bidi.
+ *   2. Duplicate-key scan  — catches top-level, nested, and escaped-equivalent
+ *      duplicates that JSON.parse would silently discard.
+ *   3. JSON parse.
+ *   4. Protected header profile (alg / typ / kid; reject embedded JWKs).
+ *   5. Claims object profile  — iss / sub / serviceId / aud / iat / exp / jti /
+ *      scope / binding / request / actor.
+ *   6. Subject = serviceId.
+ *   7. TTL / skew boundary.
+ *   8. Operation audience.
+ *   9. Issuer.
+ *   10. Per-operation actor profile (create / exchange / cleanup / query).
+ *
+ * Callers do NOT need to call separate framing/duplicate/claims helpers to
+ * achieve the EP-01 security posture — one function call covers everything.
+ */
+export function validateAssertionFromWire(
+  rawProtectedHeader: unknown,
+  opts: ValidateAssertionProfileOpts,
+): AssertionProfileOk | AssertionProfileErr {
+  // Layer 0: raw header framing + duplicate-key detection.
+  const rawResult = parseAssertionHeader(rawProtectedHeader);
+  if (!rawResult.ok) {
+    return {
+      ok: false,
+      layer: rawResult.layer,
+      reason: rawResult.reason,
+    };
+  }
+  return validateAssertionProfile({
+    ...opts,
+    protectedHeader: rawResult.value,
+  });
 }
 
 /**
@@ -670,13 +710,9 @@ export const ASSERTION_LIMITS = Object.freeze({
   DEFAULT_SKEW_SECONDS: 30,
 });
 
-export type AssertionProfileOk = {
-  ok: true;
-  layer: 'profile';
-  header: z.infer<typeof PROTECTED_HEADER_SCHEMA>;
-  claims: NormalizedClaims;
-  requiredActor: { operation: string; requireEffectiveHrpUser: boolean; requireActiveCrmSession: boolean };
-};
+export type AssertionProfileOk =
+  | { ok: true; layer: 'profile'; header: z.infer<typeof PROTECTED_HEADER_SCHEMA>; claims: NormalizedClaims; requiredActor: { operation: string; requireEffectiveHrpUser: boolean; requireActiveCrmSession: boolean } }
+  | { ok: true; layer: 'diagnostic'; header: { alg: string; typ: string; kid: string }; claims: NormalizedClaims; requiredActor: { operation: string; requireEffectiveHrpUser: boolean; requireActiveCrmSession: boolean } };
 
 export type AssertionProfileErr = {
   ok: false;
@@ -749,9 +785,8 @@ export function validateAssertionProfile(
       reason: 'jku/x5u/jwk/x5c not accepted',
     };
   }
-  const headerTyp = (headerParsed.data as Record<string, unknown>)['typ'] as string;
 
-  // Layer 2: claims profile (EP-01 strict shape, impl-shape variants remapped).
+  // Layer 2: claims profile (EP-01 strict shape).
   const claimsRes = validateClaimsObject(opts.claims);
   if (claimsRes.ok === false) {
     return {
@@ -762,19 +797,6 @@ export function validateAssertionProfile(
     };
   }
   const claims = claimsRes.claims as NormalizedClaims & Record<string, unknown>;
-
-  // Layer 2b: typ rejection — EP-01 wire type is 'hrp-crm-service+jwt'.
-  // Legacy impl-shape inputs may use generic 'JWT'; allow only when binding is
-  // impl-shape (flipped method/path/bodySha256). Spec-shape inputs must use
-  // the canonical EP-01 typ.
-  const isImplShape = claims._implShape !== undefined;
-  if (headerTyp === 'JWT' && !isImplShape) {
-    return {
-      ok: false,
-      layer: 'header' as const,
-      reason: 'typ must be hrp-crm-service+jwt for EP-01 spec shape',
-    };
-  }
 
   // Layer 3: subject === serviceId (also enforced inside validateClaimsObject).
   const subjRes = validateSubject(claims, { serviceId: opts.serviceId });
@@ -861,6 +883,151 @@ export function validateAssertionProfile(
     ok: true,
     layer: 'profile',
     header: headerParsed.data,
+    claims,
+    requiredActor: actorRes.required,
+  };
+}
+
+/**
+ * Diagnostics-only helper for testing implementation-shaped binding variants.
+ *
+ * NOT a consumer-facing profile entrypoint.  This helper is intended for
+ * internal diagnostic / probe use only.  A PASS from this helper does NOT
+ * constitute EP-01 profile conformance and MUST NOT be used as a security
+ * gate in production.
+ *
+ * The only difference from `validateAssertionProfile` is that the header
+ * schema accepts `typ:'JWT'` (legacy producer compatibility) and the
+ * impl-shape binding (flipped method/path/bodySha256 in the request field).
+ */
+export function diagnosticValidateAssertion(
+  opts: ValidateAssertionProfileOpts,
+): AssertionProfileOk | AssertionProfileErr {
+  // Accept typ:'JWT' at the header schema level (diagnostic only).
+  const diagHeaderSchema = z
+    .object({
+      alg: z.enum(['RS256']),
+      typ: z.enum(['hrp-crm-service+jwt', 'JWT']),
+      kid: z.string().min(1).max(64).regex(/^[A-Za-z0-9._-]+$/u),
+    })
+    .strict();
+
+  const headerParsed = diagHeaderSchema.safeParse(opts.protectedHeader);
+  if (!headerParsed.success) {
+    return {
+      ok: false,
+      layer: 'header',
+      reason: 'protected header shape invalid',
+      issues: headerParsed.error.issues,
+    };
+  }
+  if (
+    (headerParsed.data as Record<string, unknown>)['jku'] !== undefined ||
+    (headerParsed.data as Record<string, unknown>)['x5u'] !== undefined ||
+    (headerParsed.data as Record<string, unknown>)['jwk'] !== undefined ||
+    (headerParsed.data as Record<string, unknown>)['x5c'] !== undefined
+  ) {
+    return {
+      ok: false,
+      layer: 'header',
+      reason: 'jku/x5u/jwk/x5c not accepted',
+    };
+  }
+
+  // Layer 2: claims (same as public profile).
+  const claimsRes = validateClaimsObject(opts.claims);
+  if (claimsRes.ok === false) {
+    return {
+      ok: false,
+      layer: 'claims' as const,
+      reason: (claimsRes as { reason: string }).reason,
+      issues: (claimsRes as { issues?: unknown }).issues,
+    };
+  }
+  const claims = claimsRes.claims as NormalizedClaims & Record<string, unknown>;
+
+  // Layer 3–9: same as public profile (re-use the public validator's
+  // remaining logic by invoking it with a header that will pass the schema).
+  // We do inline copies of layers 3–9 to keep diagnostics fully isolated.
+  const subjRes = validateSubject(claims, { serviceId: opts.serviceId });
+  if (!subjRes.ok) return { ok: false, layer: 'subject', reason: subjRes.reason };
+
+  const ttlRes = validateTtlSkew(
+    claims,
+    {
+      ttlSeconds: opts.ttlSeconds ?? ASSERTION_LIMITS.DEFAULT_TTL_SECONDS,
+      skewSeconds: opts.skewSeconds ?? ASSERTION_LIMITS.DEFAULT_SKEW_SECONDS,
+      nowSeconds: opts.verifierNowSeconds,
+    },
+  );
+  if (!ttlRes.ok) return { ok: false, layer: 'ttl', reason: ttlRes.reason };
+
+  const audRes = validateAudience(claims, { audience: opts.expectedAudience });
+  if (!audRes.ok) return { ok: false, layer: 'audience', reason: audRes.reason };
+
+  const issRes = validateIssuer(claims, { issuer: opts.expectedIssuer });
+  if (!issRes.ok) return { ok: false, layer: 'issuer', reason: issRes.reason };
+
+  // Binding check — inline to handle both impl-shape and spec-shape.
+  // Diagnostic helper accepts both binding forms.
+  const isImplShape = claims._implShape !== undefined;
+  if (isImplShape) {
+    const impl = claims._implShape as {
+      requestOrganizationId?: string;
+      requestCrmSubject?: string;
+    };
+    if (impl.requestOrganizationId !== opts.organizationId) {
+      return { ok: false, layer: 'binding', reason: 'organizationId binding mismatch' };
+    }
+    if (impl.requestCrmSubject !== opts.crmSubject) {
+      return { ok: false, layer: 'binding', reason: 'crmSubject binding mismatch' };
+    }
+    if (claims.request.method !== opts.method) {
+      return { ok: false, layer: 'binding', reason: 'method binding mismatch' };
+    }
+    if (claims.request.path !== opts.path) {
+      return { ok: false, layer: 'binding', reason: 'path binding mismatch' };
+    }
+    if (claims.request.bodySha256 !== opts.bodySha256) {
+      return { ok: false, layer: 'binding', reason: 'bodySha256 binding mismatch' };
+    }
+  } else {
+    if (claims.binding.organizationId !== opts.organizationId) {
+      return { ok: false, layer: 'binding', reason: 'organizationId binding mismatch' };
+    }
+    if (claims.binding.crmSubject !== opts.crmSubject) {
+      return { ok: false, layer: 'binding', reason: 'crmSubject binding mismatch' };
+    }
+    if (claims.request.method !== opts.method) {
+      return { ok: false, layer: 'binding', reason: 'method binding mismatch' };
+    }
+    if (claims.request.path !== opts.path) {
+      return { ok: false, layer: 'binding', reason: 'path binding mismatch' };
+    }
+    if (claims.request.bodySha256 !== opts.bodySha256) {
+      return { ok: false, layer: 'binding', reason: 'bodySha256 binding mismatch' };
+    }
+  }
+
+  const actorRes = actorForOperation(opts.operation);
+  if (!actorRes.ok) return { ok: false, layer: 'actor', reason: actorRes.reason };
+
+  const claimsHasQueryActor = claims.actor !== undefined;
+  if (opts.query && !claimsHasQueryActor) {
+    return { ok: false, layer: 'query_actor', reason: 'query surface requires DELEGATED_USER actor' };
+  }
+  if (!opts.query && claimsHasQueryActor) {
+    return {
+      ok: false,
+      layer: 'query_actor',
+      reason: 'issuance/exchange/cleanup do not accept a query actor',
+    };
+  }
+
+  return {
+    ok: true,
+    layer: 'diagnostic' as const,
+    header: headerParsed.data as unknown as { alg: string; typ: string; kid: string },
     claims,
     requiredActor: actorRes.required,
   };
