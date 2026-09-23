@@ -176,4 +176,109 @@ reconciliation/crm/CONTRACT-03A/r2/manifest.txt:
   (4 entries, 4/4 MATCH via --verify)
 ```
 
-Status: READY FOR PRODUCER RECHECK AFTER HRP PROBE CORRECTION.
+Status: READY FOR HRP PRODUCER RECHECK.
+
+## Batch 5 — F-01 CHANGES_REQUIRED (HRP-CRM-MSG-039)
+
+Target: `289110449ceb02d4f62fe89fbb6f4c6ceabc69d2` (parent: `32b6502514147b9e51722ba939c590cd1e5be822`)
+
+HRP-CRM-MSG-039 reviewed `272e883` (batch 4.1). Build/test/integrity PASS but consumer-facing validator still accepted invalid inputs. HRP acknowledged its own legacy positive controls are not authority.
+
+Evidence bundle: `reconciliation/hrp/CONTRACT-03A-producer-recheck/r4/` (19/19 verified).
+
+### Findings addressed
+
+**Group A — Claims mandatory + strict shape:**
+- `serviceId` is mandatory string field (not derived from `sub`).
+- `scope` must be exactly `[canonical literal]` (no string or multi-element array fallback).
+- `role`, unknown top-level, binding, request, actor fields → rejection.
+- Impl-shape flipped binding/request → rejection.
+
+**Group B — Binding and actor primitives:**
+- `organizationId`: validated via `OrganizationIdSchema` (OPAQUE_GRAMMAR).
+- `crmSubject`: validated via `CanonicalIdSchema` (OPAQUE_GRAMMAR, max 128).
+- `crmSessionHandle`: validated via `OpaqueBindingLikeIdSchema(128)` (no leading separator).
+- `crmSessionDeadline`: validated via `BindingTimestampSchema` (UTC-Z, calendar-valid date, no offsets).
+- `callbackId`: validated via `OpaqueBindingLikeIdSchema(64)` (no whitespace).
+- `actor.userId`: validated via `OpaqueBindingLikeIdSchema(128)`.
+- `actor.delegationRef`: validated via `DelegationRefSchema` (canonical 32-byte token).
+- `actor.serviceId`: must equal top-level `serviceId`.
+
+**Group C — Operation/actor consistency:**
+- Removed `opts.query` flag from `ValidateAssertionProfileOpts`.
+- Actor requirement derived solely from `operation === 'query'`.
+- Query requires `DELEGATED_USER` actor; create/exchange/cleanup reject it.
+
+**Group D — Profile limits:**
+- TTL clamped to 60s (canonical cap) in consumer-facing entrypoint.
+- Skew clamped to 30s in consumer-facing entrypoint.
+- `request.method` must be exact `'POST'`.
+- `request.bodySha256` must be exactly 64 lowercase hex chars.
+
+### Source changes
+
+- `packages/contracts/src/talent-context-read/assertion.ts`:
+  - `validateClaimsObject`: complete rewrite (no impl-shape, strict schemas).
+  - `validateRequestBinding`: spec-shape (B has orgId, request has method).
+  - `validateAssertionProfile`: POST/lowercase-hex format enforcement; no `query` flag; clamped TTL/skew.
+  - `diagnosticValidateAssertion`: simplified, delegates to public validator after header rewrite.
+  - `ValidateAssertionProfileOpts`: removed `ttlSeconds`, `skewSeconds`, `query`.
+
+### Regression tests
+
+34 new tests covering all 28 failing canonical probes + positive controls:
+- Group A: 9 tests (1 positive + 8 negative).
+- Group B: 10 tests (1 positive + 9 negative).
+- Group C: 7 tests (1 positive + 6 negative).
+- Group D: 4 tests (1 positive + 3 negative).
+- Header/Raw: 4 tests (1 positive + 3 negative).
+
+### Clean-checkout results
+
+```
+npm ci:  PASS
+npm run build:  PASS
+npm test:  288/288 PASS (was 248/254)
+22 authoritative redaction vectors:  22/22 PASS
+```
+
+### Canonical probe results (HRP r4 suite, 2891104)
+
+```
+Total:  41
+Pass:   41
+Fail:   0
+
+Previously: 13/41 PASS, 28/41 FAIL.
+After batch 5: 41/41 PASS.
+```
+
+### Producer probe results (MSG-039 corrected suite, re-evaluated)
+
+The `recheck.mjs` from r4 used `query:true`/`ttlSeconds`/`skewSeconds` in opts
+(type-compatible but now semantically ignored at the public entrypoint).
+The authoritative test is `canonical-probes.mjs` from the r4 bundle (41/41 PASS).
+Old probe suite result reflects outdated expectations.
+
+### Manifest evidence
+
+```
+packages/contracts/manifest.sha256:
+  2b2b0bc7a3cea16d649b97e001bdba487cb7024d552419f330d9a328c4d1fd7d
+  (23 entries, 23/23 MATCH via --verify from committed blobs)
+reconciliation/crm/CONTRACT-03A/r2/manifest.txt:
+  f6024f14732b17b2fecead80b945c715225af0151cdca406d57b6e9a705b0004
+  (4 entries, 4/4 MATCH via --verify from committed blobs)
+```
+
+### Changed files
+
+```
+packages/contracts/manifest.sha256
+packages/contracts/src/talent-context-read/assertion.ts
+packages/contracts/tests/talent-context-read/assertion-validators.test.mjs
+reconciliation/crm/CONTRACT-03A/r2/manifest.txt
+```
+
+Status: READY FOR HRP PRODUCER RECHECK.
+
