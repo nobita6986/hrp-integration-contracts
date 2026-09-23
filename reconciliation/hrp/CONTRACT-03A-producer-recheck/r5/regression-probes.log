@@ -1,0 +1,66 @@
+COMMAND=C:\Program Files\nodejs\node.exe C:\CodeApp\hrp-integration-contracts-worktrees\hrp-producer-recheck-2eb6bd1\reconciliation\hrp\CONTRACT-03A-producer-recheck\r5\regression-probes.mjs
+CWD=C:/CodeApp/hrp-integration-contracts-worktrees/hrp-producer-recheck-2eb6bd1
+PASS I01 package manifest hash: "2b2b0bc7a3cea16d649b97e001bdba487cb7024d552419f330d9a328c4d1fd7d"
+PASS I01 handoff manifest hash: "d5dc33552646ca79edf5f7b2c1600e2afd4be37eda9148366a62ce11063176f9"
+PASS I01 package manifest 23/23 raw blobs match: true
+PASS I01 handoff manifest 4/4 raw blobs match: true
+PASS I01 committed-blob verifier exits zero: 0
+PASS F02 create parses: true
+PASS F02 exchange excludes path pendingRequestId: true
+PASS F02 exchange rejects body pendingRequestId: false
+PASS F02 cancel excludes path pendingRequestId: true
+PASS F02 revoke carries delegationRef: true
+PASS F02 code-only delegation error accepted: true
+PASS F02 delegation error rejects query messageKey: false
+PASS F02 exchange result requires effectiveHrpUserId: false
+PASS F03 PendingRequestIdSchema accepts canonical 32-byte token: true
+PASS F03 PendingRequestIdSchema rejects non-canonical pad bits: false
+PASS F03 HandoffProofSchema accepts canonical 32-byte token: true
+PASS F03 HandoffProofSchema rejects non-canonical pad bits: false
+PASS F03 ReceiptSchema accepts canonical 32-byte token: true
+PASS F03 ReceiptSchema rejects non-canonical pad bits: false
+PASS F03 DelegationRefSchema accepts canonical 32-byte token: true
+PASS F03 DelegationRefSchema rejects non-canonical pad bits: false
+PASS F03 CallbackStateSchema accepts canonical 32-byte token: true
+PASS F03 CallbackStateSchema rejects non-canonical pad bits: false
+PASS F03 JtiSchema accepts canonical 32-byte token: true
+PASS F03 JtiSchema rejects non-canonical pad bits: false
+PASS F03 CsrfTokenSchema accepts canonical 32-byte token: true
+PASS F03 CsrfTokenSchema rejects non-canonical pad bits: false
+PASS F04 create valid binding: true
+PASS F04 create rejects whitespace callbackId: false
+PASS F04 create rejects offset deadline: false
+PASS F04 exchange valid binding: true
+PASS F04 exchange rejects whitespace callbackId: false
+PASS F04 exchange rejects offset deadline: false
+PASS F04 cancel valid binding: true
+PASS F04 cancel rejects whitespace callbackId: false
+PASS F04 cancel rejects offset deadline: false
+PASS F04 revoke valid binding: true
+PASS F04 revoke rejects whitespace callbackId: false
+PASS F04 revoke rejects offset deadline: false
+PASS F05 Arabic initial: "ع••"
+PASS F05 Hangul initial: "홍••"
+PASS F05 supplementary-plane initial: "𐐀••"
+PASS F05 unsafe input omitted "﻿Alpha": false
+PASS F05 unsafe input omitted "A​B": false
+PASS F05 unsafe input omitted "́Alpha": false
+PASS F05 unsafe input omitted "-Alpha": false
+PASS F05 unsafe input omitted "'Alpha": false
+PASS F05 unsafe input omitted "Alpha-": false
+PASS F05 unsafe input omitted "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA: false
+PASS F05 result schema enforces 512-byte bound: false
+PASS F05 missing Segmenter fails closed: false
+PASS F06 query parses: true
+PASS F06 query rejects laborProfileVersion: false
+PASS F06 result parses: true
+PASS F06 result rejects snapshotVersion: false
+PASS F06 seven-code parser accepts NOT_FOUND triple: "QUERY_ERROR"
+PASS F06 query parser rejects command-only error: "PROTOCOL_ERROR"
+PASS F06 authoritative vector count: 22
+PASS F06 fixture preserves exact 22 vectors: true
+PASS F06 all authoritative vector outcomes match: true
+{"total":60,"pass":60,"fail":0}
+
+
+EXIT_CODE=0

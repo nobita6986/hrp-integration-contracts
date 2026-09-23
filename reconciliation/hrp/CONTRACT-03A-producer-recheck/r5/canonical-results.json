@@ -1,0 +1,737 @@
+{
+  "reviewedSha": "2eb6bd155399d5e0490c5a2b0c5037a57dc36bc3",
+  "observedAt": "2026-09-23T11:03:47.869Z",
+  "node": "v24.19.0",
+  "summary": {
+    "total": 41,
+    "pass": 41,
+    "fail": 0
+  },
+  "records": [
+    {
+      "id": "CONTROL canonical query",
+      "expected": true,
+      "actual": true,
+      "pass": true,
+      "result": {
+        "ok": true,
+        "layer": "profile",
+        "header": {
+          "alg": "RS256",
+          "typ": "hrp-crm-service+jwt",
+          "kid": "key-1"
+        },
+        "claims": {
+          "iss": "urn:test:issuer",
+          "aud": "urn:test:query",
+          "sub": "svc-test",
+          "serviceId": "svc-test",
+          "jti": "jt___________________________________________8",
+          "iat": 100,
+          "exp": 130,
+          "scope": [
+            "talent-context:read:identitySummary"
+          ],
+          "binding": {
+            "organizationId": "org-test",
+            "crmSubject": "crm-test",
+            "crmSessionHandle": "session-test",
+            "crmSessionDeadline": "2026-09-23T10:00:00Z",
+            "callbackId": "callback-test"
+          },
+          "request": {
+            "method": "POST",
+            "path": "/api/integrations/crm/talent-context/query",
+            "bodySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          },
+          "actor": {
+            "kind": "DELEGATED_USER",
+            "serviceId": "svc-test",
+            "userId": "hrp-test",
+            "delegationRef": "dg___________________________________________8"
+          }
+        },
+        "requiredActor": {
+          "operation": "query",
+          "requireEffectiveHrpUser": false,
+          "requireActiveCrmSession": true
+        }
+      }
+    },
+    {
+      "id": "CONTROL canonical create",
+      "expected": true,
+      "actual": true,
+      "pass": true,
+      "result": {
+        "ok": true,
+        "layer": "profile",
+        "header": {
+          "alg": "RS256",
+          "typ": "hrp-crm-service+jwt",
+          "kid": "key-1"
+        },
+        "claims": {
+          "iss": "urn:test:issuer",
+          "aud": "urn:test:query",
+          "sub": "svc-test",
+          "serviceId": "svc-test",
+          "jti": "jt___________________________________________8",
+          "iat": 100,
+          "exp": 130,
+          "scope": [
+            "talent-context:read:identitySummary"
+          ],
+          "binding": {
+            "organizationId": "org-test",
+            "crmSubject": "crm-test",
+            "crmSessionHandle": "session-test",
+            "crmSessionDeadline": "2026-09-23T10:00:00Z",
+            "callbackId": "callback-test"
+          },
+          "request": {
+            "method": "POST",
+            "path": "/api/integrations/crm/talent-context/query",
+            "bodySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "requiredActor": {
+          "operation": "create",
+          "requireEffectiveHrpUser": false,
+          "requireActiveCrmSession": true
+        }
+      }
+    },
+    {
+      "id": "CONTROL canonical exchange",
+      "expected": true,
+      "actual": true,
+      "pass": true,
+      "result": {
+        "ok": true,
+        "layer": "profile",
+        "header": {
+          "alg": "RS256",
+          "typ": "hrp-crm-service+jwt",
+          "kid": "key-1"
+        },
+        "claims": {
+          "iss": "urn:test:issuer",
+          "aud": "urn:test:query",
+          "sub": "svc-test",
+          "serviceId": "svc-test",
+          "jti": "jt___________________________________________8",
+          "iat": 100,
+          "exp": 130,
+          "scope": [
+            "talent-context:read:identitySummary"
+          ],
+          "binding": {
+            "organizationId": "org-test",
+            "crmSubject": "crm-test",
+            "crmSessionHandle": "session-test",
+            "crmSessionDeadline": "2026-09-23T10:00:00Z",
+            "callbackId": "callback-test"
+          },
+          "request": {
+            "method": "POST",
+            "path": "/api/integrations/crm/talent-context/query",
+            "bodySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "requiredActor": {
+          "operation": "exchange",
+          "requireEffectiveHrpUser": true,
+          "requireActiveCrmSession": true
+        }
+      }
+    },
+    {
+      "id": "CONTROL canonical cleanup",
+      "expected": true,
+      "actual": true,
+      "pass": true,
+      "result": {
+        "ok": true,
+        "layer": "profile",
+        "header": {
+          "alg": "RS256",
+          "typ": "hrp-crm-service+jwt",
+          "kid": "key-1"
+        },
+        "claims": {
+          "iss": "urn:test:issuer",
+          "aud": "urn:test:query",
+          "sub": "svc-test",
+          "serviceId": "svc-test",
+          "jti": "jt___________________________________________8",
+          "iat": 100,
+          "exp": 130,
+          "scope": [
+            "talent-context:read:identitySummary"
+          ],
+          "binding": {
+            "organizationId": "org-test",
+            "crmSubject": "crm-test",
+            "crmSessionHandle": "session-test",
+            "crmSessionDeadline": "2026-09-23T10:00:00Z",
+            "callbackId": "callback-test"
+          },
+          "request": {
+            "method": "POST",
+            "path": "/api/integrations/crm/talent-context/query",
+            "bodySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "requiredActor": {
+          "operation": "cleanup",
+          "requireEffectiveHrpUser": false,
+          "requireActiveCrmSession": false
+        }
+      }
+    },
+    {
+      "id": "F01 strict generic JWT rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "header",
+        "reason": "protected header shape invalid",
+        "issues": [
+          {
+            "received": "JWT",
+            "code": "invalid_enum_value",
+            "options": [
+              "hrp-crm-service+jwt"
+            ],
+            "path": [
+              "typ"
+            ],
+            "message": "Invalid enum value. Expected 'hrp-crm-service+jwt', received 'JWT'"
+          }
+        ]
+      }
+    },
+    {
+      "id": "F01 raw escaped duplicate rejected through wire entrypoint",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "raw",
+        "reason": "duplicate top-level key: kid"
+      }
+    },
+    {
+      "id": "F01 raw nested duplicate rejected through wire entrypoint",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "raw",
+        "reason": "duplicate top-level key: x"
+      }
+    },
+    {
+      "id": "F01 wrong issuer rejected with valid canonical header",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "issuer",
+        "reason": "issuer mismatch"
+      }
+    },
+    {
+      "id": "F01 nbf rejected with valid canonical header",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "nbf not accepted"
+      }
+    },
+    {
+      "id": "F01 organizationIdDigest rejected with valid canonical header",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "organizationIdDigest not accepted"
+      }
+    },
+    {
+      "id": "F01 future iat beyond skew rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "ttl",
+        "reason": "iat in the future"
+      }
+    },
+    {
+      "id": "F01 exp plus skew boundary rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "ttl",
+        "reason": "expired at verifierNow"
+      }
+    },
+    {
+      "id": "F01 wrong body hash rejected with valid canonical header",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "binding",
+        "reason": "bodySha256 binding mismatch"
+      }
+    },
+    {
+      "id": "F01-A missing serviceId rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "serviceId required"
+      }
+    },
+    {
+      "id": "F01-A numeric serviceId rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "serviceId required"
+      }
+    },
+    {
+      "id": "F01-A string scope rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "scope must be a single-element array of the canonical literal"
+      }
+    },
+    {
+      "id": "F01-A unknown role claim rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "role not accepted"
+      }
+    },
+    {
+      "id": "F01-A unknown binding field rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "binding.unknown field: extra"
+      }
+    },
+    {
+      "id": "F01-A unknown request field rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "request.unknown field: extra"
+      }
+    },
+    {
+      "id": "F01-A unknown actor field rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "actor.unknown field: extra"
+      }
+    },
+    {
+      "id": "F01-A legacy flipped binding request rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "binding.organizationId invalid",
+        "issues": [
+          {
+            "code": "invalid_type",
+            "expected": "string",
+            "received": "undefined",
+            "path": [],
+            "message": "Required"
+          }
+        ]
+      }
+    },
+    {
+      "id": "F01-B invalid callbackId grammar rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "binding.callbackId invalid",
+        "issues": [
+          {
+            "validation": "regex",
+            "code": "invalid_string",
+            "message": "opaque id grammar",
+            "path": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "F01-B callbackId overlimit rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "binding.callbackId invalid",
+        "issues": [
+          {
+            "code": "too_big",
+            "maximum": 64,
+            "type": "string",
+            "inclusive": true,
+            "exact": false,
+            "message": "String must contain at most 64 character(s)",
+            "path": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "F01-B empty crmSessionHandle rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "binding.crmSessionHandle invalid",
+        "issues": [
+          {
+            "code": "too_small",
+            "minimum": 1,
+            "type": "string",
+            "inclusive": true,
+            "exact": false,
+            "message": "String must contain at least 1 character(s)",
+            "path": []
+          },
+          {
+            "validation": "regex",
+            "code": "invalid_string",
+            "message": "opaque id grammar",
+            "path": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "F01-B invalid crmSessionHandle grammar rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "binding.crmSessionHandle invalid",
+        "issues": [
+          {
+            "validation": "regex",
+            "code": "invalid_string",
+            "message": "opaque id grammar",
+            "path": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "F01-B crmSessionHandle overlimit rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "binding.crmSessionHandle invalid",
+        "issues": [
+          {
+            "code": "too_big",
+            "maximum": 128,
+            "type": "string",
+            "inclusive": true,
+            "exact": false,
+            "message": "String must contain at most 128 character(s)",
+            "path": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "F01-B impossible date rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "binding.crmSessionDeadline invalid",
+        "issues": [
+          {
+            "code": "custom",
+            "message": "binding timestamp is not a real Gregorian date",
+            "path": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "F01-B offset timestamp rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "binding.crmSessionDeadline invalid",
+        "issues": [
+          {
+            "code": "custom",
+            "message": "binding timestamp must be RFC3339 UTC Z (e.g. 2026-09-22T10:00:00.000Z)",
+            "path": []
+          },
+          {
+            "code": "custom",
+            "message": "binding timestamp is not a real Gregorian date",
+            "path": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "F01-B invalid actor userId grammar rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "actor.userId invalid",
+        "issues": [
+          {
+            "validation": "regex",
+            "code": "invalid_string",
+            "message": "opaque id grammar",
+            "path": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "F01-B actor userId overlimit rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "actor.userId invalid",
+        "issues": [
+          {
+            "code": "too_big",
+            "maximum": 128,
+            "type": "string",
+            "inclusive": true,
+            "exact": false,
+            "message": "String must contain at most 128 character(s)",
+            "path": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "F01-B invalid actor delegation token rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "actor.delegationRef invalid",
+        "issues": [
+          {
+            "code": "too_small",
+            "minimum": 46,
+            "type": "string",
+            "inclusive": true,
+            "exact": false,
+            "message": "String must contain at least 46 character(s)",
+            "path": []
+          },
+          {
+            "code": "custom",
+            "message": "must start with dg_ and have 43 base64url chars",
+            "path": []
+          },
+          {
+            "code": "custom",
+            "message": "must be canonical base64url of exactly 32 bytes",
+            "path": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "F01-C actor service mismatch rejected",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "claims",
+        "reason": "actor.serviceId must match serviceId"
+      }
+    },
+    {
+      "id": "F01-C query operation with query false cannot drop actor",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "query_actor",
+        "reason": "query surface requires DELEGATED_USER actor"
+      }
+    },
+    {
+      "id": "F01-C query operation with omitted flag cannot drop actor",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "query_actor",
+        "reason": "query surface requires DELEGATED_USER actor"
+      }
+    },
+    {
+      "id": "F01-C create operation cannot accept actor via query flag",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "query_actor",
+        "reason": "create/exchange/cleanup do not accept a query actor"
+      }
+    },
+    {
+      "id": "F01-C exchange operation cannot accept actor via query flag",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "query_actor",
+        "reason": "create/exchange/cleanup do not accept a query actor"
+      }
+    },
+    {
+      "id": "F01-C cleanup operation cannot accept actor via query flag",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "query_actor",
+        "reason": "create/exchange/cleanup do not accept a query actor"
+      }
+    },
+    {
+      "id": "F01-D TTL override cannot relax 60 second cap",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "ttl",
+        "reason": "TTL exceeds cap"
+      }
+    },
+    {
+      "id": "F01-D skew override cannot relax 30 second cap",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "ttl",
+        "reason": "expired at verifierNow"
+      }
+    },
+    {
+      "id": "F01-D method profile remains POST with matching context",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "binding",
+        "reason": "request.method must be POST"
+      }
+    },
+    {
+      "id": "F01-D bodySha256 remains lower hex with matching context",
+      "expected": false,
+      "actual": false,
+      "pass": true,
+      "result": {
+        "ok": false,
+        "layer": "binding",
+        "reason": "request.bodySha256 must be 64 lowercase hex chars"
+      }
+    }
+  ]
+}

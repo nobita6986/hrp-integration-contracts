@@ -1,0 +1,9 @@
+COMMAND=C:\WINDOWS\system32\cmd.exe /d /s /c npm run build
+CWD=C:\CodeApp\hrp-integration-contracts-worktrees\hrp-producer-recheck-2eb6bd1\packages\contracts
+
+> @hrp-integration-contracts/talent-context-read-dev@0.0.0-dev.0 build
+> tsc -p tsconfig.json
+
+
+
+EXIT_CODE=0

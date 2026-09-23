@@ -1,0 +1,47 @@
+COMMAND=C:\Program Files\nodejs\node.exe C:\CodeApp\hrp-integration-contracts-worktrees\hrp-producer-recheck-2eb6bd1\reconciliation\hrp\CONTRACT-03A-producer-recheck\r5\canonical-probes.mjs
+CWD=C:/CodeApp/hrp-integration-contracts-worktrees/hrp-producer-recheck-2eb6bd1
+PASS CONTROL canonical query: {"expected":true,"actual":true,"layer":"profile"}
+PASS CONTROL canonical create: {"expected":true,"actual":true,"layer":"profile"}
+PASS CONTROL canonical exchange: {"expected":true,"actual":true,"layer":"profile"}
+PASS CONTROL canonical cleanup: {"expected":true,"actual":true,"layer":"profile"}
+PASS F01 strict generic JWT rejected: {"expected":false,"actual":false,"layer":"header","reason":"protected header shape invalid"}
+PASS F01 raw escaped duplicate rejected through wire entrypoint: {"expected":false,"actual":false,"layer":"raw","reason":"duplicate top-level key: kid"}
+PASS F01 raw nested duplicate rejected through wire entrypoint: {"expected":false,"actual":false,"layer":"raw","reason":"duplicate top-level key: x"}
+PASS F01 wrong issuer rejected with valid canonical header: {"expected":false,"actual":false,"layer":"issuer","reason":"issuer mismatch"}
+PASS F01 nbf rejected with valid canonical header: {"expected":false,"actual":false,"layer":"claims","reason":"nbf not accepted"}
+PASS F01 organizationIdDigest rejected with valid canonical header: {"expected":false,"actual":false,"layer":"claims","reason":"organizationIdDigest not accepted"}
+PASS F01 future iat beyond skew rejected: {"expected":false,"actual":false,"layer":"ttl","reason":"iat in the future"}
+PASS F01 exp plus skew boundary rejected: {"expected":false,"actual":false,"layer":"ttl","reason":"expired at verifierNow"}
+PASS F01 wrong body hash rejected with valid canonical header: {"expected":false,"actual":false,"layer":"binding","reason":"bodySha256 binding mismatch"}
+PASS F01-A missing serviceId rejected: {"expected":false,"actual":false,"layer":"claims","reason":"serviceId required"}
+PASS F01-A numeric serviceId rejected: {"expected":false,"actual":false,"layer":"claims","reason":"serviceId required"}
+PASS F01-A string scope rejected: {"expected":false,"actual":false,"layer":"claims","reason":"scope must be a single-element array of the canonical literal"}
+PASS F01-A unknown role claim rejected: {"expected":false,"actual":false,"layer":"claims","reason":"role not accepted"}
+PASS F01-A unknown binding field rejected: {"expected":false,"actual":false,"layer":"claims","reason":"binding.unknown field: extra"}
+PASS F01-A unknown request field rejected: {"expected":false,"actual":false,"layer":"claims","reason":"request.unknown field: extra"}
+PASS F01-A unknown actor field rejected: {"expected":false,"actual":false,"layer":"claims","reason":"actor.unknown field: extra"}
+PASS F01-A legacy flipped binding request rejected: {"expected":false,"actual":false,"layer":"claims","reason":"binding.organizationId invalid"}
+PASS F01-B invalid callbackId grammar rejected: {"expected":false,"actual":false,"layer":"claims","reason":"binding.callbackId invalid"}
+PASS F01-B callbackId overlimit rejected: {"expected":false,"actual":false,"layer":"claims","reason":"binding.callbackId invalid"}
+PASS F01-B empty crmSessionHandle rejected: {"expected":false,"actual":false,"layer":"claims","reason":"binding.crmSessionHandle invalid"}
+PASS F01-B invalid crmSessionHandle grammar rejected: {"expected":false,"actual":false,"layer":"claims","reason":"binding.crmSessionHandle invalid"}
+PASS F01-B crmSessionHandle overlimit rejected: {"expected":false,"actual":false,"layer":"claims","reason":"binding.crmSessionHandle invalid"}
+PASS F01-B impossible date rejected: {"expected":false,"actual":false,"layer":"claims","reason":"binding.crmSessionDeadline invalid"}
+PASS F01-B offset timestamp rejected: {"expected":false,"actual":false,"layer":"claims","reason":"binding.crmSessionDeadline invalid"}
+PASS F01-B invalid actor userId grammar rejected: {"expected":false,"actual":false,"layer":"claims","reason":"actor.userId invalid"}
+PASS F01-B actor userId overlimit rejected: {"expected":false,"actual":false,"layer":"claims","reason":"actor.userId invalid"}
+PASS F01-B invalid actor delegation token rejected: {"expected":false,"actual":false,"layer":"claims","reason":"actor.delegationRef invalid"}
+PASS F01-C actor service mismatch rejected: {"expected":false,"actual":false,"layer":"claims","reason":"actor.serviceId must match serviceId"}
+PASS F01-C query operation with query false cannot drop actor: {"expected":false,"actual":false,"layer":"query_actor","reason":"query surface requires DELEGATED_USER actor"}
+PASS F01-C query operation with omitted flag cannot drop actor: {"expected":false,"actual":false,"layer":"query_actor","reason":"query surface requires DELEGATED_USER actor"}
+PASS F01-C create operation cannot accept actor via query flag: {"expected":false,"actual":false,"layer":"query_actor","reason":"create/exchange/cleanup do not accept a query actor"}
+PASS F01-C exchange operation cannot accept actor via query flag: {"expected":false,"actual":false,"layer":"query_actor","reason":"create/exchange/cleanup do not accept a query actor"}
+PASS F01-C cleanup operation cannot accept actor via query flag: {"expected":false,"actual":false,"layer":"query_actor","reason":"create/exchange/cleanup do not accept a query actor"}
+PASS F01-D TTL override cannot relax 60 second cap: {"expected":false,"actual":false,"layer":"ttl","reason":"TTL exceeds cap"}
+PASS F01-D skew override cannot relax 30 second cap: {"expected":false,"actual":false,"layer":"ttl","reason":"expired at verifierNow"}
+PASS F01-D method profile remains POST with matching context: {"expected":false,"actual":false,"layer":"binding","reason":"request.method must be POST"}
+PASS F01-D bodySha256 remains lower hex with matching context: {"expected":false,"actual":false,"layer":"binding","reason":"request.bodySha256 must be 64 lowercase hex chars"}
+{"total":41,"pass":41,"fail":0}
+
+
+EXIT_CODE=0

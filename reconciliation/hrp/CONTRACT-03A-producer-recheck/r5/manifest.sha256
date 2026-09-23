@@ -1,0 +1,20 @@
+# Raw SHA-256 of committed data files; manifest does not hash itself.
+# Format: <64 lowercase hex><two spaces><repository-relative path>
+
+255e28a87c6d1cef039029d1bdbec5eac0b1f25f0e1607544642e7b714eaf401  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/2026-09-23_producer-contract03a-report.md
+aba2e92371769d693286420f5a1615e5f118d069f5cf709cc5aa6bc63ec56185  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/build.log
+4b036dbe3879e63475e19e379dabe0fc4dfc5c57ec822c6ccc9dab8a303f1a6b  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/canonical-probes.log
+13f0c92e506e8a0d32939e673f36d06b5aeeaf1f15ebb9077b3f7eaba3dfa55c  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/canonical-probes.mjs
+f0fa3474827d892ecd50d2dc6a7f45b89783219cc5878c1f9babfd86b0e32069  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/canonical-results.json
+107e71a5e576ef5f82d77597b62f31085088fb03e0f836804ca944a8cfb214b3  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/capture.mjs
+6a4391cc3f93a14713c12291bd057e6a46e907b426296e56544487c8e7d80531  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/environment.txt
+aaf772e811020f027548328192f94116660527e94188ce48a5a8dee13cc8257d  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/generator-verify.log
+67c7d360ba79a9ff5b648fc4fb46f96da6c8cc0c3f0ac0563d6cdc2491b38f6a  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/manifest-verify.log
+6e771bd11b6d4996b012030e24fa1ce81a654e84ef22f83f869a35dfef167169  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/npm-ci.log
+e945d19b860e1994c2198aacac455f9b83b55a99b550c9edb6216beeed06c14d  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/README.md
+d2853a777aaa07b3047aa9eb06be1cab6aafb09c6ff3b929395fc830854ec8a9  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/regression-probes.log
+03c9535ef1e125140a16b8bee2640c50594884ebb594fb38fb2e3270d1498d6f  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/regression-probes.mjs
+e54af0159a8f7edaaca1a59927a26cedf479660fe2599fc8c7db23f9ab532390  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/regression-results.json
+2317144bc181642510ed462f12f6c5d6938e8451a0b34dbcf4991372aa534e43  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/scope.md
+4b694c57937e2f10c854299531827fe79afd39ef5b96f2baa79448b854c3164b  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/test.log
+327e738c24eebdb7464d4336ebd0fc4c9ee579fc43a39d432fcbe5e9275e945f  reconciliation/hrp/CONTRACT-03A-producer-recheck/r5/verify-bundle.mjs

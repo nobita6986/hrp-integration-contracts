@@ -1,0 +1,12 @@
+COMMAND=C:\WINDOWS\system32\cmd.exe /d /s /c npm ci
+CWD=C:\CodeApp\hrp-integration-contracts-worktrees\hrp-producer-recheck-2eb6bd1\packages\contracts
+
+added 2 packages, and audited 3 packages in 1s
+
+1 package is looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+
+EXIT_CODE=0

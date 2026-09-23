@@ -1,0 +1,372 @@
+{
+  "reviewedSha": "2eb6bd155399d5e0490c5a2b0c5037a57dc36bc3",
+  "observedAt": "2026-09-23T11:03:51.086Z",
+  "node": "v24.19.0",
+  "summary": {
+    "total": 60,
+    "pass": 60,
+    "fail": 0
+  },
+  "records": [
+    {
+      "id": "I01 package manifest hash",
+      "expected": "2b2b0bc7a3cea16d649b97e001bdba487cb7024d552419f330d9a328c4d1fd7d",
+      "actual": "2b2b0bc7a3cea16d649b97e001bdba487cb7024d552419f330d9a328c4d1fd7d",
+      "pass": true
+    },
+    {
+      "id": "I01 handoff manifest hash",
+      "expected": "d5dc33552646ca79edf5f7b2c1600e2afd4be37eda9148366a62ce11063176f9",
+      "actual": "d5dc33552646ca79edf5f7b2c1600e2afd4be37eda9148366a62ce11063176f9",
+      "pass": true
+    },
+    {
+      "id": "I01 package manifest 23/23 raw blobs match",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "I01 handoff manifest 4/4 raw blobs match",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "I01 committed-blob verifier exits zero",
+      "expected": 0,
+      "actual": 0,
+      "pass": true
+    },
+    {
+      "id": "F02 create parses",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 exchange excludes path pendingRequestId",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 exchange rejects body pendingRequestId",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F02 cancel excludes path pendingRequestId",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 revoke carries delegationRef",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 code-only delegation error accepted",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F02 delegation error rejects query messageKey",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F02 exchange result requires effectiveHrpUserId",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema accepts canonical 32-byte token",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 PendingRequestIdSchema rejects non-canonical pad bits",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema accepts canonical 32-byte token",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 HandoffProofSchema rejects non-canonical pad bits",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema accepts canonical 32-byte token",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 ReceiptSchema rejects non-canonical pad bits",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema accepts canonical 32-byte token",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 DelegationRefSchema rejects non-canonical pad bits",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema accepts canonical 32-byte token",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CallbackStateSchema rejects non-canonical pad bits",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema accepts canonical 32-byte token",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 JtiSchema rejects non-canonical pad bits",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema accepts canonical 32-byte token",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F03 CsrfTokenSchema rejects non-canonical pad bits",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 create valid binding",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 create rejects whitespace callbackId",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 create rejects offset deadline",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange valid binding",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange rejects whitespace callbackId",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 exchange rejects offset deadline",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel valid binding",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel rejects whitespace callbackId",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 cancel rejects offset deadline",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke valid binding",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke rejects whitespace callbackId",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F04 revoke rejects offset deadline",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 Arabic initial",
+      "expected": "ع••",
+      "actual": "ع••",
+      "pass": true
+    },
+    {
+      "id": "F05 Hangul initial",
+      "expected": "홍••",
+      "actual": "홍••",
+      "pass": true
+    },
+    {
+      "id": "F05 supplementary-plane initial",
+      "expected": "𐐀••",
+      "actual": "𐐀••",
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe input omitted \"﻿Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe input omitted \"A​B\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe input omitted \"́Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe input omitted \"-Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe input omitted \"'Alpha\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe input omitted \"Alpha-\"",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 unsafe input omitted \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 result schema enforces 512-byte bound",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F05 missing Segmenter fails closed",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F06 query parses",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F06 query rejects laborProfileVersion",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F06 result parses",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F06 result rejects snapshotVersion",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "id": "F06 seven-code parser accepts NOT_FOUND triple",
+      "expected": "QUERY_ERROR",
+      "actual": "QUERY_ERROR",
+      "pass": true
+    },
+    {
+      "id": "F06 query parser rejects command-only error",
+      "expected": "PROTOCOL_ERROR",
+      "actual": "PROTOCOL_ERROR",
+      "pass": true
+    },
+    {
+      "id": "F06 authoritative vector count",
+      "expected": 22,
+      "actual": 22,
+      "pass": true
+    },
+    {
+      "id": "F06 fixture preserves exact 22 vectors",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "id": "F06 all authoritative vector outcomes match",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    }
+  ]
+}

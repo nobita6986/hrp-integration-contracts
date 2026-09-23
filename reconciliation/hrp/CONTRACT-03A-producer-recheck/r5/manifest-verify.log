@@ -1,0 +1,12 @@
+COMMAND=C:\Program Files\nodejs\node.exe packages/contracts/scripts/generate-manifest.mjs --verify
+CWD=C:/CodeApp/hrp-integration-contracts-worktrees/hrp-producer-recheck-2eb6bd1
+=== --verify mode ===
+Verifying manifest entries against committed blobs at HEAD.
+
+packages/contracts/manifest.sha256: 23/23 MATCH, 0 FAIL
+reconciliation/crm/CONTRACT-03A/r2/manifest.txt: 4/4 MATCH, 0 FAIL
+
+=== VERIFY PASSED: all entries match ===
+
+
+EXIT_CODE=0
