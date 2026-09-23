@@ -122,3 +122,58 @@ validate() runs validateAssertionProfile with typ:JWT and impl-shape binding. Th
 To resolve the contradiction, the HRP probe script would need to use spec-shape binding (with binding={organizationId,...}) when checking F01 reject generic JWT typ. The probe as written cannot distinguish between impl-shape and spec-shape.
 
 Cannot modify HRP evidence per task instructions.
+
+---
+## Batch 4.1 notes (F-01 narrow correction)
+
+- Final correction commit: `272e883ef48c552054849905d7b75695b7ac4d8f`
+- Parent: `294f924042153ac54df62b71513acc84fef8e345`
+- Branch: `codex/contract03a-schema-conformance`
+
+### F-01 correction (T0 verdict on 294f924: CHANGES_REQUIRED F-01 only)
+
+1. `TYP_PROFILE_STRICT` narrowed to `['hrp-crm-service+jwt']` only — no 'JWT'.
+2. Impl-shape conditional (Layer 2b) removed from `validateAssertionProfile`.
+3. `validateAssertionFromWire`: new consumer-facing raw entrypoint — receives raw
+   protected-header bytes, runs framing/duplicate-key before `JSON.parse`, then
+   delegates to `validateAssertionProfile`.
+4. `diagnosticValidateAssertion`: separate diagnostics helper accepting 'JWT';
+   returns `layer:'diagnostic'` to clearly distinguish from EP-01 conformance.
+5. `AssertionProfileOk` union type updated for diagnostic layer.
+
+### Probe script contradiction resolved
+
+HRP-CRM-MSG-037 (producer-probe-correction) confirmed the probe contradiction
+was a script bug. The corrected expectations (MSG-037) reflect:
+
+- Generic typ "JWT" MUST reject via consumer-facing entrypoint.
+- Canonical typ "hrp-crm-service+jwt" MUST pass when other conditions are valid.
+- Legacy implementation-shaped control is DIAGNOSTIC_ONLY (excluded from conformance).
+
+### Producer probe results (MSG-037 corrected suite, 272e883)
+
+```
+npm ci/build/test: 254/254 PASS (clean checkout verified)
+22 authoritative redaction vectors: 22/22 PASS
+MSG-037 producer suite: 173/174 PASS
+  1 probe-script artifact: "F01 query accepted actor cannot be stripped/rejected
+  by claims schema" — probe uses implHeader (typ:'JWT') with query:true.
+  With strict EP-01 typ enforcement (batch 4.1), this correctly rejects at header
+  layer. The probe's expected:true reflects the old lenient behavior.
+  Not an implementation defect. HRP probe script needs the diagnostic annotation
+  on this probe.
+
+```
+
+### Manifest evidence
+
+```
+packages/contracts/manifest.sha256:
+  7c0e8d1a1956bbce95a53a12f652031ab7e46ab153be0b4cdceef25bc2d9a4c5
+  (23 entries, 23/23 MATCH via --verify)
+reconciliation/crm/CONTRACT-03A/r2/manifest.txt:
+  adff813d6cc72c932ca95d2c57f1606737c99fbd31f0734ae6f15467a8445209
+  (4 entries, 4/4 MATCH via --verify)
+```
+
+Status: READY FOR PRODUCER RECHECK AFTER HRP PROBE CORRECTION.
