@@ -1,0 +1,6 @@
+# Raw SHA-256 of committed data files; manifest does not hash itself.
+# Format: <64 lowercase hex><two spaces><repository-relative path>
+
+28bff62162fd575352e5e652679b5b6146bcfe7fd1e323dea5e192a3ea18b32f  reconciliation/hrp/CONTRACT-03B-packaging-compatibility-acceptance/r1/ACCEPTANCE-RECORD.md
+4581ec7f0fdf4926e2ded5ddcb0dea4ec8ebfe807068b8e2afd4a98002ae26d3  reconciliation/hrp/CONTRACT-03B-packaging-compatibility-acceptance/r1/README.md
+e19b15a1880b5a86783f40f1b3ce70d527d73bad00eecc08e03db0a4e940b994  reconciliation/hrp/CONTRACT-03B-packaging-compatibility-acceptance/r1/VERIFICATION.md
