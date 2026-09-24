@@ -8,14 +8,12 @@
 ## Tarball
 - Filename: hrp-engagement-contracts-0.0.0-r2-candidate.0.tgz
 - Total files: 79
-- Package size: 168.9 kB
-- Unpacked size: 1.2 MB
-- SHA-256: 7ecde0807c2760feed99717dc53bac0060c26dde37b6846557a5d799f34210be
-- npm shasum: a537bc2f34b7a910a74adf69f469ffca3948cde5
-- Integrity: sha512-AEuif1E1P6Wga[...]Ij/6vpmnJHj/A==
+- Package size: 169360 bytes (169.4 kB packed / 1.2 MB unpacked)
+- SHA-256: b1db1cb28aeab10bb85497661e1d976dc7370c9abb280db9a3aff16567732dfc
+- npm shasum: 4713b1ce639acdc070a9fa95f868bc08b99d0f9b
+- Integrity: sha512-+27AdjodOKTVc[...]I9ZkvEND06HFw==
 
 ## Full tarball file inventory (79 files)
-```
 package.json
 CHANGELOG.md
 README.md
@@ -95,22 +93,21 @@ dist/talent-context-read/query-types.js
 dist/talent-context-read/query-types.d.ts
 dist/talent-context-read/redaction.js
 dist/talent-context-read/redaction.d.ts
-```
 
 ## Breakdown
-- Root surface files (38): index.js, index.d.ts + 18 commands 뿯½ 2 + enums/envelopes/errors/primitives 뿯½ 2
-- Subpath surface files (18): 9 modules 뿯½ 2 (index, assertion, conformance, delegation, primitives, query-errors, query-parser, query-types, redaction)
-- Metadata: package.json, CHANGELOG.md, README.md
+- Root surface files (38): index.js, index.d.ts + 18 commands x 2 + enums/envelopes/errors/primitives x 2 = 38
+- Subpath surface files (18): 9 modules x 2 (index, assertion, conformance, delegation, primitives, query-errors, query-parser, query-types, redaction) = 18
+- Metadata (3): package.json, CHANGELOG.md, README.md
 
 ## Root vs subpath export counts (runtime)
 - Root: 379 named exports (matches baseline)
 - Subpath: 83 named exports (full new module surface)
 
-## No `src/`, `tests/`, `node_modules/`, or scripts in the tarball
-The `package.json` `files` array is restricted to:
+## No src/, tests/, node_modules/, or scripts in the tarball
+The package.json files array is restricted to:
 - dist (all compiled output)
 - README.md, CHANGELOG.md, LICENSE
 
 The tarball is clean for distribution. There is no risk of a consumer
-accidentally importing from `dist/commands/x` (no exports entry exposes
-that path); only `.` and `./talent-context-read/v1` are public surfaces.
+accidentally importing from dist/commands/x (no exports entry exposes
+that path); only . and ./talent-context-read/v1 are public surfaces.

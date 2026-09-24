@@ -1,41 +1,60 @@
 # CONTRACT-03B.1 r2 Evidence Index
 
-This directory contains complete evidence for the r2 additive packaging
-candidate, recorded for T1-A handoff and T0 verification.
+This directory contains the complete evidence bundle for the r2 additive
+packaging candidate. It is recorded for T1-A handoff and T0 verification.
 
 ## Branch
-`codex/contract03b-consumer-compatibility-r2`
+codex/contract03b1-r2
 
-## Source commits (recording in this order)
-- **P2** (packaging source — `packages/publish-candidate/**` + `packages/crm-frozen-root/**` + `packages/contracts/src/talent-context-read/**` + scripts)
-- **E2** (evidence bundle — this directory)
+## Commits (chronological)
+- P2  (packaging source): b7505568957217184b225d99312066097c518fdc
+- E2  (prior evidence bundle, now superseded): be733bd187a08804db175355dac049c7fd6e54cd
+- E3  (evidence closure, current): this commit
 
-## Build artifacts
-- `hrp-engagement-contracts-0.0.0-r2-candidate.0.tgz`
-- SHA-256: `7ecde0807c2760feed99717dc53bac0060c26dde37b6846557a5d799f34210be`
-- npm shasum: `a537bc2f34b7a910a74adf69f469ffca3948cde5`
+## Final tarball identity
+- Filename: hrp-engagement-contracts-0.0.0-r2-candidate.0.tgz
+- npm package name: @hrp-engagement/contracts
+- npm version: 0.0.0-r2-candidate.0
+- Size: 169360 bytes
 - File count: 79
-- Unpacked size: 1.2 MB
-- Built from: clean checkout of P2
+- SHA-256: b1db1cb28aeab10bb85497661e1d976dc7370c9abb280db9a3aff16567732dfc
+- npm shasum: 4713b1ce639acdc070a9fa95f868bc08b99d0f9b
+- Built from: clean checkout of P2 (commit b750556)
+- Reproducibility: T0 independently rebuilt twice from P2-compatible inputs;
+  both byte-identical to the values recorded above.
+
+## Tarball supersedes
+- Old r1 tarball SHA-256 (single-surface replacement): 7c394f74bfa16458bb67d414ff2373e27fb2fb934606a82b3f04e8127f0e87c0
+- r1 was rejected because it removed the frozen CRM root exports. r2 restores
+  the full CRM root and keeps the talent-context-read/v1 subpath additive.
 
 ## Files in this evidence directory
-| File | Purpose |
-|---|---|
-| `README.md` | This index |
-| `BASELINE-PROVENANCE.md` | CRM baseline SHA + per-file raw SHA-256 |
-| `FULL-PACKAGE-ASSEMBLY.md` | How candidate was built from CRM baseline + new module |
-| `ROOT-EXPORT-PARITY.md` | Root export name set: baseline === candidate |
-| `PACKAGE-INVENTORY.md` | Full tarball file inventory |
-| `TARBALL-EVIDENCE.md` | Tarball identity, SHA, signatures, reproducibility |
-| `PRELIMINARY-CRM-MATRIX.md` | 6-consumer scratch build outcome with candidate |
-| `AC-EVIDENCE.md` | Frozen contract tests + new module tests output |
-| `manifest.sha256` | Raw SHA-256 manifest of this evidence bundle |
-| `manifest.txt` | Raw SHA-256 manifest (canonical name) |
+- README.md                       — this index
+- BASELINE-PROVENANCE.md          — CRM baseline SHA + per-file raw SHA-256
+- FULL-PACKAGE-ASSEMBLY.md        — additive assembly mechanism
+- ROOT-EXPORT-PARITY.md           — baseline === candidate root export set
+- PACKAGE-INVENTORY.md            — full tarball file inventory (79 files)
+- TARBALL-EVIDENCE.md             — tarball identity, hash, reproducibility
+- PRELIMINARY-CRM-MATRIX.md       — 6-consumer scratch build outcome
+- AC-EVIDENCE.md                  — test counts and probes
+- manifest.sha256                 — raw SHA-256 manifest (with header)
+- manifest.txt                    — raw SHA-256 manifest (canonical body)
 
-## Manifest format (all `*.sha256` / `manifest.txt` in this dir)
+## Manifest format (all *.sha256 / manifest.txt in this dir)
 - Raw SHA-256, 64 lowercase hex
-- UTF-8, no BOM, LF
+- UTF-8 no BOM, LF line endings
 - Repo-relative paths
-- Read-only verify mode supported
-- No self-hash, no machine paths, no `node_modules`, no `dist`, no
-  tarball binary
+- Read-only verify supported via: node packages/publish-candidate/scripts/generate-manifest.mjs --verify
+- Excludes: manifest files themselves (no self-hash), node_modules/,
+  dist/, *.tgz, machine paths
+
+## Test count breakdown (precise)
+- Frozen CRM tests (from baseline 7264335):       423 tests
+- CONTRACT-03A tests (talent-context-read/v1):    288 tests
+- Generator / manifest tests (publish-candidate):    2 tests
+- Aggregate TAP total:                            713 tests
+- Aggregate TAP suites:                            47 suites
+  (the 47 suites are nested describes inside talent-context-read tests;
+  frozen CRM and generator tests run at the top level and contribute 0
+  suites to the TAP suite counter)
+- All 713/713 PASS, 0 FAIL.
