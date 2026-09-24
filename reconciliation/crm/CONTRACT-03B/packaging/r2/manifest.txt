@@ -1,0 +1,12 @@
+# Raw-File-SHA256: 64-hex SHA-256 of the file raw bytes.
+# Format: <Raw-File-SHA256>  <path>
+# Excludes: manifest.txt itself.
+
+962e0f0e8cf8a94856d55de115873f7779e388d9001f8cacd51325333b212822  reconciliation/crm/CONTRACT-03B/packaging/r2/README.md
+3da33bed1dd09891c3945ad47469b785cd7aa4b49d86bc8c6833e63edad2b044  reconciliation/crm/CONTRACT-03B/packaging/r2/BASELINE-PROVENANCE.md
+f2a0c8dc1f00ec077e7c414e8cc1006b5439f83cb5e88a3b0e593b08da6d1440  reconciliation/crm/CONTRACT-03B/packaging/r2/FULL-PACKAGE-ASSEMBLY.md
+9901f6b2667540a88a763133a311c2bf8fc863d95ef4b3424a1674097087eb09  reconciliation/crm/CONTRACT-03B/packaging/r2/ROOT-EXPORT-PARITY.md
+b88814a64ced1dd3ea33c653cec03ac43fedae7099461b44084db12de954afa1  reconciliation/crm/CONTRACT-03B/packaging/r2/PACKAGE-INVENTORY.md
+e320379026180a485dc1fa74182fdc3e47f3e2b8f3a1fa6f99fcab8f2e1f48b9  reconciliation/crm/CONTRACT-03B/packaging/r2/TARBALL-EVIDENCE.md
+4e451741c90b4cece3e4337140469c07914dbca473894c93029136629ce51373  reconciliation/crm/CONTRACT-03B/packaging/r2/PRELIMINARY-CRM-MATRIX.md
+991c19cfe5ee900f21148b23adb5b790be122334d238d3847c2340f09a5bf48c  reconciliation/crm/CONTRACT-03B/packaging/r2/AC-EVIDENCE.md
