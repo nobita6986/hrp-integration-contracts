@@ -32,26 +32,23 @@ import {
 //   Claims (EP-01):
 //     - iss required, MUST equal the registered expectedIssuer.
 //     - sub required, MUST equal serviceId.
-//     - serviceId required (or derived from sub if absent).
+//     - serviceId required (string field; not derived from sub).
 //     - aud required, MUST equal expectedAudience (per operation).
 //     - iat, exp required, integer epoch, non-negative, no unsafe-large
 //       integer, exp > iat, lifetime <= 60s. verifierNow < exp + 30s.
 //     - jti required, canonical 32-byte token.
-//     - scope MUST equal the canonical literal
-//       'talent-context:read:identitySummary' (string form or array form
-//       of length 1 accepted for legacy impl-shape inputs; arbitrary
-//       string literals REJECTED).
+//     - scope MUST be exactly [canonical literal] (single-element array).
+//       String form and arbitrary literals REJECTED.
 //     - binding (B): organizationId/crmSubject/crmSessionHandle/
-//       crmSessionDeadline/callbackId (spec). For impl-shape compatibility,
-//       a claims input with binding={method, path, bodySha256} is
-//       re-mapped to the same B semantics.
-//     - request: method/path/bodySha256 (spec). For impl-shape compatibility,
-//       a claims input with request={organizationId, crmSubject, delegationRef}
-//       is re-mapped to the same semantics.
+//       crmSessionDeadline/callbackId, each validated by EP-05 canonical
+//       grammar and BindingTimestampSchema.
+//     - request: method MUST equal 'POST'; path as registered;
+//       bodySha256 MUST be 64 lowercase hex chars and match registered.
 //     - nbf NOT accepted. organizationIdDigest NOT accepted.
-//     - Query surface: actor.kind === 'DELEGATED_USER' with
-//       serviceId/userId/delegationRef REQUIRED.
-//     - Issuance / exchange / cleanup: query actor shape REJECTED.
+//     - actor (query surface only): kind MUST be 'DELEGATED_USER';
+//       serviceId MUST equal top-level serviceId; userId OPAQUE_GRAMMAR;
+//       delegationRef canonical 32-byte token.
+//     - Unknown top-level / binding / request / actor fields REJECTED.
 //
 // No signature cryptography, no signer, no replay store. Runtime
 // invariants (signature verify, jti consume, session active, RLS,
@@ -269,18 +266,19 @@ function resolveJsonEscapes(s: string): string {
 
 // --- Claims profile ---------------------------------------------------------
 //
-// EP-01 spec shape (bilateral acceptance):
+// EP-01 spec shape (bilateral acceptance, post-batch-5):
 //   iss, sub, serviceId, aud, iat, exp, jti, scope, binding, request.
 //   Optionally: actor (required when query surface is in use).
 //
-// For backward compatibility with prior implementation-shaped inputs that
-// flipped binding/request, this validator accepts BOTH shapes and re-maps
-// them to a uniform internal model before enforcing the consumer-facing
-// binding rules:
-//
+// Strict EP-01 spec only at the consumer-facing validator:
 //   Spec binding:    { organizationId, crmSubject, crmSessionHandle,
 //                       crmSessionDeadline, callbackId }
-//   Impl binding:    { method, path, bodySha256 }
+//   Spec request:    { method: 'POST', path, bodySha256: 64 lowercase hex }
+//
+// Impl-shape inputs (binding={method,path,bodySha256} or
+// request={organizationId,crmSubject,delegationRef}) are NO LONGER accepted.
+// The diagnostic helper `diagnosticValidateAssertion` exists for tests that
+// must exercise legacy shapes; it does NOT confer profile conformance.
 //
 //   Spec request:    { method, path, bodySha256 }
 //   Impl request:    { organizationId, crmSubject, delegationRef }
