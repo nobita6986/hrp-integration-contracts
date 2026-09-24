@@ -7,13 +7,13 @@
 | filename | hrp-engagement-contracts-0.0.0-candidate.0.tgz |
 | package | @hrp-engagement/contracts |
 | version | 0.0.0-candidate.0 |
-| bytes | 28 571 |
-| SHA-256 | 4fc0cef16e3dbf9f5412ccb9771e30ce3acd8bc438f9b7bd527395eac35f363a |
-| npm-registry shasum (sha1) | 3523ec849cd3262485641644a988eb5ee9aaffa9 |
+| bytes | 27 949 |
+| SHA-256 | 7c394f74bfa16458bb67d414ff2373e27fb2fb934606a82b3f04e8127f0e87c0 |
+| npm-registry shasum (sha1) | aaa23def3c0247a77da75b87ea9474bc82f9da2c |
 | npm-registry integrity | sha512-HTULQC93jO5VA[...]CvfddNg3ZFLTA== |
 | file count | 20 |
-| unpacked size | 131 919 bytes (131.9 kB) |
-| package size | 28 571 bytes (28.6 kB) |
+| unpacked size | 129 392 bytes (129.4 kB) |
+| package size | 27 949 bytes (27.9 kB) |
 
 ## Tarball is a TEST ARTIFACT
 
@@ -62,7 +62,7 @@ See PACKAGE-INVENTORY.md for the full 20-file unpacked inventory.
 ## Verification
 
 Re-running `npm pack` from the same SHA must produce the same tarball
-byte size (28 571 bytes) and the same SHA-256.
+byte size (27 949 bytes) and the same SHA-256.
 
 Tarball excluded from git by `packages/publish-candidate/.gitignore`:
 

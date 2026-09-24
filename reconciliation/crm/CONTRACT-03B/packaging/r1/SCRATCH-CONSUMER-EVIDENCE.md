@@ -8,7 +8,7 @@
 - TypeScript 5.7.3 installed as devDep.
 - Tarball:
   `D:\CodeApp\hrp-integration-contracts-02a\packages\publish-candidate\hrp-engagement-contracts-0.0.0-candidate.0.tgz`
-- Tarball SHA-256: `4fc0cef16e3dbf9f5412ccb9771e30ce3acd8bc438f9b7bd527395eac35f363a`
+- Tarball SHA-256: `7c394f74bfa16458bb67d414ff2373e27fb2fb934606a82b3f04e8127f0e87c0`
 
 ## Install
 

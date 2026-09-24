@@ -51,16 +51,18 @@ task (CONTRACT-03B.2) will surface real CRM consumers.
 
 ## Handoff inputs for CONTRACT-03B.2
 
+
+**Packaging source commit (P):** `68c5fc729afb306f27266f8b08f8c63a671a446e`  (encoding hygiene fixes: UTF-16LE -> UTF-8)
 T1-A will execute the CRM consumer compatibility review with:
 
-- Candidate commit SHA: `<TO_BE_FILLED_BY_HANDOFF>` (full 40-char SHA)
-- Candidate parent SHA: `2eb6bd155399d5e0490c5a2b0c5037a57dc36bc3`
+- Candidate commit SHA: `68c5fc729afb306f27266f8b08f8c63a671a446e` (full 40-char SHA)
+- Candidate parent SHA (source of truth): `2eb6bd155399d5e0490c5a2b0c5037a57dc36bc3`
 - Branch: `codex/contract03b-packaging`
 - Package identity: `@hrp-engagement/contracts`
 - Version: `0.0.0-candidate.0` (VERSION_CANDIDATE / NOT_PUBLISHED)
 - Tarball filename: `hrp-engagement-contracts-0.0.0-candidate.0.tgz`
-- Tarball SHA-256: `4fc0cef16e3dbf9f5412ccb9771e30ce3acd8bc438f9b7bd527395eac35f363a`
-- Tarball byte size: 28 571
+- Tarball SHA-256: `7c394f74bfa16458bb67d414ff2373e27fb2fb934606a82b3f04e8127f0e87c0`
+- Tarball byte size: 27 949
 - Install command:
   `npm install "D:\CodeApp\hrp-integration-contracts-02a\packages\publish-candidate\hrp-engagement-contracts-0.0.0-candidate.0.tgz" --save`
 - Supported Node version: `>=20`

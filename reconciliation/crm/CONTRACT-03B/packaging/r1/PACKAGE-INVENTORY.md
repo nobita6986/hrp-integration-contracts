@@ -6,7 +6,7 @@ These live under packages/contracts/ and are NOT copied into the tarball.
 The packaging candidate consumes only their compiled output from
 packages/contracts/dist/.
 
-| File | Role |
+| **TOTAL** | **129 392** |
 |------|------|
 | packages/contracts/src/talent-context-read/*.ts | source (Zod schemas, validators, parsers) |
 | packages/contracts/src/index.ts | re-export barrel (dev-harness only) |
@@ -15,13 +15,13 @@ packages/contracts/dist/.
 | packages/contracts/manifest.sha256 | source manifest |
 | packages/contracts/tsconfig.json | TS config |
 
-## Packaged files (20 files, 131.9 kB unpacked, 28.6 kB tarball)
+## Packaged files (20 files, 129.4 kB unpacked, 27.9 kB tarball)
 
 From npm pack --dry-run and npm pack outputs:
 
 | Path | Bytes |
 |------|-------|
-| README.md | 5056 |
+| README.md | 2492 |
 | package.json | 1022 |
 | dist/talent-context-read/index.js | 909 |
 | dist/talent-context-read/index.d.ts | 268 |

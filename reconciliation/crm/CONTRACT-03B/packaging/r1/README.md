@@ -5,7 +5,6 @@
 **Base accepted candidate:** 2eb6bd155399d5e0490c5a2b0c5037a57dc36bc3
 **Producer PASS evidence:** 371267aeee58a45891af468e6f4799ca6dd23b0e
 **Bilateral acceptance:** Message-ID HRP-CRM-MSG-043, record 696acaefeabc031be060eeced877b46d5828f7f8
-**Bundle manifest SHA-256:** 98fe336820879677b3b8ae96863a094fb9c3e0bead6afd2fc2405078e6aacd75 (11/11 MATCH)
 
 ## Status
 
@@ -17,6 +16,8 @@
 - Package identity: @hrp-engagement/contracts
 - Subpath: @hrp-engagement/contracts/talent-context-read/v1
 - Branch isolation: branched from accepted candidate 2eb6bd1...; no history rewrite.
+- Packaging source commit (P): 68c5fc729afb306f27266f8b08f8c63a671a446e
+- Evidence commit (E): pending (to be committed after Phase 2)
 
 ## Scope summary
 
