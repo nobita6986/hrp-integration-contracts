@@ -1,31 +1,37 @@
 {
   "name": "@hrp-engagement/contracts",
-  "version": "0.0.0-candidate.0",
-  "private": false,
-  "description": "Engagement contracts (CONTRACT-03B.1 packaging candidate for talent-context-read/v1 executable acceptance)",
+  "version": "0.0.0-r2-candidate.0",
+  "description": "Engagement contracts — r2 additive candidate: preserves the complete frozen CRM root package and adds the talent-context-read/v1 subpath. Built for CONTRACT-03B.1.",
   "type": "module",
-  "main": "./dist/talent-context-read/index.js",
-  "types": "./dist/talent-context-read/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/talent-context-read/index.js",
-      "types": "./dist/talent-context-read/index.d.ts"
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
     "./talent-context-read/v1": {
       "import": "./dist/talent-context-read/index.js",
       "types": "./dist/talent-context-read/index.d.ts"
     },
-    "./talent-context-read/v1/package.json": "./package.json"
+    "./package.json": "./package.json"
   },
   "files": [
-    "dist/talent-context-read",
-    "README.md"
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
   ],
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "prepare": "node scripts/copy-from-harness.mjs"
+    "verify": "node scripts/verify-baseline.mjs",
+    "assemble": "node scripts/assemble.mjs",
+    "build": "tsc",
+    "test": "npm run build && node --test tests/availability.test.mjs tests/enums-extra.test.mjs tests/enums.legacy.mjs tests/enums.test.mjs tests/envelopes.legacy.mjs tests/envelopes.test.mjs tests/errors.legacy.mjs tests/errors.test.mjs tests/fixtures-coverage-0.7.test.mjs tests/fixtures-fix-f1-f5.test.mjs tests/fixtures-fix-f2-gateway-hrpui.test.mjs tests/gateway-providers-ports.test.mjs tests/identity.test.mjs tests/next-action.test.mjs tests/outbox.test.mjs tests/placement-case-interactions.test.mjs tests/profile-intake.test.mjs tests/queries-events-mappings.test.mjs tests/routing-analytics-kpi-ai.test.mjs tests/scheduling.test.mjs tests/suppression.test.mjs tests/talent-context-read/*.test.mjs tests/generator/*.test.mjs",
+    "manifest:generate": "node scripts/generate-manifest.mjs",
+    "manifest:verify": "node scripts/generate-manifest.mjs --verify"
   },
   "devDependencies": {
     "typescript": "5.7.3",

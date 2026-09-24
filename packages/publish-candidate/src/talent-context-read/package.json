@@ -1,0 +1,14 @@
+﻿{
+  "name": "@hrp-integration-contracts/talent-context-read-dev",
+  "version": "0.0.0-dev.0",
+  "private": true,
+  "description": "Dev-only harness for CONTRACT-03A shared schemas (CONTRACT-02B TalentContextRead v1 + delegation operations + redaction)",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/",
+    "test:verbose": "node --test --test-reporter=spec tests/"
+  },
+  "devDependencies": {
+    "zod": "3.24.2"
+  }
+}
