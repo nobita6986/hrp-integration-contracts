@@ -1,0 +1,18 @@
+# Evidence bundle files (one repo-relative path per line).
+# This list is consumed by `generate-manifest.mjs --evidence-list-file ...`
+# to build `reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/manifest.sha256`.
+# NOTE: this file itself is also hashed and recorded in the manifest it produces.
+reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/README.md
+reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/ARTIFACT-DESCRIPTOR.json
+reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/REPRODUCTION-RUNBOOK.md
+reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/TOOLING-CLOSURE.md
+reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/DOUBLE-BUILD-EVIDENCE.md
+reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/AC-EVIDENCE.md
+reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/manifest.files.txt
+reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/manifest.sha256
+reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/builds/.gitignore
+reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/builds/build-1/RECONSTRUCT-RESULT.txt
+reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/builds/build-2/RECONSTRUCT-RESULT.txt
+tools/reconstruct.mjs
+tools/verify-artifact.mjs
+packages/publish-candidate/scripts/generate-manifest.mjs

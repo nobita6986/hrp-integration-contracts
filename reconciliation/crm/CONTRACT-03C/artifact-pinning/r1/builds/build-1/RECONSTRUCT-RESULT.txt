@@ -1,0 +1,9 @@
+# Local reconstruction result
+# All values from a fresh in-tree assemble + build + npm pack.
+filename=hrp-engagement-contracts-0.0.0-r2-candidate.0.tgz
+byte_size=169360
+sha256=b1db1cb28aeab10bb85497661e1d976dc7370c9abb280db9a3aff16567732dfc
+npm_shasum=4713b1ce639acdc070a9fa95f868bc08b99d0f9b
+file_count=79
+source_commit=1841c9354f361c4ac2bdb70a325c739c264262de
+matched_descriptor=true

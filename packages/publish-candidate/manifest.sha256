@@ -1,6 +1,6 @@
 # Raw-File-SHA256: 64-hex SHA-256 of the file raw bytes.
-# Format: <Raw-File-SHA256>  <path>
-# Excludes: node_modules/, dist/, *.tgz, .gitignore.
+# Format: <Raw-File-SHA256>  <repo-relative-path>
+# Excludes: node_modules/, dist/, *.tgz, .gitignore, manifest.sha256 (no self-hash).
 
 5218f21cd19f27c1891223a866cb8f9d08af5cc353355369185dd540779bdb95  packages/crm-frozen-root/package.json
 e415740f630280ba3ce5c026d1869c89fbd62d27e4b03b372d5c93ed3892cc0f  packages/crm-frozen-root/src/commands/ai-proposals.ts
@@ -61,7 +61,7 @@ cc142419e33354b56769eedca917a5dfdaddd8e0edee527c8dbd9ce2e0ff47a2  packages/publi
 1b225328175f9b3426e07f5db9efa762c8881d310c1d69ff646abe45705bc16b  packages/publish-candidate/package-lock.json
 65fe2b4e083004ad74e088082eab9b5d5468404633369068f3ec512c2133798e  packages/publish-candidate/package.json
 1b3aa5294e4f403c5277cda204f8c032ee9d131b870d61866054c26e42e2eed2  packages/publish-candidate/scripts/assemble.mjs
-2c7ba44d8241d5fef915f6376f9536b0931a29d70b010b47593be599140da9a4  packages/publish-candidate/scripts/generate-manifest.mjs
+1c12e80c59ef5d7abb138cd143ca201b075a82b75e1a5d7e4b807c4e59c5c098  packages/publish-candidate/scripts/generate-manifest.mjs
 bbfcc49796ac86f14fd048151aa0f8b05cb572843be31381c8f8d5874dd9592b  packages/publish-candidate/scripts/verify-baseline.mjs
 e415740f630280ba3ce5c026d1869c89fbd62d27e4b03b372d5c93ed3892cc0f  packages/publish-candidate/src/commands/ai-proposals.ts
 7c9cbde564a0a406ab4c6606a9b71188213f6be46ae46a5ccefd2b88b6922bae  packages/publish-candidate/src/commands/ai-provider-config.ts

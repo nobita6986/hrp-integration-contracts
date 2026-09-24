@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "descriptor_id": "CONTRACT-03C/artifact-pinning/r1",
+  "package": {
+    "name": "@hrp-engagement/contracts",
+    "version": "0.0.0-r2-candidate.0",
+    "registry_status": "NOT_PUBLISHED"
+  },
+  "artifact": {
+    "filename": "hrp-engagement-contracts-0.0.0-r2-candidate.0.tgz",
+    "byte_size": 169360,
+    "sha256": "b1db1cb28aeab10bb85497661e1d976dc7370c9abb280db9a3aff16567732dfc",
+    "npm_shasum": "4713b1ce639acdc070a9fa95f868bc08b99d0f9b",
+    "file_count": 79
+  },
+  "source": {
+    "commit": "1841c9354f361c4ac2bdb70a325c739c264262de",
+    "packaging_p2": "b7505568957217184b225d99312066097c518fdc",
+    "evidence_e3": "81a1000efac3d244add07568f69cd63554fa3eff",
+    "compatibility_evidence": "e7f90de7e6fb98c9e2900f00cc6b6265de712dc1",
+    "baseline_commit": "crm-baseline-pinned-by-acceptance-record"
+  },
+  "accepted_subpath": "@hrp-engagement/contracts/talent-context-read/v1",
+  "acceptance_record": {
+    "accepting_authority": "T0 HRP",
+    "acceptance_message": "HRP-CRM-MSG-045",
+    "acceptance_commit": "1841c9354f361c4ac2bdb70a325c739c264262de",
+    "acceptance_manifest_sha256": "14ab789408c54844f149b1130a0e98c3716cda1e967661828194c5258be03251",
+    "evidence_path": "reconciliation/hrp/CONTRACT-03B-packaging-compatibility-acceptance/r1/ACCEPTANCE-RECORD.md",
+    "verification_path": "reconciliation/hrp/CONTRACT-03B-packaging-compatibility-acceptance/r1/VERIFICATION.md",
+    "frozen_root": {
+      "source_root": "packages/crm-frozen-root/",
+      "module_count": 67,
+      "named_export_count": 379,
+      "named_export_parity": "379/379"
+    }
+  },
+  "reproduction": {
+    "command": "node tools/reconstruct.mjs --descriptor reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/ARTIFACT-DESCRIPTOR.json --output-dir reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/builds/",
+    "verify_command": "node tools/verify-artifact.mjs --descriptor reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/ARTIFACT-DESCRIPTOR.json --tarball <path-to-.tgz>",
+    "expected_exit_code": 0
+  },
+  "publication_status": "NOT_EXECUTED",
+  "immutable": true,
+  "no_registry_actions": [
+    "no npm publish",
+    "no npm dist-tag",
+    "no npm release",
+    "no Git tag",
+    "no release branch creation"
+  ],
+  "no_consumer_actions": [
+    "no CRM repo mutation",
+    "no consumer package.json update",
+    "no lockfile change",
+    "no consumer migration"
+  ],
+  "no_runtime_actions": [
+    "no runtime endpoint",
+    "no JWT signer or verifier",
+    "no replay or delegation store",
+    "no DB migration or RLS",
+    "no auth or session change",
+    "no pilot or deploy"
+  ]
+}

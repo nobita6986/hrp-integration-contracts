@@ -1,0 +1,4 @@
+# CONTRACT-03C.1: Local reproduction outputs (do not commit tarball binaries).
+# Scoped to this directory only.
+*.tgz
+*.tgz.sha256

@@ -1,0 +1,17 @@
+# Raw-File-SHA256: 64-hex SHA-256 of the file raw bytes.
+# Format: <Raw-File-SHA256>  <repo-relative-path>
+# Excludes: machine paths, node_modules/, dist/, *.tgz, manifest itself.
+
+48aaf7487201e61c9cebfd17ad1061375a2f81611c5c879d8b0228a90921bf3a  reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/README.md
+f02ab3042d71415eaea970b8d580d2c5e05c83771a9c113a8f8701683404e006  reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/ARTIFACT-DESCRIPTOR.json
+3ad38716bb9ada72b541f259fff9999dac42387617f68c6d7b816be2dd7b2823  reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/REPRODUCTION-RUNBOOK.md
+83a999f3c4fff1523ab248333385961a836d3f6fc48ea1484d8b043af02981b0  reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/TOOLING-CLOSURE.md
+02da7e732499706d17f8a8be91606bb91f1415a7e753fc2b112c64e2a1a72f83  reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/DOUBLE-BUILD-EVIDENCE.md
+09753e8747689bdb33e8c6c1d227ca8d5312601024cf43aee1a2780207e0761a  reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/AC-EVIDENCE.md
+d65e690218da7b25fe4d8371a283cb2fb11484ebbc3788c019e0787856f6fe7d  reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/manifest.files.txt
+170b9c0a87a04d12de52ef921e24054a9bfddd7c2ef598e4127901a1dc2da60c  reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/builds/.gitignore
+afb470c393caf112501f4227616a4a8f88b25981ddf2cf1bd6dfef4614fbce28  reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/builds/build-1/RECONSTRUCT-RESULT.txt
+afb470c393caf112501f4227616a4a8f88b25981ddf2cf1bd6dfef4614fbce28  reconciliation/crm/CONTRACT-03C/artifact-pinning/r1/builds/build-2/RECONSTRUCT-RESULT.txt
+5f1923c25f45efa911b674f3d3e7cf4f84e63c495e39293dc9622c07db372c45  tools/reconstruct.mjs
+cb6c9028a6faa3d0d76cc2a85f5388d432613e985cc5ac56ee25216f6bbb66b2  tools/verify-artifact.mjs
+1c12e80c59ef5d7abb138cd143ca201b075a82b75e1a5d7e4b807c4e59c5c098  packages/publish-candidate/scripts/generate-manifest.mjs

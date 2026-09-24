@@ -1,6 +1,6 @@
 # Raw-File-SHA256: 64-hex SHA-256 of the file raw bytes.
-# Format: <Raw-File-SHA256>  <path>
-# Excludes: manifest.txt itself.
+# Format: <Raw-File-SHA256>  <repo-relative-path>
+# Excludes: machine paths, node_modules/, dist/, *.tgz, manifest itself.
 
 e870d5a5a7112615dbf1124c31203c9178336ebf30be158ffb12693b378657de  reconciliation/crm/CONTRACT-03B/packaging/r2/README.md
 22fde0a9881cd5d1a17ff7e1360719593ef027fe133b5e272cdbea85608d041a  reconciliation/crm/CONTRACT-03B/packaging/r2/BASELINE-PROVENANCE.md
